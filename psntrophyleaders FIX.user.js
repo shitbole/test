@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name              psntrophyleaders FIX
-// @version           1.500
+// @version           1.501
 // @icon                https://www.google.com/s2/favicons?domain=psntrophyleaders.com
 // @match             https://psntrophyleaders.com/*
-// @downloadURL   https://www.dropbox.com/s/e7i051mdvvvpzhj/psntrophyleaders%20FIX.user.js?dl=0
-// @updateURL       https://www.dropbox.com/s/e7i051mdvvvpzhj/psntrophyleaders%20FIX.user.js?dl=0
+// @downloadURL   https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
+// @updateURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
 // ==/UserScript==
 
 
