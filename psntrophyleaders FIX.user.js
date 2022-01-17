@@ -1,9 +1,11 @@
 // ==UserScript==
-// @name              psntrophyleaders FIX
-// @version           1.507
-// @icon                https://www.google.com/s2/favicons?domain=psntrophyleaders.com
-// @match             https://psntrophyleaders.com/*
-// @downloadURL   https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
+// @name       psntrophyleaders FIX
+// @version       1.5.1
+// @author       monkey
+// @description       upgrade
+// @icon       https://i.imgur.com/M32n7XP.png
+// @match       https://psntrophyleaders.com/*
+// @downloadURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
 // @updateURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
 // ==/UserScript==
 
@@ -2569,6 +2571,7 @@ const arrayVR = [
 'sparc-ps4',
 'special-delivery-ps4',
 'special-delivery-ps4-1',
+'spice-and-wolf-vr-ps4',
 'sports-bar-vr-hangout-2-0-ps4',
 'sprint-vector-ps4',
 'spuds-unearthed-ps4',
