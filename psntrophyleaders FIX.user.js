@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name              psntrophyleaders FIX
-// @version           1.503
+// @version           1.505
 // @icon                https://www.google.com/s2/favicons?domain=psntrophyleaders.com
 // @match             https://psntrophyleaders.com/*
 // @downloadURL   https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
@@ -30,6 +30,7 @@ const arrayEU = [
 'lizard-lady-vs-the-cats-ps4',
 'space-kabaam-ps4-1',
 'ancient-stories-gods-of-egypt-ps4',
+'soulfrost-ps4',
 'maze-pedestal-of-trials-ps4-1',
 'sables-grimoire-ps4',
 'venus-improbable-dream-ps4-1',
@@ -719,6 +720,7 @@ const arrayNA = [
 'from-eath-to-heaven-ps4-1',
 'energy-cycle-edge-ps5-1',
 'mastho-is-together-ps4-2',
+'soulfrost-ps4-1',
 'mastho-is-together-ps5-1',
 'santas-workshop-ps5-1',
 'nekopara-vol-4-ps4',
@@ -1655,6 +1657,19 @@ const arrayJP = [
 'norn9-var-commons-psvita-1',
 'ozmafia-vivace-psvita',
 'possession-magenta-psvita',
+'オルフレール-～幸福の花束～-psvita',
+'カエル畑ｄｅつかまえて-psvita',
+'カエル畑-ｄｅ-つかまえて・夏%e3%80%80千木良参戦！-psvita',
+'カタハネ-―an-call-belle―-psvita',
+'ドリームクラブホストガール%e3%80%80オンステージ-ps4',
+'マジきゅんっ！%e3%80%80ルネッサンス-psvita',
+'メモリーズオフ-innocent-fille-%e3%80%80ノエル-fullbloom-ps4',
+'春音＊アリスグラム-snow-drop-ps4-psvita',
+'桜花裁き-斬-psvita',
+'赤い砂堕ちる月-psvita',
+'逢魔が刻-～かくりよの縁～-psvita',
+'鳥籠のマリアージュ-～初恋の翼～-psvita',
+'Ｃｌｏｖｅｒ　Ｄａｙ’ｓ　～Ｍａｋｉｎｇ　ｆｏｒ　Ｈａｐｐｉｎｅｓｓ．～-psvita',
 'psychicemotion6-psvita',
 'reゼロから始める異世界生活-death-or-kiss-ps4',
 'rebirthday-song～恋を唄う死神～another-record-psvita',
@@ -2133,6 +2148,9 @@ const arrayDELISTED = [
 'ドラゴンクエスト無料版-ps4',
 'invector-ps4',
 'will-a-wonderful-world-ps4-2',
+'will-a-wonderful-world-ps4',
+'will：素晴らしき世界-ps4',
+'will-a-wonderful-world-ps4-1',
 'whiteboyz-wit-attitude-the-pursuit-of-money-ps4',
 'whiteboyz-wit-attitude-the-pursuit-of-money-ps4-1',
 'adams-venture-chronicles-ps3',
@@ -2239,6 +2257,7 @@ const arrayREMOVEPS4 = [
 
 
 (function() {
+    //setTimeout(function() {
     'use strict';
 
     console.log('number of / splits: ', document.URL.split('/').length)
@@ -2290,7 +2309,7 @@ const arrayREMOVEPS4 = [
     else {
         return
     }
-
+    //}, 1000);
 })();
 
 function checkRegionGame(row) {
@@ -2563,10 +2582,22 @@ function addTag(row, label) {
 
 function moveRowContent(original) {
 	let offset = original.getElementsByClassName('platformlabel').length - 1;
-
+    var flagoffset = 6
 	const difficulty = original.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = original.getElementsByClassName('difficultyText')[0].children[1];
-	const dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
+    var dateHTML
+    var nbn = original.getElementsByClassName('title-cell')[0].children
+
+    if (nbn[6+offset].innerText.substring(1, 3) === 'of' | nbn[6+offset].innerText.substring(1, 3) === 'om') {
+        dateHTML = original.getElementsByClassName('title-cell')[0].children[6+offset];
+    }
+    else if (nbn[5+offset].innerText.substring(1, 3) === 'of' | nbn[5+offset].innerText.substring(1, 3) === 'om') {
+        dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
+    }
+    else {
+        //console.log(nbn[5+offset].innerText.substring(1, 3))
+        dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
+    }
 	const date = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split('on ')[1].substring(0, 12).replace('i', ''): '';
 	const timestamp = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split(date)[1].substring(0, 12).replace('i', ''): '';
 	const timer = dateHTML.innerText.split('in ')[1];
@@ -2582,10 +2613,10 @@ function moveRowContent(original) {
 	original.getElementsByClassName('difficultyText')[0].style.fontWeight = 'bold';
 	original.getElementsByClassName('difficultyText')[0].classList = [];
 
-	original.getElementsByClassName('title-cell')[0].children[5+offset].innerHTML = dateHTML.innerHTML;
-	original.getElementsByClassName('title-cell')[0].children[5+offset].innerText = timestamp;
-	original.getElementsByClassName('title-cell')[0].children[5+offset].style.color = dateHTML.style.color;
-	original.getElementsByClassName('title-cell')[0].children[5+offset].style.fontWeight = 'bold';
+	dateHTML.innerHTML = dateHTML.innerHTML;
+	dateHTML.innerText = timestamp;
+	dateHTML.style.color = dateHTML.style.color;
+	dateHTML.style.fontWeight = 'bold';
 	original.getElementsByClassName('title-cell')[0].style.width = `100%`;
 	original.getElementsByClassName('title-cell')[0].colSpan = 'unset';
 	original.getElementsByClassName('image-cell')[0].style.width = '105px';
@@ -2702,6 +2733,7 @@ function modifyProgressBar(row) {
 }
 
 function parseGameDetails() {
+    setTimeout(function() {
 	//remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
     const difficulty = document.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = document.getElementsByClassName('difficultyText')[0].children[1];
@@ -2752,17 +2784,19 @@ function parseGameDetails() {
             document.getElementsByClassName('sub')[1].style.display = 'none';
         }
         document.getElementsByClassName('gamebreadcrumb')[1].style.display = 'none';
-        const width = document.getElementsByClassName('page-header')[0].offsetWidth - document.getElementsByClassName('gameImage')[0].offsetWidth - 50;
-        document.getElementsByClassName('progress_float')[0].style = `width: ${width}px; margin-left: 0px; margin-top: 35px !important; display: flex; justify-content: flex-end`;
+        //const width = document.getElementsByClassName('page-header')[0].offsetWidth - document.getElementsByClassName('gameImage')[0].offsetWidth - 50;
+        //console.log(width)
+        //650 = correct, 850 = wrong
+        document.getElementsByClassName('progress_float')[0].style = `width: ${650}px; margin-left: 0px; margin-top: 35px !important; display: flex; justify-content: flex-end`;
         document.getElementsByClassName('progress_float')[0].children[0].style.display = "none";
         document.getElementsByClassName('progress_float')[0].getElementsByClassName('progresscontainer')[0].style.width = "166px";
         document.getElementsByClassName('progress_float')[0].children[1].style.marginRight = '10px';
 
-        document.getElementsByClassName('trophy_totals')[0].style = `border-top: unset; width: ${width}px; display: flex; justify-content: flex-end; position: absolute; margin-top: 15px;`;
+        document.getElementsByClassName('trophy_totals')[0].style = `border-top: unset; width: ${650}px; display: flex; justify-content: flex-end; position: absolute; margin-top: 15px;`;
         document.getElementsByClassName('trophy_totals')[0].getElementsByClassName('total')[0].style = 'border-left: unset; color: white !important;';
         remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
     }
-
+    }, 50);
 }
 
 function insertBefore(newNode, existingNode) {
