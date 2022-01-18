@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.5.1
+// @version       1.5.2
 // @author       monkey
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -37,8 +37,15 @@ const arrayEU = [
 '3d-dot-game-heroes-ps3-1',
 '36-fragments-of-midnight-ps4-1',
 '36-fragments-of-midnight-psvita-1',
+'angels-with-scaly-wings-ps5-1',
+'aery-little-bird-adventure-ps4',
+'miles-kilo-psvita',
+'one-eyed-kutkh-ps4-psvita-3',
+'my-aunt-is-a-witch-psvita',
+'active-neurons-puzzle-game-psvita-1',
 '99vidas-ps4-ps3-psvita-1',
 '112th-seed-ps4-1',
+'void-gore-ps5-2',
 '112th-seed-ps5-1',
 'access-denied-ps4-1',
 'access-denied-psvita-2',
@@ -730,6 +737,14 @@ const arrayEU = [
 const arrayNA = [
 '3d-dot-game-heroes-ps3',
 '20-bunnies-ps4-2',
+'how-to-take-off-your-mask-remastered-ps4',
+'angels-with-scaly-wings-ps5',
+'walking-dead-the-final-season-ps4-2',
+'void-gore-ps5-3',
+'miles-kilo-psvita-1',
+'my-aunt-is-a-witch-psvita-1',
+'active-neurons-puzzle-game-psvita',
+'takotan-psvita-2',
 '20-bunnies-ps5-2',
 '36-fragments-of-midnight-ps4',
 '36-fragments-of-midnight-psvita',
@@ -1092,7 +1107,6 @@ const arrayNA = [
 'metropolis-lux-obscura-ps4-psvita-1',
 'metropolis-lux-obscura-ps4-psvita-3',
 'micetopia-ps4',
-'midnight-deluxe-ps4-2',
 'midnight-deluxe-psvita-1',
 'milos-quest-ps4-1',
 'milos-quest-psvita-1',
@@ -1420,6 +1434,7 @@ const arrayNA = [
 'zj-the-ball-level-5-ps4-1',
 'zomb-ps4',
 'zombo-buster-rising-ps4-1',
+'midnight-deluxe-ps4-1',
 '√letter-ps4-3',
 '√letter-psvita-3',
 
@@ -1427,11 +1442,33 @@ const arrayNA = [
 const arrayAS = [
 '20-bunnies-ps4-1',
 '20-bunnies-ps5-1',
+'pretty-girls-panic-plus-ps4-1',
+'pretty-girls-panic-plus-ps5-2',
+'how-to-take-off-your-mask-remastered-ps4-2',
+'glo-ps5-1',
+'glo-ps4-1',
+'ladders-by-powgi-ps5-2',
+'ladders-by-powgi-ps4-2',
+'miles-kilo-psvita-3',
+'kid-tripp-psvita-1',
+'finger-fitness-ps5',
+'ghoulboy-psvita',
+'habroxia-psvita-2',
+'deep-ones-psvita',
+'guard-duty-psvita-2',
+'my-aunt-is-a-witch-psvita-2',
+'distraint-deluxe-edition-psvita-2',
+'devious-dungeon-2-psvita-2',
+'awesome-pea-2-psvita-2',
+'breeder-homegrown-directors-cut-psvita-2',
+'alphaset-by-powgi-psvita-2',
 '36-fragments-of-midnight-ps4-2',
 '36-fragments-of-midnight-psvita-2',
 '112th-seed-ps4-3',
 'access-denied-ps4-2',
 'access-denied-psvita-1',
+'void-gore-ps5',
+'takotan-psvita-1',
 'akibas-trip-2-獎盃組-ps3',
 'alphaset-by-powgi-ps4-2',
 'alteric-ps4',
@@ -1451,6 +1488,7 @@ const arrayAS = [
 'blind-men-ps4-2',
 'blind-men-psvita',
 'bouncy-bullets-ps4',
+'midnight-deluxe-ps4-2',
 'bouncy-bullets-psvita-2',
 'breeder-homegrown-directors-cut-ps4-2',
 'bucket-knight-ps4-2',
@@ -1545,7 +1583,6 @@ const arrayAS = [
 'mekabolt-psvita-2',
 'metagal-ps4-2',
 'metagal-psvita-2',
-'midnight-deluxe-ps4-1',
 'midnight-deluxe-psvita-2',
 'milos-quest-ps4-2',
 'milos-quest-psvita-2',
@@ -1665,7 +1702,16 @@ const arrayJP = [
 '50-cent-blood-on-the-sand-ps3',
 '112th-seed-ps4-2',
 '112th-seed-ps5',
+'pretty-girls-panic-plus-ps4-2',
+'pretty-girls-panic-plus-ps5-1',
+'amenitys-life-アメニティーズ-ライフ-psvita',
+'alias-carnival-サクラメント-psvita',
+'takotan-psvita',
 'aborigenus-ps4-2',
+'void-gore-ps5-1',
+'miles-kilo-psvita-2',
+'distraint-deluxe-edition-psvita-3',
+'subnautica-ps4-1',
 'air-psvita',
 'akb1149-恋愛総選挙（playstation3版）-ps3',
 'akibas-trip-2-トロフィーセット-ps3',
@@ -2128,7 +2174,9 @@ const arrayKR = [
 ];
 const arrayCN = [
 'koi-ps4-1',
+'candleman-ps4',
 'raincity-ps4-1',
+'hohokum-ps4-ps3-psvita-3',
 'rayman-legends-ps4-1',
 '临终-重生试炼vr-ps4',
 '临终：重生试炼-ps4',
@@ -2143,17 +2191,7 @@ const arrayRU =[
 'rayman-origins-ps3-1',
 ];
 const arrayVR = [
-'2md-vr-football-ps4',
-'2md-vr-football-ps4-1',
-'18floors-ps4',
-'18floors-ps4-1',
-'23-seconds-to-5-ps4',
-'100ft-robot-golf-ps4',
-'1976-back-to-midway-ps4',
-'1976-back-to-midway-ps4-1',
-'a-tech-cybernetic-vr-ps4',
-'a-tech-cybernetic-vr-ps4-1',
-'accounting-ps4',
+
 'ace-banana-ps4',
 'ace-banana-ps4-1',
 'affected-the-manor-ps4',
@@ -2737,13 +2775,19 @@ const arrayPHYSICAL = [
 'nicole-psvita',
 'steinsgate-ps3-1',
 'tales-from-the-borderlands-ps4-ps3',
+'takotan-psvita-4',
 'task-force-kampas-psvita-4',
 'winters-daydream-psvita-3',
+'walking-dead-the-final-season-ps4-3',
+'walking-dead-the-final-season-ps4-2',
 ];
 const arrayDIGITAL = [
 'tales-from-the-borderlands-ps4',
+'walking-dead-the-final-season-ps4',
+'walking-dead-the-final-season-ps4-1',
 ];
-const arrayREMOVEVITA = ['alteric-ps4-psvita',
+const arrayREMOVEVITA = [
+'alteric-ps4-psvita',
 'alteric-ps4-psvita-1',
 'batman-arkham-origins-ps3-psvita',
 'creepy-road-ps4-psvita',
@@ -2783,6 +2827,7 @@ const arrayREMOVEVITA = ['alteric-ps4-psvita',
 'ホチキス-ps4-psvita',
 ];
 const arrayREMOVEPS3 = [
+'hohokum-ps4-ps3-psvita-3',
 '7scarlet-ps3-psvita',
 'steinsgate-0-ps4-ps3-psvita',
 'steinsgate-0-ps4-ps3-psvita-1',
@@ -3032,7 +3077,7 @@ function checkRegion(row) {
     if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
     if (arrayDIGITAL.includes(game)) addTag(row, 'DIGITAL')
 
-    if ((document.URL.split('/').length) === 6) {
+    /*if ((document.URL.split('/').length) === 6) {
         if (document.URL.split('/')[3] === 'user') {
             let titleGame1 = row.getElementsByClassName('gametitle')[0]
             let innerT = titleGame1.innerText
@@ -3048,7 +3093,7 @@ function checkRegion(row) {
                 titleGame1.append(remove_junk)
             }
         }
-    }
+    }*/
 
 
     if (game === '十三機兵防衛圏-ps4') {
