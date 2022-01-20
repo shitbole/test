@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.5.2
+// @version       1.5.3
 // @author       monkey
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -740,6 +740,7 @@ const arrayNA = [
 'how-to-take-off-your-mask-remastered-ps4',
 'angels-with-scaly-wings-ps5',
 'walking-dead-the-final-season-ps4-2',
+'music-racer-ps4-1',
 'void-gore-ps5-3',
 'miles-kilo-psvita-1',
 'my-aunt-is-a-witch-psvita-1',
@@ -750,7 +751,6 @@ const arrayNA = [
 '36-fragments-of-midnight-psvita',
 '99vidas-ps4-ps3-psvita',
 '112th-seed-ps4',
-'112th-seed-ps5-2',
 '112th-seed-ps5-3',
 'access-denied-ps4',
 'access-denied-psvita',
@@ -1442,12 +1442,24 @@ const arrayNA = [
 const arrayAS = [
 '20-bunnies-ps4-1',
 '20-bunnies-ps5-1',
+'space-intervention-ps4',
+'akinofa-ps4-2',
+'dreaming-sarah-ps4-2',
+'c14-dating-ps5-2',
+'c14-dating-ps4-2',
+'gaps-by-powgi-ps5-1',
+'gaps-by-powgi-ps4-1',
+'twin-robots-ultimate-edition-ps5-2',
+'inferno-2-ps4-2',
+'void-gore-ps4-3',
+
 'pretty-girls-panic-plus-ps4-1',
 'pretty-girls-panic-plus-ps5-2',
 'how-to-take-off-your-mask-remastered-ps4-2',
 'glo-ps5-1',
 'glo-ps4-1',
 'ladders-by-powgi-ps5-2',
+'112th-seed-ps5-2',
 'ladders-by-powgi-ps4-2',
 'miles-kilo-psvita-3',
 'kid-tripp-psvita-1',
@@ -1701,6 +1713,10 @@ const arrayJP = [
 '3dドットゲームヒーローズ-ps3',
 '50-cent-blood-on-the-sand-ps3',
 '112th-seed-ps4-2',
+'pretty-girls-panic-plus-ps4-2',
+'pretty-girls-panic-plus-ps5-1',
+'amenitys-life-アメニティーズ-ライフ-psvita',
+'alias-carnival-サクラメント-psvita',
 '112th-seed-ps5',
 'pretty-girls-panic-plus-ps4-2',
 'pretty-girls-panic-plus-ps5-1',
@@ -2194,6 +2210,7 @@ const arrayVR = [
 
 'ace-banana-ps4',
 'ace-banana-ps4-1',
+'spice-and-wolf-vr2-ps4',
 'affected-the-manor-ps4',
 'affected-the-manor-ps4-1',
 'affected-the-manor-ps4-2',
@@ -2214,6 +2231,7 @@ const arrayVR = [
 'animal-force-ps4-1',
 'anyones-diary-ps4',
 'anywherevr-ps4',
+'concrete-genie-ps4',
 'apex-construct-ps4',
 'apocalypse-rider-ps4',
 'arashi-castles-of-sin-ps4',
