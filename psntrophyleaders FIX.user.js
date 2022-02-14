@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.5.3
+// @version       1.5.6
 // @author       monkey
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -21,21 +21,144 @@ var REMOVE_FLAGGLOSS = true
 
 
 
-
 const arrayOR =[
-'invector-ps4',
-'battle-rockets-psvita',
+/*'invector-ps4',
+'battle-rockets-psvita',*/
 ];
 const arrayRR =[
-'invector-ps4-1',
+/*'invector-ps4-1',
 'battle-rockets-2-0-psvita-1',
-'battle-rockets-2-0-psvita',
+'battle-rockets-2-0-psvita',*/
 ];
 
 
 const arrayEU = [
+'barry-the-bunny-ps5',
+'aery-a-journey-beyond-time-ps4-1',
+'grey-skies-ps4-1',
+'roombo-first-blood-ps4-1',
+'takotan-ps5-2',
+'cattch-ps4',
 '3d-dot-game-heroes-ps3-1',
+'retrace-memories-of-death-ps4-1',
+'spirit-of-the-north-enhanced-edition-ps5',
+'pantsu-hunter-back-to-the-90s-ps5',
+'mythic-ocean-ps4-1',
+'mastho-is-together-ps5-2',
+'pig-d-ps5',
+'tower-of-balloons-otterrific-arcade-ps4',
+'ladders-by-powgi-ps5',
+'cross-the-moon-ps5',
+'jacknhat-ps4',
+'jacknhat-ps5',
+'gutwhale-ps5',
+'magi-trials-ps4',
+'magi-trials-ps5',
+'murder-diaries-ps4-1',
+'active-neurons-puzzle-game-ps5',
+'futbol-break-head-to-head-ps5',
+'cake-invaders-ps5-1',
+'cake-invaders-ps4-2',
+'donut-run-ps4',
+'donut-run-ps5',
+'pantsu-hunter-back-to-the-90s-ps5',
+'darker-skies-ps5',
+'breakneck-city-ps5-2',
+'alba-a-wildlife-adventure-ps4',
+'alba-a-wildlife-adventure-ps5',
+'ball-lab-ps5-1',
+'nowhere-girl-ps5',
+'minesweeper-genius-ps4',
+'forgotten-city-ps4-1',
+'tilting-tiles-ps4-1',
+'infestor-ps4',
+'bai-qu-hundreds-of-melodies-ps4-1',
+'our-church-and-halloween-rpg-story-five-james-version-ps4',
+'our-church-and-halloween-rpg-story-five-scott-version-ps4',
+'one-eyed-kutkh-ps4-psvita',
+'0-degrees-ps5-1',
+'little-lily-princess-ps5',
+'little-lily-princess-ps4',
+'super-destronaut-dx-2-ps5',
+'sheep-p-ps4',
+'sheep-p-ps5',
+'one-escape-ps4',
+'farm-frenzy-refreshed-ps4',
+'cross-the-moon-ps4',
+'castle-of-pixel-skulls-ps4',
+'barry-the-bunny-ps4',
+'orbibot-ps4-1',
+'arrog-ps4-1',
+'rusty-gun-ps4',
+'one-eyed-lee-and-the-dinner-party-ps4',
+'gutwhale-ps4-1',
+'whiskey-mafia-franks-story-ps4',
+'0-degrees-ps4-2',
+'blitz-breaker-ps4-2',
+'apple-slash-ps4',
+'highschool-romance-ps4-1',
+'lovechoice-ps4-1',
+'rogue-explorer-ps4',
+'space-revenge-ps4-1',
+'storytale-ps4-1',
+'shiro-ps4',
+'gleylancer-ps4-1',
+'pukan-bye-bye-ps4',
+'whiskey-mafia-leos-family-ps4',
+'890b-ps4-1',
+'nowhere-girl-ps4',
+'pig-d-ps4',
+'20-bunnies-ps4',
+'sushi-run-ps4',
+'ball-lab-ps4-1',
+'memories-of-east-coast-ps4-1',
+'icecream-break-ps4',
+'catch-the-bowling-balls-challenge-mode-edition-breakthrough-gaming-arcade-ps4',
+'tanks-vs-tanks-pvp-ps4-1',
+'drizzlepath-deja-vu-ps4',
+'6souls-ps4',
+'zj-the-ball-challenge-level-1c-ps4',
+'zj-the-ball-challenge-level-2c-ps4',
+'zippy-the-circle-challenge-level-1c-and-level-2c-ps4',
+'alexio-ps4',
 '36-fragments-of-midnight-ps4-1',
+'arkan-the-dog-adventurer-ps4',
+'iconoclasts-ps4-psvita',
+'grood-ps4',
+'lego-dc-super-villains-ps4-1',
+'mighty-aphid-ps4',
+'we-are-the-dwarves-ps4',
+'stranded-deep-ps4',
+'lost-castle-ps4',
+'star-wars-jedi-fallen-order-ps4-1',
+'sid-meiers-civilization-vi-ps4-1',
+'fire-pro-wrestling-world-ps4-1',
+'burnout-paradise-remastered-ps4-1',
+'hex-card-clash-ps4-1',
+'knights-of-valour-ps4',
+'skyforge-ps4',
+'final-fantasy-xv-ps4',
+'galak-z-the-dimensional-ps4-1',
+'heavy-weapon-ps3-1',
+'socom-special-forces-ps3',
+'shank-ps3-1',
+'clash-of-the-titans-ps3-2',
+'queeny-army-ps4',
+'futbol-break-head-to-head-ps4-1',
+'zj-the-ball-challenge-level-5c-ps4',
+'bunny-memory-ps4',
+'kansei-the-second-turn-hd-ps4',
+'zj-the-ball-challenge-level-4c-ps4',
+'breakneck-city-ps4-2',
+'mastho-is-together-ps4-1',
+'contrast-ps4-1',
+'zj-the-ball-challenge-level-3c-ps4',
+'prince-of-landis-ps4',
+'gardeners-path-ps4',
+'ice-cream-break-head-to-head-ps4',
+'futbol-break-ps4',
+'christmas-run-ps4',
+'santas-workshop-ps4',
 '36-fragments-of-midnight-psvita-1',
 'angels-with-scaly-wings-ps5-1',
 'aery-little-bird-adventure-ps4',
@@ -736,7 +859,119 @@ const arrayEU = [
 ];
 const arrayNA = [
 '3d-dot-game-heroes-ps3',
+'save-your-nuts-ps4',
+'roombo-first-blood-ps4',
+'trophy-set-racing-bros-ps5',
+'memories-of-east-coast-ps5-2',
+'dont-touch-this-button-ps5',
+'aery-a-journey-beyond-time-ps4',
+'takotan-ps5-3',
+'cattch-ps4-1',
+'retrace-memories-of-death-ps4',
+'marauder-chronicles-curse-over-valdria-ps5-1',
+'tanks-vs-tanks-ps4-1',
+'pig-d-ps5-1',
+'brave-match-ps4-1',
+'gutwhale-ps5-1',
+'gutwhale-ps4',
 '20-bunnies-ps4-2',
+'donut-run-ps5-1',
+'mythic-ocean-ps4',
+'donut-run-ps4-1',
+'futbol-break-head-to-head-ps5-1',
+'cake-invaders-ps5-3',
+'cake-invaders-ps4-3',
+'breakneck-city-ps5',
+'gav-gav-odyssey-ps4-1',
+'alba-a-wildlife-adventure-ps4-1',
+'alba-a-wildlife-adventure-ps5-1',
+'round-invaders-ps4',
+'active-neurons-puzzle-game-ps5-1',
+'cinders-ps4',
+'aery-broken-memories-ps4-1',
+'ice-cream-break-ps5',
+'sushi-break-2-ps5-1',
+'sushi-break-2-head-to-head-na-ps5',
+'starlight-shores-ps5-1',
+'starlight-shores-ps4-1',
+'finger-fitness-ps5-2',
+'gleylancer-ps5',
+'one-last-memory-ps4',
+'arkan-the-dog-adventurer-ps5',
+'forgotten-city-ps4',
+'jacknhat-ps5-1',
+'ravva-and-the-cyclops-curse-ps5-2',
+'active-neurons-3-wonders-of-the-world-ps4-1',
+'marauder-chronicles-curse-over-valdria-ps4-1',
+'blasftul-ps4-1',
+'gleylancer-ps4',
+'fluxteria-ps4',
+'aery-dreamscape-ps4-1',
+'titan-chaser-ps4-1',
+'last-dead-end-ps4',
+'murder-diaries-2-ps4',
+'murder-diaries-ps4',
+'sushi-run-na-ps5',
+'0-degrees-ps5-2',
+'pantsu-hunter-back-to-the-90s-ps5-1',
+'bowling-breakthrough-gaming-arcade-ps4-1',
+'arkan-the-dog-adventurer-ps4-1',
+'queeny-army-ps4-1',
+'futbol-break-head-to-head-ps4',
+'zj-the-ball-challenge-level-5c-ps4-1',
+'bunny-memory-ps4-1',
+'kansei-the-second-turn-hd-ps4-2',
+'zj-the-ball-challenge-level-4c-ps4-1',
+'breakneck-city-ps4',
+'zj-the-ball-challenge-level-3c-ps4-1',
+'prince-of-landis-ps4-1',
+'futbol-break-ps4-1',
+'gardeners-path-ps4-1',
+'ice-cream-break-head-to-head-ps4-1',
+'santas-workshop-ps4-1',
+'zippy-the-circle-challenge-level-1c-and-level-2c-ps4-1',
+'zj-the-ball-challenge-level-2c-ps4-1',
+'zj-the-ball-challenge-level-1c-ps4-1',
+'farm-frenzy-refreshed-ps4-1',
+'6souls-ps4-1',
+'drizzlepath-deja-vu-ps4-3',
+'tanks-vs-tanks-pvp-ps4',
+'catch-the-bowling-balls-challenge-mode-edition-breakthrough-gaming-arcade-ps4-1',
+'icecream-break-ps4-1',
+'memories-of-east-coast-ps4',
+'one-escape-ps4-1',
+'racing-challenge-mode-edition-breakthrough-gaming-arcade-ps4-1',
+'sushi-run-ps4-1',
+'avoid-them-challenge-mode-edition-breakthrough-gaming-arcade-ps4-1',
+'bowling-story-two-mark-version-project-summer-ice-ps4-1',
+'pig-d-ps4-1',
+'one-eyed-lee-and-the-dinner-party-ps4-1',
+'day-without-me-ps4-1',
+'arrog-ps4',
+'whiskey-mafia-leos-family-ps4-1',
+'bowling-story-one-mark-version-project-summer-ice-ps4-1',
+'pukan-bye-bye-ps4-1',
+'our-church-and-halloween-rpg-story-five-james-version-ps4-1',
+'our-church-and-halloween-rpg-story-five-scott-version-ps4-1',
+'tower-of-balloons-otterrific-arcade-ps4-1',
+'balancelot-ps4',
+'crazy-gravity-ps4-2',
+'promesa-ps4-1',
+'dont-touch-this-button-ps4-1',
+'bff-or-die-ps4-1',
+'takorita-meets-fries-ps4-1',
+'whiskey-mafia-franks-story-ps4-1',
+'rusty-gun-ps4-1',
+'cave-bad-ps4',
+'virtuous-western-ps4-1',
+'dojoran-ps4-1',
+'orbibot-ps4',
+'yoko-yuki-dr-rats-revenge-ps4-1',
+'one-eyed-kutkh-ps4-psvita-1',
+'tilting-tiles-ps4',
+'alexio-ps4-1',
+'ball-lab-ps4-2',
+'ball-lab-ps5-2',
 'how-to-take-off-your-mask-remastered-ps4',
 'angels-with-scaly-wings-ps5',
 'walking-dead-the-final-season-ps4-2',
@@ -792,7 +1027,6 @@ const arrayNA = [
 'baseball-bout-otterrific-arcade-ps4',
 'baseball-challenge-mode-edition-breakthrough-gaming-arcade-ps4-1',
 'battle-rockets-2-0-psvita-1',
-'batu-ta-batu-ps4',
 'betty-bat-ps4',
 'big-dipper-psvita',
 'bird-game-ps4',
@@ -1441,7 +1675,54 @@ const arrayNA = [
 ];
 const arrayAS = [
 '20-bunnies-ps4-1',
+'cross-the-moon-ps5-2',
+'reflection-of-mine-ps4-2',
+'gutwhale-ps4-2',
+'kingdom-hearts-iii-ps4-1',
+'gutwhale-ps5-2',
+'project-starship-x-ps4-3',
+'takotan-ps5',
+'mad-rat-dead-ps4',
+'pretty-girls-panic-ps5-2',
+'breakneck-city-ps5-1',
+'memories-of-east-coast-ps5-1',
+'big-dipper-ps4-1',
+'cave-bad-ps5-1',
+'zero-strain-ps5-2',
+'castle-of-no-escape-2-ps4-3',
+'mina-michi-ps4-1',
+'dojoran-ps4-2',
+'sinuca-attack-ps4-2',
+'metropolis-lux-obscura-ps4',
+'bff-or-die-ps4-2',
+'tamiku-ps4-2',
+'cave-bad-ps4-1',
+'freddy-spaghetti-2-ps4-2',
+'cross-the-moon-ps4-2',
+'cybxus-heart-ps4-2',
+'pretty-girls-panic-ps4-2',
+'poker-pretty-girls-battle-texas-holdem-ps4-2',
+'poker-pretty-girls-battle-fantasy-world-edition-ps4-2',
+'virtuous-western-ps4-2',
+'skatemasta-tcheco-ps4-2',
+'one-eyed-lee-and-the-dinner-party-ps4-2',
+'enter-digiton-heart-of-corruption-ps4-1',
+'pinkman-ps4-2',
+'hellbreachers-ps4-1',
+'squad-killer-ps4-1',
+'one-escape-ps4-2',
+'aborigenus-ps4-1',
+'thunderflash-ps4-2',
+'memories-of-east-coast-ps4-2',
+'more-dark-ps4-2',
+'brotherhood-united-ps4-1',
+'donutsnjustice-ps4-2',
+'dont-touch-this-button-ps4-2',
+'evil-inside-ps4-3',
+'batu-ta-batu-ps4-1',
 '20-bunnies-ps5-1',
+'ravva-and-the-cyclops-curse-ps5-1',
+'0-degrees-ps5',
 'space-intervention-ps4',
 'akinofa-ps4-2',
 'dreaming-sarah-ps4-2',
@@ -1452,7 +1733,11 @@ const arrayAS = [
 'twin-robots-ultimate-edition-ps5-2',
 'inferno-2-ps4-2',
 'void-gore-ps4-3',
-
+'queeny-army-ps4-2',
+'paradox-error-ps4-1',
+'horned-knight-ps4-2',
+'bullet-beat-ps4-2',
+'breakneck-city-ps4-1',
 'pretty-girls-panic-plus-ps4-1',
 'pretty-girls-panic-plus-ps5-2',
 'how-to-take-off-your-mask-remastered-ps4-2',
@@ -1711,6 +1996,24 @@ const arrayHK = [
 ];
 const arrayJP = [
 '3dドットゲームヒーローズ-ps3',
+'batu-ta-batu-ps4-2',
+'fallen-legion-sins-of-an-empire-ps4-1',
+'daymare-1998-ps4',
+'takotan-ps5-1',
+'alien-isolation-ps4-1',
+'project-starship-x-ps4-2',
+'immortus-temporus-ps4-3',
+'bullet-beat-ps4-3',
+'フレディ-スパゲッティ-２-ps4',
+'バルーンボーイ-ps4',
+'bff-or-die-ps4-3',
+'crosskrush-ps4-2',
+'poker-pretty-girls-battle-fantasy-world-edition-ps4-3',
+'poker-pretty-girls-battle-texas-holdem-ps4-3',
+'ravva-and-the-cyclops-curse-ps4-3',
+'brotherhood-united-ps4-3',
+'fallen-legion-flames-of-rebellion-ps4',
+'フォールンレギオン-救いの亡霊-ps4',
 '50-cent-blood-on-the-sand-ps3',
 '112th-seed-ps4-2',
 'pretty-girls-panic-plus-ps4-2',
@@ -2210,7 +2513,6 @@ const arrayVR = [
 
 'ace-banana-ps4',
 'ace-banana-ps4-1',
-'spice-and-wolf-vr2-ps4',
 'affected-the-manor-ps4',
 'affected-the-manor-ps4-1',
 'affected-the-manor-ps4-2',
@@ -2802,11 +3104,13 @@ const arrayPHYSICAL = [
 const arrayDIGITAL = [
 'tales-from-the-borderlands-ps4',
 'walking-dead-the-final-season-ps4',
+'sly-3-psvita',
 'walking-dead-the-final-season-ps4-1',
 ];
 const arrayREMOVEVITA = [
 'alteric-ps4-psvita',
 'alteric-ps4-psvita-1',
+'one-eyed-kutkh-ps4-psvita-1',
 'batman-arkham-origins-ps3-psvita',
 'creepy-road-ps4-psvita',
 'creepy-road-ps4-psvita-1',
@@ -2814,6 +3118,7 @@ const arrayREMOVEVITA = [
 'deep-ones-ps4-psvita-2',
 'drowning-ps4-psvita',
 'drowning-ps4-psvita-1',
+'one-eyed-kutkh-ps4-psvita',
 'energy-balance-ps4-psvita',
 'energy-balance-ps4-psvita-2',
 'energy-cycle-edge-ps4-psvita',
@@ -2822,6 +3127,7 @@ const arrayREMOVEVITA = [
 'energy-cycle-ps4-psvita-2',
 'energy-invasion-ps4-psvita',
 'energy-invasion-ps4-psvita-1',
+'iconoclasts-ps4-psvita',
 'metropolis-lux-obscura-ps4-psvita',
 'metropolis-lux-obscura-ps4-psvita-1',
 'mooseman-ps4-psvita',
@@ -2859,6 +3165,8 @@ const arrayREMOVEPS4 = [
 'deep-ones-ps4-psvita',
 'deep-ones-ps4-psvita-3',
 'drowning-ps4-psvita-2',
+'one-eyed-kutkh-ps4-psvita-3',
+'one-eyed-kutkh-ps4-psvita-2',
 'drowning-ps4-psvita-3',
 'energy-balance-ps4-psvita-1',
 'energy-balance-ps4-psvita-3',
@@ -2897,6 +3205,7 @@ const arrayREMOVEPS4 = [
         //for (let i = 0; i < rows.length; ++i) {
         //    checkRegionGame(rows[i]);
         //}
+        console.log("code 1")
     }
     else if ((document.URL.split('/').length) === 6) {
         if (document.URL.split('/')[3] === 'game') {
@@ -2908,6 +3217,7 @@ const arrayREMOVEPS4 = [
 			for (let i = 0; i < rows.length; ++i) {
 				modifyProgressBar(rows[i]);
 			}
+            console.log("code 2")
             return // game + no user
         }
         else {
@@ -2921,6 +3231,7 @@ const arrayREMOVEPS4 = [
                 moveRowContent(rows[i]);
                 checkRegion(rows[i]);
             }
+            console.log("code 3")
         }
     }
     else if ((document.URL.split('/').length) === 7) {
@@ -2932,12 +3243,32 @@ const arrayREMOVEPS4 = [
         for (let i = 0; i < rows.length; ++i) {
             modifyProgressBar(rows[i]);
         }
+        console.log("code 4")
     //return // game + user
     }
     else if ((document.URL.split('/').length) === 8) {
+        console.log("code 5")
+        return // trophy
+    }
+    else if ((document.URL.split('/').length) === 4) {
+        console.log("code 6")
+        let maincontainer = document.getElementById('maincontainer');
+        maincontainer.style = 'margin-left: 310px'
+        let table = document.getElementById('usergamelist');
+        table.style.tableLayout = 'fixed';
+        table.style.width = '1020px'
+        let rows = document.getElementsByClassName('gamerow');
+        for (let i = 0; i < rows.length; ++i) {
+            moveRowContent(rows[i]);
+            checkRegion(rows[i]);
+        }
         return // trophy
     }
     else {
+        console.log("code 20")
+        for (let i = 0; i < document.URL.split('/').length; ++i) {
+            console.log("[" + i + "] - " + document.URL.split('/')[i])
+        }
         return
     }
     //}, 1000);
@@ -3063,7 +3394,7 @@ function checkRegion(row) {
             game = decodeURI(url.split('/')[5]);
         }
     }
-    console.log(game)
+    //console.log(game)
     let flag = row.getElementsByClassName('flaggloss')[0]
     if (flag) {
         if (REMOVE_FLAGS) {
@@ -3338,23 +3669,27 @@ function modifyProgressBar(row) {
 	if (!row.classList.contains('dlc_header')) {
         let trophyHTML = row.getElementsByClassName('sonytrophyrare')[0];
         if (trophyHTML) {
+            let percent = trophyHTML.innerHTML.split('title="')[1].split('%')[0]
+            console.log(percent)
+
             row.removeChild(trophyHTML)
             let newPlatCell = document.createElement('td');
             let text = trophyHTML.innerText.trim()
+            //newLabel.innerHTML = `<acronym title="${label}">${label}</acronym>`
             if (text == "Common") {
-                newPlatCell.innerHTML =`<img width="auto" height="19px" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/0LuKHfY.png">`
+                newPlatCell.innerHTML =`<img width="auto" height="19px" title="${percent}%" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/0LuKHfY.png">`
             }
             else if (text == "Rare") {
-                newPlatCell.innerHTML = `<img width="auto" height="19px" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/ppJobwB.png">`
+                newPlatCell.innerHTML = `<img width="auto" height="19px" title="${percent}%" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/ppJobwB.png">`
             }
             else if (text == "Very Rare") {
-                newPlatCell.innerHTML = `<img width="auto" height="19px" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/a00IBi5.png">`
+                newPlatCell.innerHTML = `<img width="auto" height="19px" title="${percent}%" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/a00IBi5.png">`
             }
             else if (text == "Ultra Rare") {
-                newPlatCell.innerHTML = `<img width="auto" height="19px" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/y45e4ng.png">`
+                newPlatCell.innerHTML = `<img width="auto" height="19px" title="${percent}%" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/y45e4ng.png">`
             }
             else {
-                newPlatCell.innerHTML = `<img width="auto" height="19px" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/y45e4ng.png">`
+                newPlatCell.innerHTML = `<img width="auto" height="19px" title="${percent}%" style="padding-bottom: 15px; padding-right: 15px;" src="https://i.imgur.com/y45e4ng.png">`
             }
             newPlatCell.style.paddingTop = "20px"
             insertBefore(newPlatCell, row.getElementsByClassName('trophyrare')[0])
@@ -3362,9 +3697,9 @@ function modifyProgressBar(row) {
 
 		let num = row.getElementsByClassName('percent_expand')[0].innerText.split(' of ')[0];
 		let denum = row.getElementsByClassName('percent_expand')[0].innerText.split(' of ')[1].split('\n')[0];
-        if (denum > num) {
-           num = denum
-        }
+        /*if (num > denum) {
+           denum = num
+        }*/
 		let percent = row.getElementsByClassName('percent_earned')[0].innerText.trim().replace('%', '');
 
 		let newProgressBar = document.createElement('div');
