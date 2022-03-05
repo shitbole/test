@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.5.6
-// @author       monkey
+// @version       1.5.7
+// @author       Luhari
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
 // @match       https://psntrophyleaders.com/*
@@ -33,10 +33,56 @@ const arrayRR =[
 
 
 const arrayEU = [
+'aery-broken-memories-ps4',
+'active-neurons-3-wonders-of-the-world-ps5-1',
+'desert-racing-gst-ps4',
+'brotherhood-united-ps5-2',
+'chick-c-ps5',
+'round-invaders-ps4-1',
+'task-force-kampas-ps5-3',
+'mekabolt-ps5',
+'mad-rat-dead-ps4-2',
+'orbibot-ps5-1',
+'aery-dreamscape-ps4',
+'chick-c-ps4-1',
 'barry-the-bunny-ps5',
+'gleylancer-ps5-1',
+'meme-run-2-ps4-1',
+'bai-qu-hundreds-of-melodies-ps5',
+'nape-retroverse-collection-ps5',
+'nape-retroverse-collection-ps4',
+'dr-oil-ps4',
+'kansei-the-second-turn-hd-ps5-1',
+'from-heaven-to-earth-ps4-1',
+'last-dead-end-ps4-1',
+'stilstand-ps4',
+'active-neurons-2-ps4-1',
+'sushi-run-eu-ps5',
+'mymaitê-ps4-1',
+'can-you-escape-ps4-1',
+'super-onion-boy-2-ps4',
+'super-onion-boy-2-ps5',
 'aery-a-journey-beyond-time-ps4-1',
+'henchman-story-ps5',
+'henchman-story-ps4-1',
+'pretty-girls-mahjong-solitaire-blue-ps4-1',
+'pretty-girls-mahjong-solitaire-blue-ps5-2',
+'football-cup-2022-ps5',
+'football-cup-2022-ps4',
+'lovechoice-ps5-1',
 'grey-skies-ps4-1',
+'gav-gav-odyssey-ps4',
+'starlight-shores-ps4',
+'starlight-shores-ps5',
+'save-your-nuts-ps4-1',
+'ice-cream-break-ps5-1',
+'ice-cream-break-head-to-head-ps5',
+'sushi-break-2-ps5',
+'ravva-and-the-cyclops-curse-ps5-3',
+'titan-chaser-ps4',
 'roombo-first-blood-ps4-1',
+'alveole-ps5',
+'alveole-ps4',
 'takotan-ps5-2',
 'cattch-ps4',
 '3d-dot-game-heroes-ps3-1',
@@ -48,6 +94,10 @@ const arrayEU = [
 'pig-d-ps5',
 'tower-of-balloons-otterrific-arcade-ps4',
 'ladders-by-powgi-ps5',
+'prince-of-landis-ps5-1',
+'kinduo-ps5',
+'kinduo-ps4-1',
+'space-revenge-ps5-1',
 'cross-the-moon-ps5',
 'jacknhat-ps4',
 'jacknhat-ps5',
@@ -854,18 +904,48 @@ const arrayEU = [
 'zj-the-ball-level-5-ps4',
 'zomb-ps4-1',
 '√letter-ps4-2',
+'ever-forward-ps4-1',
 '√letter-psvita-2',
 
 ];
 const arrayNA = [
 '3d-dot-game-heroes-ps3',
+'alveole-ps5-1',
+'alveole-ps4-1',
+'takorita-meets-fries-ps5-1',
+'drizzlepath-deja-vu-ps5-3',
+'stilstand-ps4-1',
+'active-neurons-2-ps4',
+'meme-run-2-ps4',
+'my-friend-peppa-pig-ps5',
+'grey-skies-ps4',
+'mymaitê-ps4',
+'mekabolt-ps5-1',
+'gothic-murder-adventure-that-changes-destiny-ps4',
+'brotherhood-united-ps5-3',
+'mad-rat-dead-ps4-1',
+'kansei-the-second-turn-hd-ps5',
+'ammo-pigs-cocked-and-loaded-ps4',
+'jacknhat-ps4-1',
+'ever-forward-ps4',
+'prince-of-landis-ps5',
+'little-lily-princess-ps5-1',
+'little-lily-princess-ps4-1',
+'immortus-temporus-ps4-1',
+'flowers-by-powgi-ps5-1',
+'flowers-by-powgi-ps4-1',
+'kinduo-ps4',
+'kinduo-ps5-1',
 'save-your-nuts-ps4',
 'roombo-first-blood-ps4',
 'trophy-set-racing-bros-ps5',
+'active-neurons-3-wonders-of-the-world-ps5',
 'memories-of-east-coast-ps5-2',
 'dont-touch-this-button-ps5',
 'aery-a-journey-beyond-time-ps4',
 'takotan-ps5-3',
+'football-cup-2022-ps4-1',
+'football-cup-2022-ps5-1',
 'cattch-ps4-1',
 'retrace-memories-of-death-ps4',
 'marauder-chronicles-curse-over-valdria-ps5-1',
@@ -997,7 +1077,6 @@ const arrayNA = [
 'aery-little-bird-adventure-ps4-1',
 'akinofa-ps4',
 'albedo-eyes-from-outer-space-ps4-1',
-'alien-destroyer-ps4-1',
 'alphaset-by-powgi-ps4-1',
 'alphaset-by-powgi-psvita-1',
 'alteric-ps4-psvita',
@@ -1676,10 +1755,19 @@ const arrayNA = [
 const arrayAS = [
 '20-bunnies-ps4-1',
 'cross-the-moon-ps5-2',
+'cattch-ps4-2',
 'reflection-of-mine-ps4-2',
 'gutwhale-ps4-2',
+'freddy-spaghetti-2-ps5-2',
+'gav-gav-odyssey-ps4-2',
+'akinofa-ps5',
+'castle-of-pixel-skulls-ps4-3',
+'castle-of-pixel-skulls-ps5-3',
+'rpgmaker-mv-ps4',
 'kingdom-hearts-iii-ps4-1',
 'gutwhale-ps5-2',
+'brotherhood-united-ps5',
+'alien-destroyer-ps4-1',
 'project-starship-x-ps4-3',
 'takotan-ps5',
 'mad-rat-dead-ps4',
@@ -1998,7 +2086,32 @@ const arrayJP = [
 '3dドットゲームヒーローズ-ps3',
 'batu-ta-batu-ps4-2',
 'fallen-legion-sins-of-an-empire-ps4-1',
+'ワン・ナイト・スタンド-ps4',
+'pretty-girls-mahjong-solitaire-ps5-1',
+'月の彼方で逢いましょう-ps4-psvita',
+'delicious-pretty-girls-mahjong-solitaire-ps4-3',
+'ワン・ナイト・スタンド-ps5',
+'ボク姫project-ps4',
+'cybxus-heart-ps4-3',
+'サンダーフラッシュ-ps5',
+'サンダーフラッシュ-ps4',
+'pretty-girls-mahjong-solitaire-ps4-1',
+'ravva-and-the-cyclops-curse-ps5',
+'castle-of-pixel-skulls-ps4-2',
+'castle-of-pixel-skulls-ps5-2',
+'kansei-～豪邸殺人事件～-ps5',
+'kansei-the-second-turn-hd-ps4-1',
+'crisis-wing-ps4-3',
+'pretty-girls-klondike-solitaire-ps4-3',
+'pretty-girls-klondike-solitaire-ps5-2',
+'poker-pretty-girls-battle-fantasy-world-edition-ps5-2',
+'アーケードアーカイブス　ワンダーボーイ-ps4',
+'jisei-～喫茶店殺人事件～-ps4',
+'さくらの雲＊スカアレットの恋-ps4',
 'daymare-1998-ps4',
+'フレディ-スパゲッティ-２-ps5',
+'blackberry-honey-～メイド物語～-ps5',
+'blackberry-honey-～メイド物語～-ps4',
 'takotan-ps5-1',
 'alien-isolation-ps4-1',
 'project-starship-x-ps4-2',
@@ -2472,6 +2585,8 @@ const arrayJP = [
 const arrayKR = [
 'chaoschild-ps4-1',
 'chaoschild-psvita-1',
+'cybxus-heart-ps4-4',
+'탐정-진구지-사부로-prism-of-eyes-ps4',
 'chaoschild-러브-chu☆chu-ps4',
 'roboticsnotes-elite-psvita-2',
 'steinsgate-0-ps4',
@@ -3090,6 +3205,7 @@ const arrayDELISTED = [
 ];
 const arrayPHYSICAL = [
 'foxyland-2-psvita-3',
+'mooseman-psvita',
 'foxyland-psvita-3',
 'just-ignore-them-psvita-2',
 'nicole-psvita',
@@ -3194,12 +3310,15 @@ const arrayREMOVEPS4 = [
 '콥스-파티-blood-drive-ps4-psvita',
 ];
 
-
 (function() {
     //setTimeout(function() {
     'use strict';
 
     console.log('number of / splits: ', document.URL.split('/').length)
+	  injectLoadingBar();
+
+	var currentProgress = 0;
+	var totalProgress = 0;
     if ((document.URL.split('/')[3]) === "games") {
         //let rows = document.getElementsByClassName('gameCell');
         //for (let i = 0; i < rows.length; ++i) {
@@ -3208,15 +3327,28 @@ const arrayREMOVEPS4 = [
         console.log("code 1")
     }
     else if ((document.URL.split('/').length) === 6) {
+
+			// Modify style so it shows horizontal scrolls too
+			let page = document.getElementById('page');
+			page.style = 'overflow: unset !important;'
+
+
         if (document.URL.split('/')[3] === 'game') {
 			checkRegion(null);
             inlineTitleTags();
 			parseGameDetails();
 			let table = document.getElementById('game_details_table');
 			let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-			for (let i = 0; i < rows.length; ++i) {
-				modifyProgressBar(rows[i]);
-			}
+					totalProgress = rows.length;
+					var loadingInterval = setInterval(() => {
+						if (currentProgress >= totalProgress) {
+							clearInterval(loadingInterval);
+							return;
+						}
+						modifyProgressBar(rows[currentProgress]);
+						currentProgress++;
+						updateLoadingBar(currentProgress, totalProgress);
+					}, 1);
             console.log("code 2")
             return // game + no user
         }
@@ -3227,10 +3359,17 @@ const arrayREMOVEPS4 = [
             table.style.tableLayout = 'fixed';
             table.style.width = '1020px'
             let rows = document.getElementsByClassName('gamerow');
-            for (let i = 0; i < rows.length; ++i) {
-                moveRowContent(rows[i]);
-                checkRegion(rows[i]);
-            }
+					  totalProgress = rows.length;
+							var loadingInterval = setInterval(() => {
+								if (currentProgress >= totalProgress) {
+									clearInterval(loadingInterval);
+									return;
+								}
+                moveRowContent(rows[currentProgress]);
+                checkRegion(rows[currentProgress]);
+								currentProgress++;
+								updateLoadingBar(currentProgress, totalProgress);
+							}, 1);
             console.log("code 3")
         }
     }
@@ -3240,9 +3379,16 @@ const arrayREMOVEPS4 = [
         parseGameDetails();
         let table = document.getElementById('game_details_table');
         let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-        for (let i = 0; i < rows.length; ++i) {
-            modifyProgressBar(rows[i]);
-        }
+			totalProgress = rows.length;
+				var loadingInterval = setInterval(() => {
+					if (currentProgress >= totalProgress) {
+						clearInterval(loadingInterval);
+						return;
+					}
+					modifyProgressBar(rows[currentProgress]);
+					currentProgress++;
+					updateLoadingBar(currentProgress, totalProgress);
+				}, 1);
         console.log("code 4")
     //return // game + user
     }
@@ -3258,10 +3404,16 @@ const arrayREMOVEPS4 = [
         table.style.tableLayout = 'fixed';
         table.style.width = '1020px'
         let rows = document.getElementsByClassName('gamerow');
-        for (let i = 0; i < rows.length; ++i) {
-            moveRowContent(rows[i]);
-            checkRegion(rows[i]);
-        }
+			totalProgress = rows.length;
+				var loadingInterval = setInterval(() => {
+					if (currentProgress >= totalProgress) {
+						clearInterval(loadingInterval);
+						return;
+					}
+					moveRowContent(rows[currentProgress]);
+					currentProgress++;
+					updateLoadingBar(currentProgress, totalProgress);
+				}, 1);
         return // trophy
     }
     else {
@@ -3384,6 +3536,26 @@ function addTagGame(row, label) {
 	insertBefore(newLabel, lastLabel);
 }*/
 
+function injectLoadingBar() {
+	let newLoadingBar = document.createElement('div');
+	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #023; margin: 5px; border-radius: 8px; padding: 10px;';
+	newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
+  newLoadingBar.classList = ["loadingBar"];
+
+	insertBefore(newLoadingBar, document.getElementById('social_media'));
+	document.getElementById('social_media').parentElement.style = "width: 900px; margin: 0 auto; display:flex; justify-content: space-between;";
+	// document.getElementById('social_media').parentElement.append(newLoadingBar);
+}
+
+function updateLoadingBar(currentProgress, totalProgress) {
+	let loadingBar = document.getElementsByClassName('loadingBar')[0];
+	if (loadingBar && loadingBar.children[0]) {
+		loadingBar.children[1].children[0].style = "float: left; width:" + currentProgress/totalProgress*100 + "%";
+		loadingBar.children[0].children[0].innerHTML = currentProgress + " / " + totalProgress;
+		loadingBar.children[0].children[1].innerHTML = (currentProgress/totalProgress*100).toFixed(0) + "%";
+	}
+}
+
 function checkRegion(row) {
 	let url = row ? decodeURI(row.getElementsByClassName('gameImageLink')[0].href): decodeURI(location.href);
 	let game = decodeURI(url.split('/')[6]);
@@ -3394,7 +3566,7 @@ function checkRegion(row) {
             game = decodeURI(url.split('/')[5]);
         }
     }
-    //console.log(game)
+    console.log(game)
     let flag = row.getElementsByClassName('flaggloss')[0]
     if (flag) {
         if (REMOVE_FLAGS) {
@@ -3670,7 +3842,7 @@ function modifyProgressBar(row) {
         let trophyHTML = row.getElementsByClassName('sonytrophyrare')[0];
         if (trophyHTML) {
             let percent = trophyHTML.innerHTML.split('title="')[1].split('%')[0]
-            console.log(percent)
+           // console.log(percent)
 
             row.removeChild(trophyHTML)
             let newPlatCell = document.createElement('td');
