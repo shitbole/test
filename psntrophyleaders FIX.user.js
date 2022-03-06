@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.5.7
+// @version       1.5.8
 // @author       Luhari
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -36,6 +36,20 @@ const arrayEU = [
 'aery-broken-memories-ps4',
 'active-neurons-3-wonders-of-the-world-ps5-1',
 'desert-racing-gst-ps4',
+'blackberry-honey-ps4-1',
+'blackberry-honey-ps5-1',
+'futbol-break-ps5-1',
+'ketchup-story-ps4',
+'ketchup-story-ps5',
+'one-night-stand-ps5',
+'valentine-candy-break-2-ps4',
+'valentine-candy-break-2-ps5',
+'saint-patricks-day-break-2-ps4',
+'saint-patricks-day-break-2-ps5',
+'valentine-candy-break-2-head-to-head-ps5-1',
+'valentine-candy-break-2-head-to-head-ps4',
+'trivia-for-dummies-ps4',
+'christmas-run-ps5',
 'brotherhood-united-ps5-2',
 'chick-c-ps5',
 'round-invaders-ps4-1',
@@ -917,6 +931,7 @@ const arrayNA = [
 'stilstand-ps4-1',
 'active-neurons-2-ps4',
 'meme-run-2-ps4',
+'one-night-stand-ps5-1',
 'my-friend-peppa-pig-ps5',
 'grey-skies-ps4',
 'mymaitê-ps4',
@@ -3319,6 +3334,8 @@ const arrayREMOVEPS4 = [
 
 	var currentProgress = 0;
 	var totalProgress = 0;
+
+
     if ((document.URL.split('/')[3]) === "games") {
         //let rows = document.getElementsByClassName('gameCell');
         //for (let i = 0; i < rows.length; ++i) {
@@ -3566,7 +3583,7 @@ function checkRegion(row) {
             game = decodeURI(url.split('/')[5]);
         }
     }
-    console.log(game)
+    //console.log(game)
     let flag = row.getElementsByClassName('flaggloss')[0]
     if (flag) {
         if (REMOVE_FLAGS) {
