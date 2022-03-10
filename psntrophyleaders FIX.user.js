@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.5.8
+// @version       1.5.9
 // @author       Luhari
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -40,6 +40,12 @@ const arrayEU = [
 'blackberry-honey-ps5-1',
 'futbol-break-ps5-1',
 'ketchup-story-ps4',
+'would-you-like-to-run-an-idol-cafe-2-ps5-1',
+'would-you-like-to-run-an-idol-cafe-2-ps4-1',
+'rogue-explorer-ps5',
+'memories-of-east-coast-ps5',
+'santas-workshop-ps5',
+'6souls-ps5',
 'ketchup-story-ps5',
 'one-night-stand-ps5',
 'valentine-candy-break-2-ps4',
@@ -926,11 +932,26 @@ const arrayNA = [
 '3d-dot-game-heroes-ps3',
 'alveole-ps5-1',
 'alveole-ps4-1',
+'ice-cream-break-head-to-head-ps5-1',
+'valentine-candy-break-2-ps4-1',
+'futbol-break-ps5',
+'blackberry-honey-ps5',
+'blackberry-honey-ps4',
+'ketchup-story-ps4-1',
+'ketchup-story-ps5-1',
+'valentine-candy-break-2-ps5-1',
+'saint-patricks-day-break-2-ps4-1',
+'saint-patricks-day-break-2-ps5-1',
+'valentine-candy-break-2-head-to-head-ps4-1',
+'valentine-candy-break-2-head-to-head-ps5',
 'takorita-meets-fries-ps5-1',
 'drizzlepath-deja-vu-ps5-3',
 'stilstand-ps4-1',
 'active-neurons-2-ps4',
 'meme-run-2-ps4',
+'alien-destroyer-ps4-1',
+'chick-c-ps4',
+'chick-c-ps5-1',
 'one-night-stand-ps5-1',
 'my-friend-peppa-pig-ps5',
 'grey-skies-ps4',
@@ -1050,7 +1071,6 @@ const arrayNA = [
 'our-church-and-halloween-rpg-story-five-scott-version-ps4-1',
 'tower-of-balloons-otterrific-arcade-ps4-1',
 'balancelot-ps4',
-'crazy-gravity-ps4-2',
 'promesa-ps4-1',
 'dont-touch-this-button-ps4-1',
 'bff-or-die-ps4-1',
@@ -1184,8 +1204,6 @@ const arrayNA = [
 'concept-destruction-ps5-2',
 'contraptions-ps4',
 'coolpaintr-ps4-2',
-'crazy-gravity-ps4',
-'crazy-gravity-ps5-1',
 'crazy-machines-vr-ps4-1',
 'crimson-spires-ps4-1',
 'crimson-spires-ps5-1',
@@ -1765,6 +1783,8 @@ const arrayNA = [
 'midnight-deluxe-ps4-1',
 '√letter-ps4-3',
 '√letter-psvita-3',
+'crazy-gravity-ps4-2',
+'crazy-gravity-ps5-2',
 
 ];
 const arrayAS = [
@@ -1772,8 +1792,26 @@ const arrayAS = [
 'cross-the-moon-ps5-2',
 'cattch-ps4-2',
 'reflection-of-mine-ps4-2',
+'el-gancho-ps4-2',
+'el-gancho-ps5-2',
+'dr-oil-ps4-1',
 'gutwhale-ps4-2',
+'sun-wukong-vs-robot-ps4-2',
+'sun-wukong-vs-robot-ps5-2',
+'crisis-wing-ps5-1',
+'crisis-wing-ps4',
+'cake-invaders-ps5-2',
+'cake-invaders-ps4-1',
 'freddy-spaghetti-2-ps5-2',
+'dont-touch-this-button-ps5-2',
+'dont-touch-this-button-ps4-2',
+'ravva-and-the-cyclops-curse-ps4-1',
+'crazy-gravity-ps4',
+'crazy-gravity-ps5-1',
+'rogue-explorer-ps5-1',
+'rogue-explorer-ps4-1',
+'virtuous-western-ps5-2',
+'dont-touch-this-button-ps5-2',
 'gav-gav-odyssey-ps4-2',
 'akinofa-ps5',
 'castle-of-pixel-skulls-ps4-3',
@@ -1782,7 +1820,6 @@ const arrayAS = [
 'kingdom-hearts-iii-ps4-1',
 'gutwhale-ps5-2',
 'brotherhood-united-ps5',
-'alien-destroyer-ps4-1',
 'project-starship-x-ps4-3',
 'takotan-ps5',
 'mad-rat-dead-ps4',
@@ -2103,6 +2140,7 @@ const arrayJP = [
 'fallen-legion-sins-of-an-empire-ps4-1',
 'ワン・ナイト・スタンド-ps4',
 'pretty-girls-mahjong-solitaire-ps5-1',
+'デート・ア・ライブ-蓮ディストピア-ps4',
 '月の彼方で逢いましょう-ps4-psvita',
 'delicious-pretty-girls-mahjong-solitaire-ps4-3',
 'ワン・ナイト・スタンド-ps5',
@@ -3768,9 +3806,17 @@ function moveRowContent(original) {
         dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
     }
     else {
-        //console.log(nbn[5+offset].innerText.substring(1, 3))
-        dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
+        //console.log(nbn[7+offset].innerText)
+
+        if (nbn[7+offset].innerText.substring(1, 3) === 'of' | nbn[7+offset].innerText.substring(1, 3) === 'om') {
+            dateHTML = original.getElementsByClassName('title-cell')[0].children[7+offset];
+        }
+        else {
+            dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
+        }
     }
+    //console.log(nbn[5+offset].innerText.substring(1, 3))
+
 	const date = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split('on ')[1].substring(0, 12).replace('i', ''): '';
 	const timestamp = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split(date)[1].substring(0, 12).replace('i', ''): '';
 	const timer = dateHTML.innerText.split('in ')[1];
