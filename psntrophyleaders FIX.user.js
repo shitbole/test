@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.1
+// @version       1.6.0
 // @author       Luhari
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -12,7 +12,7 @@
 
 
 
-var REMOVE_FLAGS = false
+var REPLACE_FLAGS = true
 var REMOVE_FLAGGLOSS = true
 
 
@@ -37,7 +37,30 @@ const arrayEU = [
 'active-neurons-3-wonders-of-the-world-ps5-1',
 'desert-racing-gst-ps4',
 'murder-diaries-2-ps4-1',
+'splash-cars-ps5-3',
+'splash-cars-ps4-2',
+'personality-and-psychology-premium-ps5',
+'tarot-readings-premium-ps5-1',
+'cow-g-ps4-1',
+'cow-g-ps5',
+'quick-mafs-advanced-ps4-1',
+'quick-mafs-advanced-ps5-1',
+'pizza-delivery-boy-who-saved-the-world-ps5-1',
+'pizza-delivery-boy-who-saved-the-world-ps4-1',
+'donut-break-ps5',
+'burger-break-ps5',
+'burger-break-ps4',
+'burger-break-head-to-head-ps5',
+'burger-break-head-to-head-ps4',
+'saint-patricks-day-break-2-head-to-head-ps4',
+'saint-patricks-day-break-2-head-to-head-ps5',
+'moto-roader-mc-ps4-1',
+'moto-roader-mc-ps5-1',
+'radioactive-dwarfs-evil-from-the-sewers-ps4',
 'blackberry-honey-ps4-1',
+'blitz-breaker-ps5-1',
+'pretty-girls-breakers-ps4-1',
+'pretty-girls-breakers-ps5-1',
 'blackberry-honey-ps5-1',
 'dead-tree-of-ranchiuna-ps5',
 'arkan-the-dog-adventurer-ps5-1',
@@ -948,10 +971,34 @@ const arrayNA = [
 '3d-dot-game-heroes-ps3',
 'alveole-ps5-1',
 'gardeners-path-ps5-1',
+'splash-cars-ps4-3',
+'splash-cars-ps5-1',
 'alveole-ps4-1',
+'moto-roader-mc-ps5',
+'moto-roader-mc-ps4',
+'saint-patricks-day-run-ps4-1',
+'tarot-readings-premium-ps5',
+'12-minutes-ps4',
+'el-gancho-ps5',
+'el-gancho-ps4',
+'dr-oil-ps4-2',
+'quick-mafs-advanced-ps5',
+'donut-break-ps5-1',
+'burger-break-ps5-1',
+'burger-break-ps4-1',
+'burger-break-head-to-head-ps5-1',
+'burger-break-head-to-head-ps4-1',
+'saint-patricks-day-break-2-head-to-head-ps5-1',
+'saint-patricks-day-break-2-head-to-head-ps4-1',
+'personality-and-psychology-premium-ps5-1',
+'saint-patricks-day-run-ps5-1',
+'pretty-girls-breakers-ps5',
+'pretty-girls-breakers-ps4',
 'quick-mafs-advanced-ps4',
 'ice-cream-break-head-to-head-ps5-1',
 'valentine-candy-break-2-ps4-1',
+'radioactive-dwarfs-evil-from-the-sewers-ps4-2',
+'broken-pipe-ps4',
 'akinofa-ps5-1',
 'futbol-break-ps5',
 'castle-of-pixel-skulls-ps4-1',
@@ -1817,9 +1864,25 @@ const arrayAS = [
 '20-bunnies-ps4-1',
 'cross-the-moon-ps5-2',
 'cattch-ps4-2',
+'immortus-temporus-ps4-2',
 'reflection-of-mine-ps4-2',
 'dead-dust-ps4-1',
 'el-gancho-ps4-2',
+'splash-cars-ps5-2',
+'splash-cars-ps4-1',
+'blitz-breaker-ps5-2',
+'delicious-pretty-girls-mahjong-solitaire-ps4-2',
+'lucid-cycle-ps4-3',
+'lucid-cycle-ps5-2',
+'wordbreaker-by-powgi-ps4-2',
+'wordbreaker-by-powgi-ps5-2',
+'radioactive-dwarfs-evil-from-the-sewers-ps4-1',
+'ammo-pigs-cocked-and-loaded-ps4-2',
+'round-invaders-ps4-2',
+'blitz-breaker-ps4-1',
+'retrace-memories-of-death-ps4-2',
+'pretty-girls-breakers-ps5-2',
+'pretty-girls-breakers-ps4-2',
 'el-gancho-ps5-2',
 'dr-oil-ps4-1',
 'gutwhale-ps4-2',
@@ -2152,6 +2215,7 @@ const arrayAS = [
 'zeroptian-invasion-psvita-2',
 'ドラゴンクエスト-ps4',
 '夢現remaster-ps4-psvita',
+'survive-mr-cube-ps4-3',
 ];
 const arrayHK = [
 'aer-ps4-2',
@@ -2160,7 +2224,6 @@ const arrayHK = [
 'icey-ps4',
 'obduction-ps4-2',
 'steinsgate-ps3-1',
-'survive-mr-cube-ps4-3',
 '√letter-方根書簡-ps4',
 '放逐選舉-ps4',
 ];
@@ -2168,11 +2231,23 @@ const arrayJP = [
 '3dドットゲームヒーローズ-ps3',
 'batu-ta-batu-ps4-2',
 'fallen-legion-sins-of-an-empire-ps4-1',
+'splash-cars-ps4',
+'splash-cars-ps5',
 'bishoujo-battle-mahjong-solitaire-ps5-3',
 'bishoujo-battle-mahjong-solitaire-ps4-3',
 'ワン・ナイト・スタンド-ps4',
+'death-come-true-ps4',
+'恋がさくころ桜どき-ps4',
 'pretty-girls-mahjong-solitaire-ps5-1',
 'デート・ア・ライブ-蓮ディストピア-ps4',
+'シックスソウルズ-ps4',
+'シックスソウルズ-ps5',
+'アイドルカフェを経営しませんか？２-ps5',
+'アイドルカフェを経営しませんか？２-ps4',
+'drizzlepath-deja-vu-ps5-2',
+'drizzlepath-deja-vu-ps4-1',
+'pretty-girls-breakers-ps5-3',
+'pretty-girls-breakers-ps4-3',
 'ガラス姫と鏡の従者-ps4',
 'モトローダーmc-ps4',
 'モトローダーmc-ps5',
@@ -2314,7 +2389,6 @@ const arrayJP = [
 'hentai-vs-evil-ps5-3',
 'hero-and-a-garden-ps4-3',
 'homestar-vr-special-edition-ps4',
-'i-doll-u-psvita',
 'id-イド-rebirth-session-psvita',
 'iro-hero-ps4-3',
 'ixshe-tell-ps4-psvita',
@@ -3228,6 +3302,7 @@ const arrayVR = [
 'vr-ping-pong-ps4-1',
 'vr-tennis-online-ps4',
 'vr-the-diner-duo-ps4',
+'luckys-tale-ps4',
 'vr-the-diner-duo-ps4-1',
 'vrapocalypse-ps4',
 'vrobot-ps4',
@@ -3286,6 +3361,7 @@ const arrayVR = [
 ]
 
 const arrayDELISTED = [
+'fall-guys-ps4',
 '1000-top-rated-ps4',
 'adams-venture-chronicles-ps3',
 'battle-rockets-psvita',
@@ -3329,6 +3405,7 @@ const arrayREMOVEVITA = [
 'one-eyed-kutkh-ps4-psvita-1',
 'batman-arkham-origins-ps3-psvita',
 'creepy-road-ps4-psvita',
+'月の彼方で逢いましょう-ps4-psvita',
 'creepy-road-ps4-psvita-1',
 'deep-ones-ps4-psvita-1',
 'deep-ones-ps4-psvita-2',
@@ -3668,10 +3745,50 @@ function checkRegion(row) {
             game = decodeURI(url.split('/')[5]);
         }
     }
+    if (arrayREMOVEVITA.includes(game)) removeTag(row, 'VITA')
+    if (arrayREMOVEPS4.includes(game)) removeTag(row, 'PS4')
+    if (arrayREMOVEPS3.includes(game)) removeTag(row, 'PS3')
+    if (arrayVR.includes(game)) addTag(row, 'VR')
+    if (arrayOR.includes(game)) addTag(row, 'OR')
+    if (arrayRR.includes(game)) addTag(row, 'RR')
     //console.log(game)
     let flag = row.getElementsByClassName('flaggloss')[0]
     if (flag) {
-        if (REMOVE_FLAGS) {
+        if (REPLACE_FLAGS) {
+            let flagregion = flag.title
+            if (flagregion == "Europe") {
+                addTag(row, 'EU')
+            }
+            else if (flagregion == "United States") {
+                addTag(row, 'NA')
+            }
+            else if (flagregion == "Asia") {
+                addTag(row, 'AS')
+            }
+            else if (flagregion == "Hong Kong") {
+                addTag(row, 'HK')
+            }
+            else if (flagregion == "Japan") {
+                addTag(row, 'JP')
+            }
+            else if ((flagregion == "Korea") | (flagregion == "Korea, Republic of")) {
+                addTag(row, 'KR')
+            }
+            else if (flagregion == "China") {
+                addTag(row, 'CN')
+            }
+            else if (flagregion == "Germany") {
+                addTag(row, 'GR')
+            }
+            else if (flagregion == "Spain") {
+                addTag(row, 'ES')
+            }
+            else if ((flagregion == "Russia") | (flagregion == "Russian Federation")) {
+                addTag(row, 'RU')
+            }
+            else {
+                console.log("unknown flag: " + flagregion)
+            }
             flag.parentNode.parentNode.removeChild(flag.parentNode);
         }
         else {
@@ -3680,22 +3797,80 @@ function checkRegion(row) {
             }
         }
     }
-    if (arrayREMOVEVITA.includes(game)) removeTag(row, 'VITA')
-    if (arrayREMOVEPS4.includes(game)) removeTag(row, 'PS4')
-    if (arrayREMOVEPS3.includes(game)) removeTag(row, 'PS3')
-    if (arrayVR.includes(game)) addTag(row, 'VR')
-    if (arrayOR.includes(game)) addTag(row, 'OR')
-    if (arrayRR.includes(game)) addTag(row, 'RR')
-	if (arrayEU.includes(game)) addTag(row, 'EU')
-	if (arrayNA.includes(game)) addTag(row, 'NA')
-    if (arrayAS.includes(game)) addTag(row, 'AS')
-    if (arrayHK.includes(game)) addTag(row, 'HK')
-    if (arrayJP.includes(game)) addTag(row, 'JP')
-    if (arrayKR.includes(game)) addTag(row, 'KR')
-    if (arrayCN.includes(game)) addTag(row, 'CN')
-    if (arrayGR.includes(game)) addTag(row, 'GR')
-    if (arrayES.includes(game)) addTag(row, 'ES')
-    if (arrayRU.includes(game)) addTag(row, 'RU')
+    else {
+        //alert("Logged game without a flag:\n\n" + game)
+        if (arrayEU.includes(game)) {
+            console.log(" ")
+            console.log("EU")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayNA.includes(game)) {
+            console.log(" ")
+            console.log("NA")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayAS.includes(game)) {
+            console.log(" ")
+            console.log("AS")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayHK.includes(game)) {
+            console.log(" ")
+            console.log("HK")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayJP.includes(game)) {
+            console.log(" ")
+            console.log("JP")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayKR.includes(game)) {
+            console.log(" ")
+            console.log("KR")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayCN.includes(game)) {
+            console.log(" ")
+            console.log("CN")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayGR.includes(game)) {
+            console.log(" ")
+            console.log("GR")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayES.includes(game)) {
+            console.log(" ")
+            console.log("ES")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+        else if (arrayRU.includes(game)) {
+            console.log(" ")
+            console.log("RU")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+    }
+
+	//if (arrayEU.includes(game)) addTag(row, 'EU')
+	//if (arrayNA.includes(game)) addTag(row, 'NA')
+    //if (arrayAS.includes(game)) addTag(row, 'AS')
+    //if (arrayHK.includes(game)) addTag(row, 'HK')
+    //if (arrayJP.includes(game)) addTag(row, 'JP')
+    //if (arrayKR.includes(game)) addTag(row, 'KR')
+    //if (arrayCN.includes(game)) addTag(row, 'CN')
+    //if (arrayGR.includes(game)) addTag(row, 'GR')
+    //if (arrayES.includes(game)) addTag(row, 'ES')
+    //if (arrayRU.includes(game)) addTag(row, 'RU')
     if (arrayDELISTED.includes(game)) addTag(row, 'DELISTED')
     if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
     if (arrayDIGITAL.includes(game)) addTag(row, 'DIGITAL')
@@ -3840,6 +4015,14 @@ function addTag(row, label) {
 
 function moveRowContent(original) {
 	let offset = original.getElementsByClassName('platformlabel').length - 1;
+    let FirstTag = original.getElementsByClassName('platformlabel')[0].innerText
+
+    let gameIMG = original.getElementsByClassName('game-image-cell')[0]
+    let newGameIMG = document.createElement('span');
+    newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#001118; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
+    insertBefore(newGameIMG, original.getElementsByClassName('game-image-cell')[0])
+    original.getElementsByClassName('game-image-cell')[0].remove()
+
     var flagoffset = 6
 	const difficulty = original.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = original.getElementsByClassName('difficultyText')[0].children[1];
@@ -3883,7 +4066,8 @@ function moveRowContent(original) {
 	dateHTML.innerText = timestamp;
 	dateHTML.style.color = dateHTML.style.color;
 	dateHTML.style.fontWeight = 'bold';
-	original.getElementsByClassName('title-cell')[0].style.width = `100%`;
+    if (FirstTag == "PS5") original.getElementsByClassName('title-cell')[0].style.verticalAlign = `middle`;
+    original.getElementsByClassName('title-cell')[0].style.width = `100%`;
 	original.getElementsByClassName('title-cell')[0].colSpan = 'unset';
 	original.getElementsByClassName('image-cell')[0].style.width = '105px';
 
@@ -3898,10 +4082,11 @@ function moveRowContent(original) {
 		let n = trophies.split('Completed all ')[1].split(' trophies')[0]
 		fraction = `${n}/${n}`
   } else {
-		fraction = trophies.split(' trophies')[0].split(')')[1].replace(' of ', '/');
+		fraction = trophies.split(' trophies')[0].split('ints)')[1].replace(' of ', '/');
 		original.getElementsByClassName('title-cell')[0].removeChild(original.getElementsByClassName('title-cell')[0].getElementsByTagName('br')[1].nextSibling)
 	}
 	let newFraction = document.createElement('span');
+    //console.log(fraction)
 	newFraction.innerHTML = fraction;
 	newFraction.style = 'float: right; color: #888';
 	original.getElementsByClassName('title bronze')[0].append(newFraction);
@@ -4008,6 +4193,10 @@ function modifyProgressBar(row) {
 function parseGameDetails() {
     setTimeout(function() {
 	//remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
+    let user = document.getElementsByClassName('username')
+    if (user) {
+        console.log(user[1])
+    }
     const difficulty = document.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = document.getElementsByClassName('difficultyText')[0].children[1];
     let newEl = document.createElement('div');
