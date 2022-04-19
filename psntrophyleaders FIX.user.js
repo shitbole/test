@@ -1,14 +1,42 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.0
+// @version       1.6.2
 // @author       Luhari
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
 // @match       https://psntrophyleaders.com/*
 // @downloadURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
 // @updateURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
+// @grant         GM_addStyle
 // ==/UserScript==
 
+GM_addStyle ( `
+    .mainBG {
+        background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+    }
+    #subnav {
+        background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+    }
+    .html {
+        background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+    }
+    .body {
+        background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat  !important;
+    }
+    #userPage  {
+        background-color: #1d2126 !important;
+    }
+    .userHeader {
+        background-color: #1d2126 !important;
+    }
+    .recent-trophies>div.window {
+        background-color: #1d2126 !important;
+    }
+    .sort-row {
+        background-color: #33383e !important;
+        color: #cecece !important;
+    }
+` );
 
 
 
@@ -3359,9 +3387,19 @@ const arrayVR = [
 '超级节拍-ps4',
 
 ]
-
+const arrayDELISTEDorange = [
+'will-a-wonderful-world-ps4-2',
+'will-a-wonderful-world-ps4-1',
+'godzilla-ps4',
+'walking-dead-the-telltale-series-collection-ps4',
+];
 const arrayDELISTED = [
 'fall-guys-ps4',
+'nightmares-from-the-deep-3-davy-jones-ps4',
+'nightmares-from-the-deep-2-the-sirens-call-ps4',
+'walking-dead-the-final-season-ps4-1',
+'sea-of-memories-ps4-1',
+'walking-dead-the-final-season-ps4',
 '1000-top-rated-ps4',
 'adams-venture-chronicles-ps3',
 'battle-rockets-psvita',
@@ -3374,10 +3412,12 @@ const arrayDELISTED = [
 'whiteboyz-wit-attitude-the-pursuit-of-money-ps4',
 'whiteboyz-wit-attitude-the-pursuit-of-money-ps4-1',
 'will-a-wonderful-world-ps4',
-'will-a-wonderful-world-ps4-1',
-'will-a-wonderful-world-ps4-2',
 'will：素晴らしき世界-ps4',
 'ドラゴンクエスト無料版-ps4',
+];
+const arrayCODE = [
+'メモリーズオフ-innocent-fille-　ノエル-fullbloom-ps4',
+'ペルソナ４-ダンシング・オールナイト-ps4',
 ];
 const arrayPHYSICAL = [
 'foxyland-2-psvita-3',
@@ -3532,6 +3572,8 @@ const arrayREMOVEPS4 = [
             return // game + no user
         }
         else {
+
+            remove(document.querySelector("#displaySummary"))
             let maincontainer = document.getElementById('maincontainer');
             maincontainer.style = 'margin-left: 310px'
             let table = document.getElementById('usergamelist');
@@ -3871,8 +3913,26 @@ function checkRegion(row) {
     //if (arrayGR.includes(game)) addTag(row, 'GR')
     //if (arrayES.includes(game)) addTag(row, 'ES')
     //if (arrayRU.includes(game)) addTag(row, 'RU')
+    if (arrayDELISTEDorange.includes(game)) addTag(row, 'DELISTEDorange')
     if (arrayDELISTED.includes(game)) addTag(row, 'DELISTED')
-    if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
+    if (arrayCODE.includes(game)) addTag(row, 'CODE')
+    //if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
+
+    let discpos = row.getElementsByClassName('gametitle')[0].parentNode.children[row.getElementsByClassName('platformlabel').length]
+    if (discpos.innerHTML.slice(39, 48) == 'Disc-only') {
+        row.getElementsByClassName('gametitle')[0].parentNode.removeChild(discpos);
+        addTag(row, 'PHYSICAL')
+        //console.log('removed disc')
+    }
+    else {
+        if (arrayPHYSICAL.includes(game)) {
+            console.log(" ")
+            console.log("PHYSICAL GAME NOT LOGGED:")
+            console.log("https://psntrophyleaders.com/game/view/" + game)
+            console.log(" ")
+        }
+    }
+
     if (arrayDIGITAL.includes(game)) addTag(row, 'DIGITAL')
 
     /*if ((document.URL.split('/').length) === 6) {
@@ -3987,10 +4047,20 @@ function addTag(row, label) {
         newLabel.style.backgroundColor= '#0068bf'
         newLabel.innerHTML = `<acronym title="VR Required to 100%">${label}</acronym>`
     }
+    else if (label === 'DELISTEDorange') {
+        newLabel.style.backgroundColor= '#FF8C00'
+        newLabel.style.width = '55px'
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store, available Physically">DELISTED</acronym>`
+    }
     else if (label === 'DELISTED') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
         newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label}</acronym>`
+    }
+    else if (label === 'CODE') {
+        newLabel.style.backgroundColor= 'red'
+        newLabel.style.width = '33px'
+        newLabel.innerHTML = `<acronym title="Only obtainable from a code">${label}</acronym>`
     }
     else if (label === 'PHYSICAL') {
         newLabel.style.backgroundColor= 'red'
@@ -4019,10 +4089,11 @@ function moveRowContent(original) {
 
     let gameIMG = original.getElementsByClassName('game-image-cell')[0]
     let newGameIMG = document.createElement('span');
-    newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#001118; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
-    insertBefore(newGameIMG, original.getElementsByClassName('game-image-cell')[0])
-    original.getElementsByClassName('game-image-cell')[0].remove()
-
+    if (gameIMG.naturalHeight > 1) {
+        newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#001118; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
+        insertBefore(newGameIMG, original.getElementsByClassName('game-image-cell')[0])
+        original.getElementsByClassName('game-image-cell')[0].remove()
+    }
     var flagoffset = 6
 	const difficulty = original.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = original.getElementsByClassName('difficultyText')[0].children[1];
@@ -4193,10 +4264,7 @@ function modifyProgressBar(row) {
 function parseGameDetails() {
     setTimeout(function() {
 	//remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
-    let user = document.getElementsByClassName('username')
-    if (user) {
-        console.log(user[1])
-    }
+
     const difficulty = document.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = document.getElementsByClassName('difficultyText')[0].children[1];
     let newEl = document.createElement('div');
@@ -4258,7 +4326,17 @@ function parseGameDetails() {
         document.getElementsByClassName('trophy_totals')[0].getElementsByClassName('total')[0].style = 'border-left: unset; color: white !important;';
         remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
     }
-    }, 50);
+    }, 150);
+    if ((document.URL.split('/').length) === 6) {
+        let user = 'user'
+        let usr = document.getElementsByClassName('username')[0].innerText
+        if (usr) user = usr
+        let newEl2 = document.createElement('div');
+            newEl2.innerHTML = `
+	<div style="display: flex; align-items: right; height: 18px"> <span style="flex: 1; text-align:right; font-size: 10pt;"></span><span style="flex: 1; text-align:left; padding-left: 520px;font-size: 10pt;"> <a href="https://psntrophyleaders.com/user/view/${user}/${decodeURI(decodeURI(location.href).split('/')[5])}">${user}</a></span></div>`
+
+            document.getElementsByClassName('gameDetailTitle')[0].appendChild(newEl2);
+    }
 }
 
 function insertBefore(newNode, existingNode) {
