@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.2
+// @version       1.6.3
 // @author       Luhari
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -34,6 +34,10 @@ GM_addStyle ( `
     }
     .sort-row {
         background-color: #33383e !important;
+        color: #cecece !important;
+    }
+    .page-header {
+        background-color: #1d2126 !important;
         color: #cecece !important;
     }
 ` );
@@ -3779,6 +3783,7 @@ function updateLoadingBar(currentProgress, totalProgress) {
 
 function checkRegion(row) {
 	let url = row ? decodeURI(row.getElementsByClassName('gameImageLink')[0].href): decodeURI(location.href);
+
 	let game = decodeURI(url.split('/')[6]);
     if (!row) {
         row = document
@@ -3917,19 +3922,24 @@ function checkRegion(row) {
     if (arrayDELISTED.includes(game)) addTag(row, 'DELISTED')
     if (arrayCODE.includes(game)) addTag(row, 'CODE')
     //if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
+    console.log(document.URL.split('/')[3])
+    if ((document.URL.split('/')[3] === 'game' && document.URL.split('/')[4] === 'view') || (document.URL.split('/')[3] === 'user' && document.URL.split('/').length === 7)) {
 
-    let discpos = row.getElementsByClassName('gametitle')[0].parentNode.children[row.getElementsByClassName('platformlabel').length]
-    if (discpos.innerHTML.slice(39, 48) == 'Disc-only') {
-        row.getElementsByClassName('gametitle')[0].parentNode.removeChild(discpos);
-        addTag(row, 'PHYSICAL')
-        //console.log('removed disc')
     }
     else {
-        if (arrayPHYSICAL.includes(game)) {
-            console.log(" ")
-            console.log("PHYSICAL GAME NOT LOGGED:")
-            console.log("https://psntrophyleaders.com/game/view/" + game)
-            console.log(" ")
+        let discpos = row.getElementsByClassName('gametitle')[0].parentNode.children[row.getElementsByClassName('platformlabel').length]
+        if (discpos.innerHTML.slice(39, 48) == 'Disc-only') {
+            row.getElementsByClassName('gametitle')[0].parentNode.removeChild(discpos);
+            addTag(row, 'PHYSICAL')
+            //console.log('removed disc')
+        }
+        else {
+            if (arrayPHYSICAL.includes(game)) {
+                console.log(" ")
+                console.log("PHYSICAL GAME NOT LOGGED:")
+                console.log("https://psntrophyleaders.com/game/view/" + game)
+                console.log(" ")
+            }
         }
     }
 
