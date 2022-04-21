@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.3
-// @author       Luhari
+// @version       1.6.4
+// @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
 // @match       https://psntrophyleaders.com/*
@@ -40,7 +40,14 @@ GM_addStyle ( `
         background-color: #1d2126 !important;
         color: #cecece !important;
     }
-` );
+    `/*tr.oddrow, tr.odd {
+        background-color: #c8c8c8;
+    }
+    tr.evenrow, tr.even {
+        background-color: #bcbcbc;
+    }
+`*/
+);
 
 
 
@@ -3531,6 +3538,15 @@ const arrayREMOVEPS4 = [
 '콥스-파티-blood-drive-ps4-psvita',
 ];
 
+function measureText(str, fontSize) {
+  const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.2796875,0.2765625,0.3546875,0.5546875,0.5546875,0.8890625,0.665625,0.190625,0.3328125,0.3328125,0.3890625,0.5828125,0.2765625,0.3328125,0.2765625,0.3015625,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.2765625,0.2765625,0.584375,0.5828125,0.584375,0.5546875,1.0140625,0.665625,0.665625,0.721875,0.721875,0.665625,0.609375,0.7765625,0.721875,0.2765625,0.5,0.665625,0.5546875,0.8328125,0.721875,0.7765625,0.665625,0.7765625,0.721875,0.665625,0.609375,0.721875,0.665625,0.94375,0.665625,0.665625,0.609375,0.2765625,0.3546875,0.2765625,0.4765625,0.5546875,0.3328125,0.5546875,0.5546875,0.5,0.5546875,0.5546875,0.2765625,0.5546875,0.5546875,0.221875,0.240625,0.5,0.221875,0.8328125,0.5546875,0.5546875,0.5546875,0.5546875,0.3328125,0.5,0.2765625,0.5546875,0.5,0.721875,0.5,0.5,0.5,0.3546875,0.259375,0.353125,0.5890625]
+  const avg = 0.5279276315789471
+  return str
+    .split('')
+    .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
+    .reduce((cur, acc) => acc + cur) * fontSize
+}
+
 (function() {
     //setTimeout(function() {
     'use strict';
@@ -3577,9 +3593,193 @@ const arrayREMOVEPS4 = [
         }
         else {
 
+
+
+
+
+
+
+            let userInfo = document.getElementsByClassName('userInfo')[0];
+            let userName = userInfo.children[0].children[0].innerText
+            let userAbout = userInfo.children[2].innerText
+            let flagdata = userInfo.children[0].children[1].innerHTML.split('="')
+            let flag1 = flagdata[2].split('"')[0]
+            let flag2 = flagdata[3].split('"')[0].replace('small', 'large')
+            let flag3 = flagdata[4].split('"')[0]
+            let flag4 = flagdata[5].split('"')[0]
+
+            let newuserInfo = document.createElement("div");
+            newuserInfo.style='width: 200px; height: 100px; position:relative; font-family: Microsoft YaHei UI;'
+            newuserInfo.innerHTML = `
+                                    <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
+
+
+                                    <big style="width: 80px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
+
+                                    <div style="position: absolute; top:37px; left:15px;">
+                                         <div style="width: 0px;height: 0px;
+
+                                                  border-left: 2vh solid transparent;
+                                                  border-top: 3vh solid #33383e;
+                                                  transform: rotate(55deg);
+                                                  position: absolute; top: 5px; left: 5px; "></div>
+
+                                         <div style="width: ${measureText(userAbout, 16) * 1.15}px; height: 25px; background-color: #33383e; border-radius: 4px; margin-bottom:50px"></div>
+                                    </div>
+                                    <small style="width: ${measureText(userAbout, 16) * 1.15}px; color: #ccc; text-align: center; font-size: 14px; position:absolute; top:41px; left:16px;">${userAbout}</small>
+                                    `
+
+
+
+
+            insertBefore(newuserInfo, userInfo);
+            userInfo.remove()
+             //= `font-family: Microsoft YaHei UI;`
+
+
+
+
+
+
+
             remove(document.querySelector("#displaySummary"))
             let maincontainer = document.getElementById('maincontainer');
             maincontainer.style = 'margin-left: 310px'
+
+            //grabbing info
+            let childarray = document.getElementsByClassName('userstats')[0].children[0].children[0].children;
+            //console.log(childarray);
+
+            /*let increaseamount = 0;
+            if (childarray[6].outerText.split("\n").length > 3)
+            {
+                increaseamount = 2;
+                console.log("increase amount changed");
+            }
+            let trophypoints = childarray[6].outerText.split("\n")[2 + increaseamount].split(" points")[0];*/
+
+            let trophypoints = childarray[6].outerText.split("\n")[childarray[6].outerText.split("\n").length > 3 ? 4 : 2].split(" points")[0];
+            //console.log(trophypoints);
+
+            let platinumtrophies = childarray[1].outerText.split("\n")[1].replace(',', '');
+            //console.log(platinumtrophies);
+
+            let goldtrophies = childarray[2].outerText.split("\n")[1].replace(',', '');
+            //console.log(goldtrophies);
+
+            let silvertrophies = childarray[3].outerText.split("\n")[1].replace(',', '');
+            //console.log(silvertrophies);
+
+            let bronzetrophies = childarray[4].outerText.split("\n")[1].replace(',', '');
+            //console.log(bronzetrophies);
+
+            let topstats = document.getElementById("toprightstats").children
+            //console.log(topstats);
+
+            let gamecount = topstats[2].outerText.split("games")[0].replace(',', '');
+            //console.log(gamecount);
+
+            let trophycount = topstats[4].outerText.split("trophies")[0].replace(',', '');
+            //console.log(trophycount);
+
+            let trophiesperday = topstats[6].outerText.split("trophies per day")[0].slice(0, -1);
+            //console.log(trophiesperday);
+
+            //let averageprogress = topstats[8].outerText.split("average progress")[0];
+            let averageprogress = topstats[8].innerHTML.split('title="')[1].split('%')[0].split('.')
+            averageprogress = [averageprogress[0], averageprogress[1].slice(0, 1)].join('.')
+            //console.log(averageprogress);
+
+            let level = topstats[0].children[0].innerText;
+            //console.log(level);
+
+            let levelpercent = topstats[0].children[1].children[0].children[1].innerText;
+            //console.log(levelpercent);
+
+            let imagesource = topstats[0].children[0].innerHTML.split('src=\"')[1].split("\">")[0];
+            //console.log(imagesource);
+
+            //remove top elements now that we've gotten info from them
+            let topstatsnum = 8;
+            while (topstatsnum != -1)
+            {
+                remove(topstats[topstatsnum]);
+                topstatsnum -= 1;
+            }
+
+            let bottomstatselement = document.createElement("div");
+            bottomstatselement.id = ["bottomrightstats"];
+            bottomstatselement.style='width: 800px; height: 60px; position:relative; font-family: Microsoft YaHei UI;'
+            bottomstatselement.innerHTML = `
+                                            <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:20px;">${averageprogress}%</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:20px;">Average completion</small>
+                                            <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:160px;">${trophiesperday}</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:160px;">Trophies per day</small>
+                                            <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:280px;">${gamecount}</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:280px;">Games</small>
+                                            <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:450px;">${trophypoints}</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:450px;">Points</small>`
+
+            insertBefore(bottomstatselement, document.getElementById('toprightstats'));
+
+            let newtopstatselement = document.createElement("div");
+            newtopstatselement.id = ["newtoprightstats"];
+            newtopstatselement.style='width: 800px; height: 80px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
+            newtopstatselement.innerHTML = `<big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:20px;">${bronzetrophies}</big>
+                                                               <img style="position:absolute; bottom:15px; right:100px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:135px;">${silvertrophies}</big>
+                                                               <img style="position:absolute; bottom:15px; right:215px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:250px;">${goldtrophies}</big>
+                                                               <img style="position:absolute; bottom:15px; right:330px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:345px;">${platinumtrophies}</big>
+                                                               <img style="position:absolute; bottom:15px; right:425px;" width=auto height=50px  src="https://i.imgur.com/VnkHuFc.png">
+
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:480px;">${trophycount}</big>
+                                                               <big style="width: 80px; text-align: center; font-size: 18px; font-weight: bold; position:absolute; bottom:45px; right:480px;">Total</big>
+
+                                                               <big style="width: 80px; text-align: left; font-size: 25px; font-weight: bold; position:absolute; bottom:26px; right:555px;">${level}</big>
+                                                               <img style="position:absolute; bottom:14px; right:635px;" width=auto height=55px  src="${imagesource}">
+
+                                                               <div style="width: 90px; height: 4px; position:absolute; bottom:6px; right:580px; background-color: #1d2126; border-style: solid; border-width:1px; border-color: #ccc">
+                                                                    <div style="width: ${levelpercent}; height: 4px; background-color: #09F;">
+
+                                                                    </div>
+                                                               </div>
+                                                               <small style="width: 92px; color: #ccc; text-align: center; font-size: 12px; position:absolute; bottom:-10px; right:580px;">${levelpercent}</small>
+                                                               `/*
+
+                                                               <div style="width: 70px; height: 2px; position:absolute; bottom:10px; right:600px; background-color: #CCC;" </div><div class="small progresscontainer" style="width: 36%; background-color: #F00;" </div>
+
+
+                                                               `/*
+                                            <td class="center"><img width=auto height=50px src="https://i.imgur.com/VnkHuFc.png"></td>
+                                            <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${platinumtrophies}</big></td>
+                                            <td class="center"><img width=auto height=50px src="https://i.imgur.com/dP1FS6L.png"></td>
+                                            <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${goldtrophies}</big></td>
+                                            <td class="center"><img width=auto height=50px src="https://i.imgur.com/TDJmHUc.png"></td>
+                                            <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${silvertrophies}</big></td>
+                                            <td class="center"><img width=auto height=50px src="https://i.imgur.com/EjoXyJB.png"></td>
+                                            <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${bronzetrophies}</big></td>`;*/
+            insertBefore(newtopstatselement, document.getElementById("bottomrightstats").previousSibling);
+
+
+
+
+
+            //fixes spacing post trophy info deletion [placed here as removing indexes from the array seems to break]
+            document.getElementsByClassName("rankhead")[1].style = "margin-top: 0px";
+
+            //console.log(document.getElementById("subnav").nextElementSibling);
+            remove(document.getElementById("subnav").nextElementSibling); //this removes the bar at the top asking for donations as well as links to psntl socials
+            //removes trophy data from left hand tab
+            remove(childarray[4]);
+            remove(childarray[3]);
+            remove(childarray[2]);
+            remove(childarray[1]);
+            remove(childarray[0]);
+
+            let links = document.getElementById('links').parentNode.parentNode.parentNode;
+            links.children[0].style = `background-color: #1d2126; !important"`
+            links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
+
             let table = document.getElementById('usergamelist');
             table.style.tableLayout = 'fixed';
             table.style.width = '1020px'
@@ -3763,13 +3963,15 @@ function addTagGame(row, label) {
 
 function injectLoadingBar() {
 	let newLoadingBar = document.createElement('div');
-	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #023; margin: 5px; border-radius: 8px; padding: 10px;';
+	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #1d2126; margin: 0 auto; border-radius: 2px; padding: 10px; margin-bottom:50px;';
 	newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
   newLoadingBar.classList = ["loadingBar"];
 
-	insertBefore(newLoadingBar, document.getElementById('social_media'));
-	document.getElementById('social_media').parentElement.style = "width: 900px; margin: 0 auto; display:flex; justify-content: space-between;";
+	insertBefore(newLoadingBar, document.getElementsByClassName('container')[1].previousSibling);
+	//document.getElementById('social_media').parentElement.style = "width: 900px; margin: 0 auto; display:flex; justify-content: space-between;";
 	// document.getElementById('social_media').parentElement.append(newLoadingBar);
+
+    document.getElementsByClassName("mainBG")[0].style = "padding-top: 35px";
 }
 
 function updateLoadingBar(currentProgress, totalProgress) {
@@ -3777,7 +3979,7 @@ function updateLoadingBar(currentProgress, totalProgress) {
 	if (loadingBar && loadingBar.children[0]) {
 		loadingBar.children[1].children[0].style = "float: left; width:" + currentProgress/totalProgress*100 + "%";
 		loadingBar.children[0].children[0].innerHTML = currentProgress + " / " + totalProgress;
-		loadingBar.children[0].children[1].innerHTML = (currentProgress/totalProgress*100).toFixed(0) + "%";
+		loadingBar.children[0].children[1].innerHTML = (currentProgress/totalProgress*100).toFixed(1) + "%";
 	}
 }
 
@@ -3922,7 +4124,7 @@ function checkRegion(row) {
     if (arrayDELISTED.includes(game)) addTag(row, 'DELISTED')
     if (arrayCODE.includes(game)) addTag(row, 'CODE')
     //if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
-    console.log(document.URL.split('/')[3])
+    //console.log(document.URL.split('/')[3])
     if ((document.URL.split('/')[3] === 'game' && document.URL.split('/')[4] === 'view') || (document.URL.split('/')[3] === 'user' && document.URL.split('/').length === 7)) {
 
     }
