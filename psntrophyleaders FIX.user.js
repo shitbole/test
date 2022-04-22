@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.4
+// @version       1.6.5
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -40,6 +40,19 @@ GM_addStyle ( `
         background-color: #1d2126 !important;
         color: #cecece !important;
     }
+    .options {
+        background-color: #1d2126 !important;
+    }
+    .gamesRight {
+        background-color: #1d2126 !important;
+    }
+    .gamebreadcrumb {
+        background-color: #1d2126 !important;
+    }
+    .filter-row, .recent-trophies {
+        background-color: #1d2126 !important;
+    }
+
     `/*tr.oddrow, tr.odd {
         background-color: #c8c8c8;
     }
@@ -3552,7 +3565,6 @@ function measureText(str, fontSize) {
     'use strict';
 
     console.log('number of / splits: ', document.URL.split('/').length)
-	  injectLoadingBar();
 
 	var currentProgress = 0;
 	var totalProgress = 0;
@@ -3566,13 +3578,14 @@ function measureText(str, fontSize) {
         console.log("code 1")
     }
     else if ((document.URL.split('/').length) === 6) {
-
 			// Modify style so it shows horizontal scrolls too
 			let page = document.getElementById('page');
 			page.style = 'overflow: unset !important;'
 
 
         if (document.URL.split('/')[3] === 'game') {
+            document.getElementById('mainbody').style = `box-shadow: 0px -11px 20px 0px #000;`
+            injectLoadingBar();
 			checkRegion(null);
             inlineTitleTags();
 			parseGameDetails();
@@ -3592,25 +3605,23 @@ function measureText(str, fontSize) {
             return // game + no user
         }
         else {
+            if (document.URL.split('/')[3] == "event") {
+                console.log("code 2a") //tournamnets
+            }
+            else{
+                injectLoadingBar();
+                let userInfo = document.getElementsByClassName('userInfo')[0];
+                let userName = userInfo.children[0].children[0].innerText
+                let userAbout = userInfo.children[2].innerText
+                let flagdata = userInfo.children[0].children[1].innerHTML.split('="')
+                let flag1 = flagdata[2].split('"')[0]
+                let flag2 = flagdata[3].split('"')[0].replace('small', 'large')
+                let flag3 = flagdata[4].split('"')[0]
+                let flag4 = flagdata[5].split('"')[0]
 
-
-
-
-
-
-
-            let userInfo = document.getElementsByClassName('userInfo')[0];
-            let userName = userInfo.children[0].children[0].innerText
-            let userAbout = userInfo.children[2].innerText
-            let flagdata = userInfo.children[0].children[1].innerHTML.split('="')
-            let flag1 = flagdata[2].split('"')[0]
-            let flag2 = flagdata[3].split('"')[0].replace('small', 'large')
-            let flag3 = flagdata[4].split('"')[0]
-            let flag4 = flagdata[5].split('"')[0]
-
-            let newuserInfo = document.createElement("div");
-            newuserInfo.style='width: 200px; height: 100px; position:relative; font-family: Microsoft YaHei UI;'
-            newuserInfo.innerHTML = `
+                let newuserInfo = document.createElement("div");
+                newuserInfo.style='width: 200px; height: 100px; position:relative; font-family: Microsoft YaHei UI;'
+                newuserInfo.innerHTML = `
                                     <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
 
 
@@ -3632,9 +3643,9 @@ function measureText(str, fontSize) {
 
 
 
-            insertBefore(newuserInfo, userInfo);
-            userInfo.remove()
-             //= `font-family: Microsoft YaHei UI;`
+                insertBefore(newuserInfo, userInfo);
+                userInfo.remove()
+                //= `font-family: Microsoft YaHei UI;`
 
 
 
@@ -3642,15 +3653,15 @@ function measureText(str, fontSize) {
 
 
 
-            remove(document.querySelector("#displaySummary"))
-            let maincontainer = document.getElementById('maincontainer');
-            maincontainer.style = 'margin-left: 310px'
+                remove(document.querySelector("#displaySummary"))
+                let maincontainer = document.getElementById('maincontainer');
+                maincontainer.style = 'margin-left: 310px'
 
-            //grabbing info
-            let childarray = document.getElementsByClassName('userstats')[0].children[0].children[0].children;
-            //console.log(childarray);
+                //grabbing info
+                let childarray = document.getElementsByClassName('userstats')[0].children[0].children[0].children;
+                //console.log(childarray);
 
-            /*let increaseamount = 0;
+                /*let increaseamount = 0;
             if (childarray[6].outerText.split("\n").length > 3)
             {
                 increaseamount = 2;
@@ -3658,70 +3669,70 @@ function measureText(str, fontSize) {
             }
             let trophypoints = childarray[6].outerText.split("\n")[2 + increaseamount].split(" points")[0];*/
 
-            let trophypoints = childarray[6].outerText.split("\n")[childarray[6].outerText.split("\n").length > 3 ? 4 : 2].split(" points")[0];
-            //console.log(trophypoints);
+                let trophypoints = childarray[6].outerText.split("\n")[childarray[6].outerText.split("\n").length > 3 ? 4 : 2].split(" points")[0];
+                //console.log(trophypoints);
 
-            let platinumtrophies = childarray[1].outerText.split("\n")[1].replace(',', '');
-            //console.log(platinumtrophies);
+                let platinumtrophies = childarray[1].outerText.split("\n")[1].replace(',', '');
+                //console.log(platinumtrophies);
 
-            let goldtrophies = childarray[2].outerText.split("\n")[1].replace(',', '');
-            //console.log(goldtrophies);
+                let goldtrophies = childarray[2].outerText.split("\n")[1].replace(',', '');
+                //console.log(goldtrophies);
 
-            let silvertrophies = childarray[3].outerText.split("\n")[1].replace(',', '');
-            //console.log(silvertrophies);
+                let silvertrophies = childarray[3].outerText.split("\n")[1].replace(',', '');
+                //console.log(silvertrophies);
 
-            let bronzetrophies = childarray[4].outerText.split("\n")[1].replace(',', '');
-            //console.log(bronzetrophies);
+                let bronzetrophies = childarray[4].outerText.split("\n")[1].replace(',', '');
+                //console.log(bronzetrophies);
 
-            let topstats = document.getElementById("toprightstats").children
-            //console.log(topstats);
+                let topstats = document.getElementById("toprightstats").children
+                //console.log(topstats);
 
-            let gamecount = topstats[2].outerText.split("games")[0].replace(',', '');
-            //console.log(gamecount);
+                let gamecount = topstats[2].outerText.split("games")[0].replace(',', '');
+                //console.log(gamecount);
 
-            let trophycount = topstats[4].outerText.split("trophies")[0].replace(',', '');
-            //console.log(trophycount);
+                let trophycount = document.getElementsByClassName("rankhead")[0].children[0].innerText.split('(')[1].split(')')[0].replace(',', '');
+                //console.log(trophycount);
 
-            let trophiesperday = topstats[6].outerText.split("trophies per day")[0].slice(0, -1);
-            //console.log(trophiesperday);
+                let trophiesperday = topstats[6].outerText.split("trophies per day")[0].slice(0, -1);
+                //console.log(trophiesperday);
 
-            //let averageprogress = topstats[8].outerText.split("average progress")[0];
-            let averageprogress = topstats[8].innerHTML.split('title="')[1].split('%')[0].split('.')
-            averageprogress = [averageprogress[0], averageprogress[1].slice(0, 1)].join('.')
-            //console.log(averageprogress);
+                //let averageprogress = topstats[8].outerText.split("average progress")[0];
+                let averageprogress = topstats[8].innerHTML.split('title="')[1].split('%')[0].split('.')
+                averageprogress = [averageprogress[0], averageprogress[1].slice(0, 1)].join('.')
+                //console.log(averageprogress);
 
-            let level = topstats[0].children[0].innerText;
-            //console.log(level);
+                let level = topstats[0].children[0].innerText;
+                //console.log(level);
 
-            let levelpercent = topstats[0].children[1].children[0].children[1].innerText;
-            //console.log(levelpercent);
+                let levelpercent = topstats[0].children[1].children[0].children[1].innerText;
+                //console.log(levelpercent);
 
-            let imagesource = topstats[0].children[0].innerHTML.split('src=\"')[1].split("\">")[0];
-            //console.log(imagesource);
+                let imagesource = topstats[0].children[0].innerHTML.split('src=\"')[1].split("\">")[0];
+                //console.log(imagesource);
 
-            //remove top elements now that we've gotten info from them
-            let topstatsnum = 8;
-            while (topstatsnum != -1)
-            {
-                remove(topstats[topstatsnum]);
-                topstatsnum -= 1;
-            }
+                //remove top elements now that we've gotten info from them
+                let topstatsnum = 8;
+                while (topstatsnum != -1)
+                {
+                    remove(topstats[topstatsnum]);
+                    topstatsnum -= 1;
+                }
 
-            let bottomstatselement = document.createElement("div");
-            bottomstatselement.id = ["bottomrightstats"];
-            bottomstatselement.style='width: 800px; height: 60px; position:relative; font-family: Microsoft YaHei UI;'
-            bottomstatselement.innerHTML = `
+                let bottomstatselement = document.createElement("div");
+                bottomstatselement.id = ["bottomrightstats"];
+                bottomstatselement.style='width: 800px; height: 60px; position:relative; font-family: Microsoft YaHei UI;'
+                bottomstatselement.innerHTML = `
                                             <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:20px;">${averageprogress}%</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:20px;">Average completion</small>
                                             <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:160px;">${trophiesperday}</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:160px;">Trophies per day</small>
                                             <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:280px;">${gamecount}</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:280px;">Games</small>
                                             <big style="width: 120px; text-align: center; font-size: 25px; font-weight: bold; position:absolute; bottom:20px; right:450px;">${trophypoints}</big><small style="width: 120px; text-align: center; font-size: 12px; position:absolute; bottom:10px; right:450px;">Points</small>`
 
-            insertBefore(bottomstatselement, document.getElementById('toprightstats'));
+                insertBefore(bottomstatselement, document.getElementById('toprightstats'));
 
-            let newtopstatselement = document.createElement("div");
-            newtopstatselement.id = ["newtoprightstats"];
-            newtopstatselement.style='width: 800px; height: 80px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
-            newtopstatselement.innerHTML = `<big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:20px;">${bronzetrophies}</big>
+                let newtopstatselement = document.createElement("div");
+                newtopstatselement.id = ["newtoprightstats"];
+                newtopstatselement.style='width: 800px; height: 80px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
+                newtopstatselement.innerHTML = `<big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:20px;">${bronzetrophies}</big>
                                                                <img style="position:absolute; bottom:15px; right:100px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:135px;">${silvertrophies}</big>
                                                                <img style="position:absolute; bottom:15px; right:215px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
@@ -3758,50 +3769,64 @@ function measureText(str, fontSize) {
                                             <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${silvertrophies}</big></td>
                                             <td class="center"><img width=auto height=50px src="https://i.imgur.com/EjoXyJB.png"></td>
                                             <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${bronzetrophies}</big></td>`;*/
-            insertBefore(newtopstatselement, document.getElementById("bottomrightstats").previousSibling);
+                insertBefore(newtopstatselement, document.getElementById("bottomrightstats").previousSibling);
 
 
 
 
 
-            //fixes spacing post trophy info deletion [placed here as removing indexes from the array seems to break]
-            document.getElementsByClassName("rankhead")[1].style = "margin-top: 0px";
+                //fixes spacing post trophy info deletion [placed here as removing indexes from the array seems to break]
+                document.getElementsByClassName("rankhead")[1].style = "margin-top: 0px";
 
-            //console.log(document.getElementById("subnav").nextElementSibling);
-            remove(document.getElementById("subnav").nextElementSibling); //this removes the bar at the top asking for donations as well as links to psntl socials
-            //removes trophy data from left hand tab
-            remove(childarray[4]);
-            remove(childarray[3]);
-            remove(childarray[2]);
-            remove(childarray[1]);
-            remove(childarray[0]);
+                //console.log(document.getElementById("subnav").nextElementSibling);
+                remove(document.getElementById("subnav").nextElementSibling); //this removes the bar at the top asking for donations as well as links to psntl socials
+                //removes trophy data from left hand tab
+                remove(childarray[4]);
+                remove(childarray[3]);
+                remove(childarray[2]);
+                remove(childarray[1]);
+                remove(childarray[0]);
 
-            let links = document.getElementById('links').parentNode.parentNode.parentNode;
-            links.children[0].style = `background-color: #1d2126; !important"`
-            links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
+                let links = document.getElementById('links').parentNode.parentNode.parentNode;
+                links.children[0].style = `background-color: #1d2126; !important"`
+                links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
 
-            let table = document.getElementById('usergamelist');
-            table.style.tableLayout = 'fixed';
-            table.style.width = '1020px'
-            let rows = document.getElementsByClassName('gamerow');
-					  totalProgress = rows.length;
-							var loadingInterval = setInterval(() => {
-								if (currentProgress >= totalProgress) {
-									clearInterval(loadingInterval);
-									return;
-								}
-                moveRowContent(rows[currentProgress]);
-                checkRegion(rows[currentProgress]);
-								currentProgress++;
-								updateLoadingBar(currentProgress, totalProgress);
-							}, 1);
-            console.log("code 3")
+                document.getElementById('mainbody').style = `box-shadow: 145px 145px 50px 145px #000;`
+
+                let table = document.getElementById('usergamelist');
+                table.style.tableLayout = 'fixed';
+                table.style.width = '1020px'
+                let rows = document.getElementsByClassName('gamerow');
+                totalProgress = rows.length;
+                var loadingInterval = setInterval(() => {
+                    if (currentProgress >= totalProgress) {
+                        clearInterval(loadingInterval);
+                        return;
+                    }
+                    moveRowContent(rows[currentProgress]);
+                    checkRegion(rows[currentProgress]);
+                    currentProgress++;
+                    updateLoadingBar(currentProgress, totalProgress);
+                }, 1);
+                console.log("code 3")
+            }
         }
     }
     else if ((document.URL.split('/').length) === 7) {
+        injectLoadingBar();
         checkRegion(null);
 	    inlineTitleTags();
         parseGameDetails();
+
+
+        let gamesHeader = document.getElementById('gamesHeader').parentNode.children[1].style = `width:100%;height:25px; background-color: #1d2126;`;
+
+        let links = document.getElementById('links').parentNode.parentNode.parentNode;
+        links.children[0].style = `background-color: #1d2126; !important"`
+        links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
+
+        document.getElementById('mainbody').style = `box-shadow: 0px -11px 20px 0px #000;`
+
         let table = document.getElementById('game_details_table');
         let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 			totalProgress = rows.length;
@@ -3822,6 +3847,7 @@ function measureText(str, fontSize) {
         return // trophy
     }
     else if ((document.URL.split('/').length) === 4) {
+        injectLoadingBar();
         console.log("code 6")
         let maincontainer = document.getElementById('maincontainer');
         maincontainer.style = 'margin-left: 310px'
@@ -3840,6 +3866,9 @@ function measureText(str, fontSize) {
 					updateLoadingBar(currentProgress, totalProgress);
 				}, 1);
         return // trophy
+    }
+    else if ((document.URL.split('/').length) === 5) {
+        console.log('code 7')
     }
     else {
         console.log("code 20")
@@ -3963,7 +3992,7 @@ function addTagGame(row, label) {
 
 function injectLoadingBar() {
 	let newLoadingBar = document.createElement('div');
-	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #1d2126; margin: 0 auto; border-radius: 2px; padding: 10px; margin-bottom:50px;';
+	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
 	newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
   newLoadingBar.classList = ["loadingBar"];
 
