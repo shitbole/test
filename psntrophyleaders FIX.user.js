@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.5
+// @version       1.6.6
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -11,6 +11,9 @@
 // ==/UserScript==
 
 GM_addStyle ( `
+    html, body {
+        background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+    }
     .mainBG {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
@@ -3577,7 +3580,7 @@ function measureText(str, fontSize) {
         //}
         console.log("code 1")
     }
-    else if ((document.URL.split('/').length) === 6) {
+    else if (((document.URL.split('/').length) === 6) | ((document.URL.split('/').length) === 4)) {
 			// Modify style so it shows horizontal scrolls too
 			let page = document.getElementById('page');
 			page.style = 'overflow: unset !important;'
@@ -3618,14 +3621,17 @@ function measureText(str, fontSize) {
                 let flag2 = flagdata[3].split('"')[0].replace('small', 'large')
                 let flag3 = flagdata[4].split('"')[0]
                 let flag4 = flagdata[5].split('"')[0]
-
+                let textSize = measureText(userAbout, 16) * 1.15
+                if (textSize < 33) {
+                    textSize = 33
+                }
                 let newuserInfo = document.createElement("div");
                 newuserInfo.style='width: 200px; height: 100px; position:relative; font-family: Microsoft YaHei UI;'
                 newuserInfo.innerHTML = `
                                     <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
 
 
-                                    <big style="width: 80px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
+                                    <big style="width: 150px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
 
                                     <div style="position: absolute; top:37px; left:15px;">
                                          <div style="width: 0px;height: 0px;
@@ -3635,9 +3641,9 @@ function measureText(str, fontSize) {
                                                   transform: rotate(55deg);
                                                   position: absolute; top: 5px; left: 5px; "></div>
 
-                                         <div style="width: ${measureText(userAbout, 16) * 1.15}px; height: 25px; background-color: #33383e; border-radius: 4px; margin-bottom:50px"></div>
+                                         <div style="width: ${textSize}px; height: 25px; background-color: #33383e; border-radius: 4px; margin-bottom:50px"></div>
                                     </div>
-                                    <small style="width: ${measureText(userAbout, 16) * 1.15}px; color: #ccc; text-align: center; font-size: 14px; position:absolute; top:41px; left:16px;">${userAbout}</small>
+                                    <small style="width: ${textSize}px; color: #ccc; text-align: center; font-size: 14px; position:absolute; top:41px; left:16px;">${userAbout}</small>
                                     `
 
 
@@ -3771,9 +3777,15 @@ function measureText(str, fontSize) {
                                             <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${bronzetrophies}</big></td>`;*/
                 insertBefore(newtopstatselement, document.getElementById("bottomrightstats").previousSibling);
 
-
-
-
+                /*document.getElementsByClassName("userLeft")[0].style = `    vertical-align: top;
+    justify-content: space-around;
+    width: 180px;
+    overflow: auto;
+    position: sticky;
+    top: 5px;
+height: 200px; !important
+`*/
+                //document.getElementsByClassName("userRight")[0].style = `padding-left: 180px;background-color: #1d2126;`
 
                 //fixes spacing post trophy info deletion [placed here as removing indexes from the array seems to break]
                 document.getElementsByClassName("rankhead")[1].style = "margin-top: 0px";
@@ -3846,7 +3858,7 @@ function measureText(str, fontSize) {
         console.log("code 5")
         return // trophy
     }
-    else if ((document.URL.split('/').length) === 4) {
+    /*else if ((document.URL.split('/').length) === 4) {
         injectLoadingBar();
         console.log("code 6")
         let maincontainer = document.getElementById('maincontainer');
@@ -3866,7 +3878,7 @@ function measureText(str, fontSize) {
 					updateLoadingBar(currentProgress, totalProgress);
 				}, 1);
         return // trophy
-    }
+    }*/
     else if ((document.URL.split('/').length) === 5) {
         console.log('code 7')
     }
@@ -4155,7 +4167,25 @@ function checkRegion(row) {
     //if (arrayPHYSICAL.includes(game)) addTag(row, 'PHYSICAL')
     //console.log(document.URL.split('/')[3])
     if ((document.URL.split('/')[3] === 'game' && document.URL.split('/')[4] === 'view') || (document.URL.split('/')[3] === 'user' && document.URL.split('/').length === 7)) {
-
+        //console.log('code ac3')
+        let discpos = row.getElementById('gametitle').parentNode.parentNode.parentNode.children[1].children[row.getElementsByClassName('platformlabel').length + row.getElementsByClassName('flaggloss').length]
+        if (discpos) {
+            //console.log(discpos.innerHTML)
+            if (discpos.innerHTML.slice(39, 48) == 'Disc-only') {
+                console.log('removed disc')
+                row.getElementById('gametitle').parentNode.parentNode.parentNode.children[1].removeChild(discpos);
+                addTag(row, 'PHYSICAL')
+                //
+            }
+            else {
+                if (arrayPHYSICAL.includes(game)) {
+                    console.log(" ")
+                    console.log("PHYSICAL GAME NOT LOGGED:")
+                    console.log("https://psntrophyleaders.com/game/view/" + game)
+                    console.log(" ")
+                }
+            }
+        }
     }
     else {
         let discpos = row.getElementsByClassName('gametitle')[0].parentNode.children[row.getElementsByClassName('platformlabel').length]
