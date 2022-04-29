@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.7
+// @version       1.6.8
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3835,7 +3835,7 @@ function measureText(str, fontSize) {
                         responseType: 'document',
                         onload: function(res) {
                             //console.log(res.response.body);
-                            country_rank = Array.from(res.response.body.children[0].children[2].children[0].children[0].children[3].children[4].children[1].children[1].getElementsByClassName('tablerow user highlighted'))[0].outerText.split('\n')[1].replace(/\s/g,'')
+                            country_rank = Array.from(res.response.body.getElementsByClassName('tablerow user highlighted'))[0].outerText.split('\n')[1].replace(/\s/g,'')
                             country_rank = country_rank.slice(0, country_rank.length / 2)
                             console.log(country_rank)
                             let country_node = document.createElement("div");
