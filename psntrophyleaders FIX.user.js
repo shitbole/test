@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.6
+// @version       1.6.7
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -8,6 +8,7 @@
 // @downloadURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
 // @updateURL       https://github.com/shitbole/test/raw/main/psntrophyleaders%20FIX.user.js
 // @grant         GM_addStyle
+// @grant         GM_xmlhttpRequest
 // ==/UserScript==
 
 GM_addStyle ( `
@@ -3614,10 +3615,15 @@ function measureText(str, fontSize) {
             else{
                 injectLoadingBar();
                 let userInfo = document.getElementsByClassName('userInfo')[0];
-                let userName = userInfo.children[0].children[0].innerText
-                let userAbout = userInfo.children[2].innerText
+                let userName = userInfo.children[0].children[0].innerText.replace(/\s/g,'')
+                console.log()
+                let userAbout = "[w[%^jsj211~]|__~!=mom"
+                if (userInfo.children[2]) {
+                    userAbout = userInfo.children[2].innerText
+                }
                 let flagdata = userInfo.children[0].children[1].innerHTML.split('="')
                 let flag1 = flagdata[2].split('"')[0]
+                let region = flagdata[3].split('"')[0].split('countries/')[1].split('_')[0]
                 let flag2 = flagdata[3].split('"')[0].replace('small', 'large')
                 let flag3 = flagdata[4].split('"')[0]
                 let flag4 = flagdata[5].split('"')[0]
@@ -3627,6 +3633,15 @@ function measureText(str, fontSize) {
                 }
                 let newuserInfo = document.createElement("div");
                 newuserInfo.style='width: 200px; height: 100px; position:relative; font-family: Microsoft YaHei UI;'
+                if (userAbout == "[w[%^jsj211~]|__~!=mom") {
+                    newuserInfo.innerHTML = `
+                                    <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
+
+
+                                    <big style="width: 150px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
+                                    `
+                }
+                else {
                 newuserInfo.innerHTML = `
                                     <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
 
@@ -3647,7 +3662,7 @@ function measureText(str, fontSize) {
                                     `
 
 
-
+                }
 
                 insertBefore(newuserInfo, userInfo);
                 userInfo.remove()
@@ -3675,8 +3690,8 @@ function measureText(str, fontSize) {
             }
             let trophypoints = childarray[6].outerText.split("\n")[2 + increaseamount].split(" points")[0];*/
 
-                let trophypoints = childarray[6].outerText.split("\n")[childarray[6].outerText.split("\n").length > 3 ? 4 : 2].split(" points")[0];
-                //console.log(trophypoints);
+
+
 
                 let platinumtrophies = childarray[1].outerText.split("\n")[1].replace(',', '');
                 //console.log(platinumtrophies);
@@ -3689,6 +3704,25 @@ function measureText(str, fontSize) {
 
                 let bronzetrophies = childarray[4].outerText.split("\n")[1].replace(',', '');
                 //console.log(bronzetrophies);
+
+                let trophypoints = ""
+                let worldRank = ""
+                let worldRankChange = ""
+                if (childarray[6].outerText.slice(14, 29) == "inaccurate data") {
+                    trophypoints = (((platinumtrophies * 300) + (goldtrophies * 90) + (silvertrophies * 30) + (bronzetrophies * 15)).toLocaleString())
+                    worldRank = ":("
+                    worldRankChange = ""
+                }
+                else {
+                    trophypoints = childarray[6].outerText.split("\n")[childarray[6].outerText.split("\n").length > 3 ? 4 : 2].split(" points")[0];
+                    //console.log(trophypoints);
+
+                    worldRank = childarray[6].outerText.split("\n")[0]
+                    //console.log(worldRank);
+
+                    worldRankChange = childarray[6].outerText.split("\n")[2]
+                    //console.log(worldRankChange);
+                }
 
                 let topstats = document.getElementById("toprightstats").children
                 //console.log(topstats);
@@ -3735,6 +3769,9 @@ function measureText(str, fontSize) {
 
                 insertBefore(bottomstatselement, document.getElementById('toprightstats'));
 
+
+                //
+
                 let newtopstatselement = document.createElement("div");
                 newtopstatselement.id = ["newtoprightstats"];
                 newtopstatselement.style='width: 800px; height: 80px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
@@ -3777,6 +3814,68 @@ function measureText(str, fontSize) {
                                             <div class="center" style="width: auto; height: 70px; position:relative; !important"><big style="font-family: Microsoft YaHei UI; font-size: 19px; font-weight: bold; position:absolute; bottom:0; left:0;">${bronzetrophies}</big></td>`;*/
                 insertBefore(newtopstatselement, document.getElementById("bottomrightstats").previousSibling);
 
+
+
+                let country_rank = ":("
+                if (childarray[6].outerText.slice(14, 29) == "inaccurate data") {
+                            let country_node = document.createElement("div");
+                            country_node.id = ["countryRank"];
+                            country_node.style='width: 8px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;'
+                            country_node.innerHTML = `
+                                                               <big style="width: 170px; font-size: 22px; font-weight: bold; position:absolute; bottom:20px; right:7px;">${country_rank}</big>
+                                                               <small style="width: 170px; font-size: 12px; position:absolute; bottom:10px; right:7px;">Country</small>`
+
+                            insertBefore(country_node, document.getElementById("bottomrightstats"));
+                }
+                else {
+                    childarray[6].remove()
+                    GM_xmlhttpRequest({
+                        method: 'GET',
+                        url: `https://psntrophyleaders.com/leaderboard/main?country=${region}&user=${userName}`,
+                        responseType: 'document',
+                        onload: function(res) {
+                            //console.log(res.response.body);
+                            country_rank = Array.from(res.response.body.children[0].children[2].children[0].children[0].children[3].children[4].children[1].children[1].getElementsByClassName('tablerow user highlighted'))[0].outerText.split('\n')[1].replace(/\s/g,'')
+                            country_rank = country_rank.slice(0, country_rank.length / 2)
+                            console.log(country_rank)
+                            let country_node = document.createElement("div");
+                            country_node.id = ["countryRank"];
+                            country_node.style=`width: 8px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;`
+                            country_node.innerHTML = `<a href="https://psntrophyleaders.com/leaderboard/main?country=${region}&user=${userName}">
+                                                                           <big style="color: #CCC; width: 170px; font-size: 22px; font-weight: bold; position:absolute; bottom:20px; right:7px;">${country_rank}
+                                                                           </big>
+                                                                           <small style="color: #888; width: 170px; font-size: 12px; position:absolute; bottom:10px; right:7px;">Country
+                                                                           </small>
+                                                                     </a>`
+
+                            insertBefore(country_node, document.getElementById("bottomrightstats"));
+                        },
+                        onerror: function(res) {
+                            console.log('could not locate country rank');
+                        }
+                    });
+                }
+                let changeColour = '#CCC';
+                if (worldRankChange.slice(0, 1) == "+") {
+                    changeColour = '#3C0'
+                }
+                else if (worldRankChange.slice(0, 1) == "-") {
+                    changeColour = '#E30';
+                }
+                let country_node = document.createElement("div");
+                country_node.id = ["worldRank"];
+                country_node.style=`width: 8px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;`
+                country_node.innerHTML = `<a href="https://psntrophyleaders.com/leaderboard/main?country=all&user=${userName}">
+                                                               <big style="color: #CCC; width: 170px; font-size: 22px; font-weight: bold; position:absolute; bottom:20px; right:-140px;">${worldRank}
+                                                               </big>
+                                                               <small style="color: #888; width: 170px; font-size: 12px; position:absolute; bottom:10px; right:-140px;">World
+                                                               </small>
+                                                               <small style="color: ${changeColour};text-align: left; width: 170px; font-size: 12px; position:absolute; bottom:10px; right:-250px;">${worldRankChange}
+                                                               </small>
+                                                           </a>`
+
+                insertBefore(country_node, document.getElementById("bottomrightstats"));
+
                 /*document.getElementsByClassName("userLeft")[0].style = `    vertical-align: top;
     justify-content: space-around;
     width: 180px;
@@ -3788,7 +3887,39 @@ height: 200px; !important
                 //document.getElementsByClassName("userRight")[0].style = `padding-left: 180px;background-color: #1d2126;`
 
                 //fixes spacing post trophy info deletion [placed here as removing indexes from the array seems to break]
-                document.getElementsByClassName("rankhead")[1].style = "margin-top: 0px";
+                //document.getElementsByClassName("rankhead")[1].style = "margin-top: 0px;";
+                //document.getElementsByClassName("rankhead")[1].parentNode.outerText = "asdfasdfasdfrds:"
+
+
+
+
+
+                let otherLeaderboards = document.createElement("div");
+                otherLeaderboards.id = ["otherLeaderboards"];
+                otherLeaderboards.style=`width: 160px; height: 1px; position:relative; font-family: Helvetica; image-rendering: crisp-edges; text-align: center; background-color: rgb(68 68 68)`
+                otherLeaderboards.innerHTML = `
+                                                               <small style="color: #CCC; width: 170px; font-size: 12px; position:absolute; bottom:4px; left: -3px;">Other Leaderboards
+                                                               </small>
+                                                           `
+
+                insertBefore(otherLeaderboards, document.getElementsByClassName("rankhead")[1]);
+
+
+
+                let otherLeaderboardsPadding = document.createElement("div");
+                otherLeaderboardsPadding.id = ["otherLeaderboardsPadding"];
+                otherLeaderboardsPadding.style=`width: 160px; height: 36px; position:relative; font-family: Helvetica; image-rendering: crisp-edges; text-align: center;`
+                insertBefore(otherLeaderboardsPadding, document.getElementsByClassName("rankhead")[1]);
+                document.getElementsByClassName("rankhead")[1].remove()
+
+
+
+
+
+
+
+
+
 
                 //console.log(document.getElementById("subnav").nextElementSibling);
                 remove(document.getElementById("subnav").nextElementSibling); //this removes the bar at the top asking for donations as well as links to psntl socials
