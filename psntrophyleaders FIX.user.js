@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.6.8
+// @version       1.7.0
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -4730,12 +4730,20 @@ function parseGameDetails() {
     }
     }, 150);
     if ((document.URL.split('/').length) === 6) {
-        let user = 'user'
-        let usr = document.getElementsByClassName('username')[0].innerText
-        if (usr) user = usr
+        let user = ''
+        let usr = document.getElementsByClassName('username')[0]
+        if (usr) {
+            user = usr.innerText
+        }
         let newEl2 = document.createElement('div');
-            newEl2.innerHTML = `
-	<div style="display: flex; align-items: right; height: 18px"> <span style="flex: 1; text-align:right; font-size: 10pt;"></span><span style="flex: 1; text-align:left; padding-left: 520px;font-size: 10pt;"> <a href="https://psntrophyleaders.com/user/view/${user}/${decodeURI(decodeURI(location.href).split('/')[5])}">${user}</a></span></div>`
+        newEl2.style=`width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;`
+        newEl2.innerHTML = `
+	                                   <div style="display: flex; height: 18px">
+                                           <span style="font-size: 10pt; align-items: center; position: absolute; left:620px; bottom: 14px;">
+                                               <a href="https://psntrophyleaders.com/user/view/${user}/${decodeURI(decodeURI(location.href).split('/')[5])}">${user}
+                                               </a>
+                                           </span>
+                                       </div>`
 
             document.getElementsByClassName('gameDetailTitle')[0].appendChild(newEl2);
     }
