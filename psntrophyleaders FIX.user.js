@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.0
+// @version       1.7.1
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3669,7 +3669,28 @@ function measureText(str, fontSize) {
                 //= `font-family: Microsoft YaHei UI;`
 
 
+                let new_avatar = document.getElementsByClassName('avatar-large')[0].currentSrc.slice(0, -5) + "xl.png"
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: `${new_avatar}`,
+                    responseType: 'document',
+                    onload: function(res) {
+                        if (res.status == 404) {
+                            console.log('could not locate higher res avatar');
+                        }
+                        else {
+                            if (new_avatar) {
+                                document.getElementsByClassName('avatar-large')[0].src = new_avatar
+                            }
+                        }
+                    },
+                    onerror: function(res) {
+                        console.log('fatal error');
+                    }
+                });
 
+
+                //console.log(avatarSrc)
 
 
 
@@ -3837,7 +3858,7 @@ function measureText(str, fontSize) {
                             //console.log(res.response.body);
                             country_rank = Array.from(res.response.body.getElementsByClassName('tablerow user highlighted'))[0].outerText.split('\n')[1].replace(/\s/g,'')
                             country_rank = country_rank.slice(0, country_rank.length / 2)
-                            console.log(country_rank)
+                            //console.log(country_rank)
                             let country_node = document.createElement("div");
                             country_node.id = ["countryRank"];
                             country_node.style=`width: 8px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;`
@@ -4739,7 +4760,7 @@ function parseGameDetails() {
         newEl2.style=`width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;`
         newEl2.innerHTML = `
 	                                   <div style="display: flex; height: 18px">
-                                           <span style="font-size: 10pt; align-items: center; position: absolute; left:620px; bottom: 14px;">
+                                           <span style="font-size: 10pt; align-items: center; position: absolute; left:550px; bottom: 14px;">
                                                <a href="https://psntrophyleaders.com/user/view/${user}/${decodeURI(decodeURI(location.href).split('/')[5])}">${user}
                                                </a>
                                            </span>
