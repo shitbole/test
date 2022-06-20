@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.1
+// @version       1.7.2
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3423,6 +3423,9 @@ const arrayDELISTEDorange = [
 ];
 const arrayDELISTED = [
 'fall-guys-ps4',
+'cybxus-heart-ps4-3',
+'aborigenus-ps4-2',
+'castle-of-no-escape-2-ps4-2',
 'nightmares-from-the-deep-3-davy-jones-ps4',
 'nightmares-from-the-deep-2-the-sirens-call-ps4',
 'walking-dead-the-final-season-ps4-1',
@@ -3759,7 +3762,11 @@ function measureText(str, fontSize) {
 
                 //let averageprogress = topstats[8].outerText.split("average progress")[0];
                 let averageprogress = topstats[8].innerHTML.split('title="')[1].split('%')[0].split('.')
-                averageprogress = [averageprogress[0], averageprogress[1].slice(0, 1)].join('.')
+
+                if (averageprogress.length > 1) {
+                    averageprogress = ([averageprogress[0], averageprogress[1].slice(0, 1)].join('.'))
+                }
+                
                 //console.log(averageprogress);
 
                 let level = topstats[0].children[0].innerText;
