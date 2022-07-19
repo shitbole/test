@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.2
+// @version       1.7.3
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3424,6 +3424,8 @@ const arrayDELISTEDorange = [
 const arrayDELISTED = [
 'fall-guys-ps4',
 'cybxus-heart-ps4-3',
+'grand-theft-auto-3-ps4',
+'grand-theft-auto-vice-city-ps4',
 'aborigenus-ps4-2',
 'castle-of-no-escape-2-ps4-2',
 'nightmares-from-the-deep-3-davy-jones-ps4',
