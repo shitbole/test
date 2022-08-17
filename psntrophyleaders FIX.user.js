@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.3
+// @version       1.7.5
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -56,7 +56,6 @@ GM_addStyle ( `
     .filter-row, .recent-trophies {
         background-color: #1d2126 !important;
     }
-
     `/*tr.oddrow, tr.odd {
         background-color: #c8c8c8;
     }
@@ -3420,11 +3419,16 @@ const arrayDELISTEDorange = [
 'will-a-wonderful-world-ps4-1',
 'godzilla-ps4',
 'walking-dead-the-telltale-series-collection-ps4',
+'sherlock-holmes-the-devils-daughter-ps4',
+'sherlock-holmes-the-devils-daughter-ps4-1',
+'sherlock-holmes-the-devils-daughter-ps4-2',
+'sherlock-holmes-crimes-and-punishments-ps4-ps3',
 ];
 const arrayDELISTED = [
 'fall-guys-ps4',
 'cybxus-heart-ps4-3',
 'grand-theft-auto-3-ps4',
+'bellator-ps3',
 'grand-theft-auto-vice-city-ps4',
 'aborigenus-ps4-2',
 'castle-of-no-escape-2-ps4-2',
@@ -3470,6 +3474,9 @@ const arrayDIGITAL = [
 'tales-from-the-borderlands-ps4',
 'walking-dead-the-final-season-ps4',
 'sly-3-psvita',
+'assassins-creed-chronicles-china-ps4',
+'assassins-creed-chronicles-india-ps4',
+'assassins-creed-chronicles-russia-ps4',
 'walking-dead-the-final-season-ps4-1',
 ];
 const arrayREMOVEVITA = [
@@ -3623,7 +3630,7 @@ function measureText(str, fontSize) {
                 let userName = userInfo.children[0].children[0].innerText.replace(/\s/g,'')
                 console.log()
                 let userAbout = "[w[%^jsj211~]|__~!=mom"
-                if (userInfo.children[2]) {
+                if (userInfo.children[2] && userInfo.children[2].innerText) {
                     userAbout = userInfo.children[2].innerText
                 }
                 let flagdata = userInfo.children[0].children[1].innerHTML.split('="')
@@ -4350,10 +4357,12 @@ function checkRegion(row) {
     }
     else {
         let discpos = row.getElementsByClassName('gametitle')[0].parentNode.children[row.getElementsByClassName('platformlabel').length]
-        if (discpos.innerHTML.slice(39, 48) == 'Disc-only') {
-            row.getElementsByClassName('gametitle')[0].parentNode.removeChild(discpos);
-            addTag(row, 'PHYSICAL')
-            //console.log('removed disc')
+        if (discpos) {
+            if (discpos.innerHTML.slice(39, 48) == 'Disc-only') {
+                row.getElementsByClassName('gametitle')[0].parentNode.removeChild(discpos);
+                addTag(row, 'PHYSICAL')
+                //console.log('removed disc')
+            }
         }
         else {
             if (arrayPHYSICAL.includes(game)) {
@@ -4548,17 +4557,20 @@ function moveRowContent(original) {
             dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
         }
     }
+
+
     //console.log(nbn[5+offset].innerText.substring(1, 3))
 
 	const date = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split('on ')[1].substring(0, 12).replace('i', ''): '';
 	const timestamp = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split(date)[1].substring(0, 12).replace('i', ''): '';
-	const timer = dateHTML.innerText.split('in ')[1];
+	var timer = dateHTML.innerText.split('in ')[1];
 	const trophies = original.getElementsByClassName('title-cell')[0].innerText;
 	let trophyHTML = original.getElementsByClassName('hasplatcell')[0];
     var date_colour = 'rgb(10, 10, 10)'
     if (dateHTML.style.color === 'rgb(136, 170, 85)') {
         date_colour = 'rgb(116, 150, 45)'
     }
+
 	original.getElementsByClassName('difficultyText')[0].innerHTML = dateHTML.innerHTML;
 	original.getElementsByClassName('difficultyText')[0].innerText = date;
 	original.getElementsByClassName('difficultyText')[0].style.color = date_colour;
@@ -4612,6 +4624,9 @@ function moveRowContent(original) {
 
 	original.getElementsByClassName('progress-cell')[0].removeChild(original.getElementsByClassName('progperc')[0]);
 	if (timer) {
+        if (timer == ".") {
+            timer = '0 seconds'
+        }
 		let newTimer = document.createElement('div');
 		newTimer.innerHTML = timer;
 		newTimer.style.color = dateHTML.style.color;
@@ -4676,11 +4691,23 @@ function modifyProgressBar(row) {
 		newProgressBar.style = "width: 240px; height: 59px; display: flex; flex-direction: column; justify-content: center; align-items:center";
 		newProgressBar.classList.add('progress-cell');
 		newProgressBar.innerHTML = `
-	<div class="prog; display:inline-block" style="display: flex; align-items: center; height: 20px; width: 100%">
-	<div class="progresscontainer stacked softshadow" style="width: calc(100% - 80px)">
-	  <div class="progressbar" style="float: left; width: ${percent}%;"></div>
+	<div
+        class="prog; display:inline-block"
+        style="display: flex; align-items: center; height: 20px; width: 100%"
+    >
+	<div
+        class="progresscontainer stacked softshadow"
+        style="width: calc(100% - 80px)">
+	  <div
+          class="progressbar" style="float: left; width: ${percent}%;">
+      </div>
 	</div>
-	<div style="margin-left: 10px; width: 10px; font-weight: bold; color: green;"> ${percent}% </div>
+
+
+
+
+
+    <div style="margin-left: 10px; width: 10px; font-weight: bold; color: green;"> ${percent}% </div>
 	</div>
 	<div style="color: black; width: 166px; text-align: right;  font-size: 16px"> <b>${num}</b> /</span>  <span  style="font-size: 10pt">${denum}</span></div>
 	`;
