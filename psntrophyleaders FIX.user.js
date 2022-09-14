@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.5
+// @version       1.7.6
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3708,8 +3708,13 @@ function measureText(str, fontSize) {
 
 
                 remove(document.querySelector("#displaySummary"))
+
+
                 let maincontainer = document.getElementById('maincontainer');
-                maincontainer.style = 'margin-left: 310px'
+                maincontainer.style = 'margin: 0 auto !important;'
+
+                let content = document.getElementsByClassName('content')[0];
+                content.style = 'margin-left: -160px !important;'
 
                 //grabbing info
                 let childarray = document.getElementsByClassName('userstats')[0].children[0].children[0].children;
@@ -3971,7 +3976,7 @@ height: 200px; !important
                 links.children[0].style = `background-color: #1d2126; !important"`
                 links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
 
-                document.getElementById('mainbody').style = `box-shadow: 145px 145px 50px 145px #000;`
+                document.getElementById('mainbody').style = `box-shadow: -10px 145px 50px 145px #000;`
 
                 let table = document.getElementById('usergamelist');
                 table.style.tableLayout = 'fixed';
@@ -4626,6 +4631,9 @@ function moveRowContent(original) {
 	if (timer) {
         if (timer == ".") {
             timer = '0 seconds'
+        }
+        else {
+            timer = timer.slice(0, -1)
         }
 		let newTimer = document.createElement('div');
 		newTimer.innerHTML = timer;
