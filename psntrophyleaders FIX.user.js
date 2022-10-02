@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.6
+// @version       1.7.7
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3650,7 +3650,7 @@ function measureText(str, fontSize) {
                                     <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
 
 
-                                    <big style="width: 150px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
+                                    <big style="width: 250px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
                                     `
                 }
                 else {
@@ -3658,7 +3658,7 @@ function measureText(str, fontSize) {
                                     <span style="display: inline-block;"><span class="flag" title="${flag1}"></span><img src="${flag2}" alt="${flag3}" title="${flag4}" width="50" height="auto"></span>
 
 
-                                    <big style="width: 150px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
+                                    <big style="width: 250px; text-align: left; color: #fff; font-size: 21px; font-weight: bold; position:absolute; top:0px; left:60px;">${userName}</big>
 
                                     <div style="position: absolute; top:37px; left:15px;">
                                          <div style="width: 0px;height: 0px;
@@ -4180,8 +4180,11 @@ function injectLoadingBar() {
 	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
 	newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
   newLoadingBar.classList = ["loadingBar"];
-
-	insertBefore(newLoadingBar, document.getElementsByClassName('container')[1].previousSibling);
+    let point = 1
+    if (document.getElementsByClassName('container')[2]) {
+        point = 2
+    }
+	insertBefore(newLoadingBar, document.getElementsByClassName('container')[point].previousSibling);
 	//document.getElementById('social_media').parentElement.style = "width: 900px; margin: 0 auto; display:flex; justify-content: space-between;";
 	// document.getElementById('social_media').parentElement.append(newLoadingBar);
 
@@ -4532,20 +4535,24 @@ function addTag(row, label) {
 function moveRowContent(original) {
 	let offset = original.getElementsByClassName('platformlabel').length - 1;
     let FirstTag = original.getElementsByClassName('platformlabel')[0].innerText
-
+    //                                                                                                         console.log("got innerText")
     let gameIMG = original.getElementsByClassName('game-image-cell')[0]
+    //                                                                                                          console.log("got game-image-cell")
     let newGameIMG = document.createElement('span');
     if (gameIMG.naturalHeight > 1) {
         newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#001118; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
         insertBefore(newGameIMG, original.getElementsByClassName('game-image-cell')[0])
         original.getElementsByClassName('game-image-cell')[0].remove()
     }
+    //                                                                                                              console.log("fixed image height")
     var flagoffset = 6
 	const difficulty = original.getElementsByClassName('difficultyText')[0].children[0];
+    //                                                                                                          console.log("got dificulty")
 	const completionRateString = original.getElementsByClassName('difficultyText')[0].children[1];
+     //                                                                                                     console.log("got date1")
     var dateHTML
     var nbn = original.getElementsByClassName('title-cell')[0].children
-
+     //                                                                                                     console.log("got date2")
     if (nbn[6+offset].innerText.substring(1, 3) === 'of' | nbn[6+offset].innerText.substring(1, 3) === 'om') {
         dateHTML = original.getElementsByClassName('title-cell')[0].children[6+offset];
     }
@@ -4562,12 +4569,14 @@ function moveRowContent(original) {
             dateHTML = original.getElementsByClassName('title-cell')[0].children[5+offset];
         }
     }
-
+    //                                                                                                      console.log("got date3")
 
     //console.log(nbn[5+offset].innerText.substring(1, 3))
-
+    //                                                                                                            console.log("starting replace1")
 	const date = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split('on ')[1].substring(0, 12).replace('i', ''): '';
+    //                                                                                                            console.log("got replace1")
 	const timestamp = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split(date)[1].substring(0, 12).replace('i', ''): '';
+    //                                                                                                            console.log("got replace2")
 	var timer = dateHTML.innerText.split('in ')[1];
 	const trophies = original.getElementsByClassName('title-cell')[0].innerText;
 	let trophyHTML = original.getElementsByClassName('hasplatcell')[0];
@@ -4596,13 +4605,15 @@ function moveRowContent(original) {
 	let newPlatCell = document.createElement('span');
 	newPlatCell.innerHTML = '<img width="15px" height="15px" style="float: left" src="/images/platinum.png">'
 	if (trophyHTML) insertBefore(newPlatCell, original.getElementsByClassName('title gold')[0])
-
+    //                                                                                                            console.log("starting replace")
 	let fraction = '';
 	if (trophies.includes('Completed all')) {
 		let n = trophies.split('Completed all ')[1].split(' trophies')[0]
 		fraction = `${n}/${n}`
-  } else {
-		fraction = trophies.split(' trophies')[0].split('ints)')[1].replace(' of ', '/');
+    }
+    else {
+		fraction = trophies.split(' trophies. ')[0].split('ints)')[1].replace(' of ', '/');
+        //                                                                                          console.log(trophies)
 		original.getElementsByClassName('title-cell')[0].removeChild(original.getElementsByClassName('title-cell')[0].getElementsByTagName('br')[1].nextSibling)
 	}
 	let newFraction = document.createElement('span');
