@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.7
+// @version       1.7.8
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -4610,11 +4610,13 @@ function moveRowContent(original) {
 	if (trophies.includes('Completed all')) {
 		let n = trophies.split('Completed all ')[1].split(' trophies')[0]
 		fraction = `${n}/${n}`
+        //console.log('debug1')
     }
     else {
-		fraction = trophies.split(' trophies. ')[0].split('ints)')[1].replace(' of ', '/');
+		fraction = trophies.split(' trophies.')[0].split('ints)')[1].replace(' of ', '/');
         //                                                                                          console.log(trophies)
 		original.getElementsByClassName('title-cell')[0].removeChild(original.getElementsByClassName('title-cell')[0].getElementsByTagName('br')[1].nextSibling)
+        //console.log('debug2')
 	}
 	let newFraction = document.createElement('span');
     //console.log(fraction)
