@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.8
+// @version       1.7.9
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3415,6 +3415,8 @@ const arrayVR = [
 
 ]
 const arrayDELISTEDorange = [
+'babylons-fall-ps5',
+'babylons-fall-ps4',
 'will-a-wonderful-world-ps4-2',
 'will-a-wonderful-world-ps4-1',
 'godzilla-ps4',
