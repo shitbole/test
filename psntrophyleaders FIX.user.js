@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.7.9
+// @version       1.8.0
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -2847,7 +2847,7 @@ const arrayGR =[
 'wolfenstein-the-new-order-ps4-1',
 ];
 const arrayES =[
-'',
+'dfgjihgfhijfdsihufdshijfshjigdfihjgfdihjkgfdshijkgfdshjkifdghjfdghjikdsghjikdsfhjikgdhjgdhsjikghijsdfhjiggiojionh32huir3hjusiuhj',
 ];
 const arrayRU =[
 'rayman-origins-ps3-1',
@@ -3417,6 +3417,7 @@ const arrayVR = [
 const arrayDELISTEDorange = [
 'babylons-fall-ps5',
 'babylons-fall-ps4',
+'assetto-corsa-ps4-1',
 'will-a-wonderful-world-ps4-2',
 'will-a-wonderful-world-ps4-1',
 'godzilla-ps4',
@@ -3595,7 +3596,7 @@ function measureText(str, fontSize) {
         //}
         console.log("code 1")
     }
-    else if (((document.URL.split('/').length) === 6) | ((document.URL.split('/').length) === 4)) {
+    else if ((((document.URL.split('/').length) === 7) && (document.URL.split('/')[3] === '')) || ((document.URL.split('/').length) === 6) || ((document.URL.split('/').length) === 4)) {
 			// Modify style so it shows horizontal scrolls too
 			let page = document.getElementById('page');
 			page.style = 'overflow: unset !important;'
@@ -3899,6 +3900,9 @@ function measureText(str, fontSize) {
                         }
                     });
                 }
+                if (worldRankChange.slice(-6) == "points") {
+                    worldRankChange = '='
+                }
                 let changeColour = '#CCC';
                 if (worldRankChange.slice(0, 1) == "+") {
                     changeColour = '#3C0'
@@ -3999,35 +4003,46 @@ height: 200px; !important
             }
         }
     }
-    else if ((document.URL.split('/').length) === 7) {
-        injectLoadingBar();
-        checkRegion(null);
-	    inlineTitleTags();
-        parseGameDetails();
+    else if (((document.URL.split('/').length) === 7) || ((document.URL.split('/')[3] === 'user') && ((document.URL.split('/').length) === 8))) {
+
+        if ((((document.URL.split('/').length) === 7)/* && (document.URL.split('/')[6] === '')*/) || (((document.URL.split('/').length) === 8) && (document.URL.split('/')[7] === ''))) {
+            if (document.getElementById('individual_swirl')) {
+                console.log('detected viewing trophy without user')
+            }
+            else {
+                injectLoadingBar();
+                checkRegion(null);
+                inlineTitleTags();
+                parseGameDetails();
 
 
-        let gamesHeader = document.getElementById('gamesHeader').parentNode.children[1].style = `width:100%;height:25px; background-color: #1d2126;`;
+                let gamesHeader = document.getElementById('gamesHeader').parentNode.children[1].style = `width:100%;height:25px; background-color: #1d2126;`;
 
-        let links = document.getElementById('links').parentNode.parentNode.parentNode;
-        links.children[0].style = `background-color: #1d2126; !important"`
-        links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
+                let links = document.getElementById('links').parentNode.parentNode.parentNode;
+                links.children[0].style = `background-color: #1d2126; !important"`
+                links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
 
-        document.getElementById('mainbody').style = `box-shadow: 0px -11px 20px 0px #000;`
+                document.getElementById('mainbody').style = `box-shadow: 0px -11px 20px 0px #000;`
 
-        let table = document.getElementById('game_details_table');
-        let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-			totalProgress = rows.length;
-				var loadingInterval = setInterval(() => {
-					if (currentProgress >= totalProgress) {
-						clearInterval(loadingInterval);
-						return;
-					}
-					modifyProgressBar(rows[currentProgress]);
-					currentProgress++;
-					updateLoadingBar(currentProgress, totalProgress);
-				}, 1);
-        console.log("code 4")
-    //return // game + user
+                let table = document.getElementById('game_details_table');
+                let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+                totalProgress = rows.length;
+                var loadingInterval = setInterval(() => {
+                    if (currentProgress >= totalProgress) {
+                        clearInterval(loadingInterval);
+                        return;
+                    }
+                    modifyProgressBar(rows[currentProgress]);
+                    currentProgress++;
+                    updateLoadingBar(currentProgress, totalProgress);
+                }, 1);
+                console.log("code 4")
+                //return // game + user
+            }
+        }
+        else {
+            console.log("code 444")
+        }
     }
     else if ((document.URL.split('/').length) === 8) {
         console.log("code 5")
@@ -4751,7 +4766,7 @@ function parseGameDetails() {
 	const completionRateString = document.getElementsByClassName('difficultyText')[0].children[1];
     let newEl = document.createElement('div');
     var num1, denom1, difficultyPoints
-    if ((document.URL.split('/').length) === 6) {
+    if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
         num1 = document.getElementsByClassName('center')[0].children[0].innerText;
         denom1 = document.getElementsByClassName('center')[0].children[1].children[0].children[0].innerText;
         difficultyPoints = completionRateString.innerText.split('/')[0].split(' ')[1];
@@ -4760,6 +4775,7 @@ function parseGameDetails() {
         trophies.style = `border-top: unset; padding-left: 210px`
     }
     else {
+
         num1 = completionRateString.innerText.split('/')[0].split(' ')[1];
         denom1 = completionRateString.innerText.split('/')[1].split(' ')[1];
         difficultyPoints = completionRateString.innerText.split('(')[1].split(')')[0].split(' ')[0]
@@ -4793,23 +4809,30 @@ function parseGameDetails() {
             document.getElementsByClassName('sub')[2].style.display = 'none';
         }
         else {
-            document.getElementsByClassName('sub')[1].style.display = 'none';
+            if (document.getElementsByClassName('sub')[1]) {
+                document.getElementsByClassName('sub')[1].style.display = 'none';
+            }
         }
-        document.getElementsByClassName('gamebreadcrumb')[1].style.display = 'none';
-        //const width = document.getElementsByClassName('page-header')[0].offsetWidth - document.getElementsByClassName('gameImage')[0].offsetWidth - 50;
-        //console.log(width)
-        //650 = correct, 850 = wrong
-        document.getElementsByClassName('progress_float')[0].style = `width: ${650}px; margin-left: 0px; margin-top: 35px !important; display: flex; justify-content: flex-end`;
-        document.getElementsByClassName('progress_float')[0].children[0].style.display = "none";
-        document.getElementsByClassName('progress_float')[0].getElementsByClassName('progresscontainer')[0].style.width = "166px";
-        document.getElementsByClassName('progress_float')[0].children[1].style.marginRight = '10px';
+        if (document.getElementsByClassName('gamebreadcrumb')[1]) {
+            document.getElementsByClassName('gamebreadcrumb')[1].style.display = 'none';
+        }
+        console.log(document.URL.split('/')[3])
+        if (document.URL.split('/')[3] === 'user') {
+            //const width = document.getElementsByClassName('page-header')[0].offsetWidth - document.getElementsByClassName('gameImage')[0].offsetWidth - 50;
+            //console.log(width)
+            //650 = correct, 850 = wrong
+            document.getElementsByClassName('progress_float')[0].style = `width: ${650}px; margin-left: 0px; margin-top: 35px !important; display: flex; justify-content: flex-end`;
+            document.getElementsByClassName('progress_float')[0].children[0].style.display = "none";
+            document.getElementsByClassName('progress_float')[0].getElementsByClassName('progresscontainer')[0].style.width = "166px";
+            document.getElementsByClassName('progress_float')[0].children[1].style.marginRight = '10px';
 
-        document.getElementsByClassName('trophy_totals')[0].style = `border-top: unset; width: ${650}px; display: flex; justify-content: flex-end; position: absolute; margin-top: 15px;`;
-        document.getElementsByClassName('trophy_totals')[0].getElementsByClassName('total')[0].style = 'border-left: unset; color: white !important;';
-        remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
+            document.getElementsByClassName('trophy_totals')[0].style = `border-top: unset; width: ${650}px; display: flex; justify-content: flex-end; position: absolute; margin-top: 15px;`;
+            document.getElementsByClassName('trophy_totals')[0].getElementsByClassName('total')[0].style = 'border-left: unset; color: white !important;';
+            remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
+        }
     }
     }, 150);
-    if ((document.URL.split('/').length) === 6) {
+    if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
         let user = ''
         let usr = document.getElementsByClassName('username')[0]
         if (usr) {
