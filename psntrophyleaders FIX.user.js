@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.0
+// @version       1.8.2
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -17,6 +17,20 @@ GM_addStyle ( `
     }
     .mainBG {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+    }
+   .progresscontainer {
+       background-color: #292b2f !important;
+       height: 5px !important;
+       border: 0px !important;
+       padding: 1px !important;
+       border-radius: 999px !important;
+    }
+   .progressbar {
+       background-color: #e1e1e1 !important;
+       height: 5px !important;
+       border: 0px !important;
+       padding: 0px !important;
+       border-radius: 999px !important;
     }
     #subnav {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
@@ -56,13 +70,21 @@ GM_addStyle ( `
     .filter-row, .recent-trophies {
         background-color: #1d2126 !important;
     }
-    `/*tr.oddrow, tr.odd {
-        background-color: #c8c8c8;
+`
+
+
+/*
+   tr.oddrow, tr.odd {
+        background-color: #2e3236;
     }
     tr.evenrow, tr.even {
-        background-color: #bcbcbc;
+        background-color: #24282c;
     }
-`*/
+    a.game-title {
+       color: #dfdfdf !important;
+   }
+*/
+
 );
 
 
@@ -3429,6 +3451,7 @@ const arrayDELISTEDorange = [
 ];
 const arrayDELISTED = [
 'fall-guys-ps4',
+'catan-ps3',
 'cybxus-heart-ps4-3',
 'grand-theft-auto-3-ps4',
 'bellator-ps3',
@@ -3630,7 +3653,7 @@ function measureText(str, fontSize) {
             else{
                 injectLoadingBar();
                 let userInfo = document.getElementsByClassName('userInfo')[0];
-                let userName = userInfo.children[0].children[0].innerText.replace(/\s/g,'')
+                let userName = userInfo.children[0].children[0].innerText.replace(/\s/g,'').split('(')[0]
                 console.log()
                 let userAbout = "[w[%^jsj211~]|__~!=mom"
                 if (userInfo.children[2] && userInfo.children[2].innerText) {
@@ -3771,7 +3794,8 @@ function measureText(str, fontSize) {
                 let gamecount = topstats[2].outerText.split("games")[0].replace(',', '');
                 //console.log(gamecount);
 
-                let trophycount = document.getElementsByClassName("rankhead")[0].children[0].innerText.split('(')[1].split(')')[0].replace(',', '');
+                let commatrophycount = document.getElementsByClassName("rankhead")[0].children[0].innerText.split('(')[1].split(')')[0];
+                let trophycount = commatrophycount.replace(',', '');
                 //console.log(trophycount);
 
                 let trophiesperday = topstats[6].outerText.split("trophies per day")[0].slice(0, -1);
@@ -3837,8 +3861,10 @@ function measureText(str, fontSize) {
                                                                <big style="width: 80px; text-align: left; font-size: 25px; font-weight: bold; position:absolute; bottom:26px; right:555px;">${level}</big>
                                                                <img style="position:absolute; bottom:14px; right:635px;" width=auto height=55px  src="${imagesource}">
 
-                                                               <div style="width: 90px; height: 4px; position:absolute; bottom:6px; right:580px; background-color: #1d2126; border-style: solid; border-width:1px; border-color: #ccc">
-                                                                    <div style="width: ${levelpercent}; height: 4px; background-color: #09F;">
+
+
+                                                               <div style="width: 90px; height: 4px; position:absolute; bottom:6px; right:580px;" class="progresscontainer stacked softshadow">
+                                                                    <div style="width: ${levelpercent}; height: 4px;" class="progressbar">
 
                                                                     </div>
                                                                </div>
@@ -3939,6 +3965,94 @@ height: 200px; !important
                 //document.getElementsByClassName("rankhead")[1].parentNode.outerText = "asdfasdfasdfrds:"
 
 
+                let totalTrophiesBoard = document.createElement("div");
+                totalTrophiesBoard.id = ["testaaa"];
+                totalTrophiesBoard.style=`width: 160px; height: 1px; position:relative; font-family: Helvetica; image-rendering: crisp-edges; text-align: center; background-color: rgb(68 68 68)`
+                totalTrophiesBoard.innerHTML = `
+                                                               <small style="color: #CCC; width: 170px; font-size: 12px; position:absolute; bottom:4px; left: -3px;">something
+                                                               </small>
+                                                           `
+
+                //insertBefore(totalTrophiesBoard, document.getElementsByClassName("rankhead")[0].parentNode.parentNode.children[1]);
+
+
+
+
+
+
+
+                //leaderboard clone for total trophies leaderboard
+
+                let inaccurate = document.getElementsByClassName("cheatermessage")[0]
+                if (inaccurate) {
+                    console.log('__skip')
+                }
+                else {
+                    let newLeaderboard = document.getElementsByClassName("rankhead")[0].parentNode.parentNode.parentNode.children[6]
+                    let cloneLeaderboard = newLeaderboard.cloneNode(true);
+                    GM_xmlhttpRequest({
+                        method: 'GET',
+                        url: `https://psntrophyleaders.com/leaderboard/main/?sort=total_trophies-desc&user=${userName}`,
+                        responseType: 'document',
+                        onload: function(res) {
+                            //console.log(res.response.body);
+                            let main_dat = Array.from(res.response.body.getElementsByClassName('tablerow user highlighted'))[0].outerText
+                            let totaltrophies_rank = main_dat.split('\n')[1].replace(/\s/g,'')
+                            let totaltrophies_rank_difference = main_dat.split('\n')[9].replace(/\s/g,'')
+                            let change_name = 'not changed'
+                            let change_color = 'CCC'
+                            if (totaltrophies_rank_difference.slice(0,1) == "-") {
+                                change_name = 'decreased'
+                                change_color = '#E30'
+                            }
+                            else if (totaltrophies_rank_difference.slice(0,1) == "+") {
+                                change_name = 'increased'
+                                change_color = '#3C0'
+                            }
+                            else {
+                                change_name = 'not changed'
+                                change_color = 'CCC'
+                            }
+                            //console.log(main_dat.split('\n')[9].replace(/\s/g,''))
+                            //console.log(main_dat.split('\n'))
+                            //console.log(totaltrophies_rank)
+
+
+
+
+
+
+                            cloneLeaderboard.innerHTML = newLeaderboard.innerHTML
+                            insertBefore(cloneLeaderboard, newLeaderboard)
+                            //newLeaderboard.style.display = 'none';
+                            cloneLeaderboard.classList.add("clonedLB");
+
+                            //console.log(newLeaderboard.innerHTML)
+                            newLeaderboard.innerHTML = `
+
+                                              <td style="text-align: right">
+                                                  <big>${totaltrophies_rank}</big>
+                                              </td>
+                                              <td>
+                                                 <small>
+                                                    <a href="https://psntrophyleaders.com/leaderboard/main/?sort=total_trophies-desc&user=${userName}" style="font-size: 1.1em; color: #06C; font-weight: bold;">Total Trophies
+                                                    </a>
+                                                    <span title="${userName}'s rank has ${change_name} by ${totaltrophies_rank_difference.slice(1)} this week on the Total Trophies Leaderboard" class="week_change"><span style="color:${change_color}">${totaltrophies_rank_difference}</span></span><br>${commatrophycount} <span style="font-size: .8em;">trophies
+                                                    </span>
+                                                 </small>
+                                              </td>
+                    `
+                        },
+                        onerror: function(res) {
+                            console.log('could not locate total trophy rank');
+                        }
+                    });
+
+                    //newLeaderboard.innerHTML + (`<a href="https://psntrophyleaders.com/leaderboard/main/?sort=total_trophies-desc&user=${userName}">test</a>`)
+                }
+
+
+
 
 
 
@@ -3954,14 +4068,16 @@ height: 200px; !important
 
 
 
+
+
+
+
+
                 let otherLeaderboardsPadding = document.createElement("div");
                 otherLeaderboardsPadding.id = ["otherLeaderboardsPadding"];
                 otherLeaderboardsPadding.style=`width: 160px; height: 36px; position:relative; font-family: Helvetica; image-rendering: crisp-edges; text-align: center;`
                 insertBefore(otherLeaderboardsPadding, document.getElementsByClassName("rankhead")[1]);
                 document.getElementsByClassName("rankhead")[1].remove()
-
-
-
 
 
 
@@ -4194,7 +4310,7 @@ function addTagGame(row, label) {
 
 function injectLoadingBar() {
 	let newLoadingBar = document.createElement('div');
-	newLoadingBar.style = 'width: 300px; height: 50px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
+	newLoadingBar.style = 'width: 300px; height: 40px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
 	newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
   newLoadingBar.classList = ["loadingBar"];
     let point = 1
@@ -4213,8 +4329,13 @@ function updateLoadingBar(currentProgress, totalProgress) {
 	if (loadingBar && loadingBar.children[0]) {
 		loadingBar.children[1].children[0].style = "float: left; width:" + currentProgress/totalProgress*100 + "%";
 		loadingBar.children[0].children[0].innerHTML = currentProgress + " / " + totalProgress;
-		loadingBar.children[0].children[1].innerHTML = (currentProgress/totalProgress*100).toFixed(1) + "%";
-	}
+        if (currentProgress === totalProgress) {
+            loadingBar.children[0].children[1].innerHTML = "100%";
+        }
+        else {
+            loadingBar.children[0].children[1].innerHTML = (currentProgress/totalProgress*100).toFixed(1) + "%";
+        }
+    }
 }
 
 function checkRegion(row) {
@@ -4608,20 +4729,18 @@ function moveRowContent(original) {
 	original.getElementsByClassName('difficultyText')[0].style.fontWeight = 'bold';
 	original.getElementsByClassName('difficultyText')[0].classList = [];
 
-	dateHTML.innerHTML = dateHTML.innerHTML;
+	//dateHTML.innerHTML = dateHTML.innerHTML;
 	dateHTML.innerText = timestamp;
-	dateHTML.style.color = dateHTML.style.color;
+	//dateHTML.style.color = dateHTML.style.color;
 	dateHTML.style.fontWeight = 'bold';
-    if (FirstTag == "PS5") original.getElementsByClassName('title-cell')[0].style.verticalAlign = `middle`;
+    if (FirstTag == "PS5") {
+        original.getElementsByClassName('title-cell')[0].style.verticalAlign = `middle`;
+    }
     original.getElementsByClassName('title-cell')[0].style.width = `100%`;
 	original.getElementsByClassName('title-cell')[0].colSpan = 'unset';
 	original.getElementsByClassName('image-cell')[0].style.width = '105px';
 
-	if (trophyHTML) original.removeChild(trophyHTML)
 
-	let newPlatCell = document.createElement('span');
-	newPlatCell.innerHTML = '<img width="15px" height="15px" style="float: left" src="/images/platinum.png">'
-	if (trophyHTML) insertBefore(newPlatCell, original.getElementsByClassName('title gold')[0])
     //                                                                                                            console.log("starting replace")
 	let fraction = '';
 	if (trophies.includes('Completed all')) {
@@ -4637,15 +4756,23 @@ function moveRowContent(original) {
 	}
 	let newFraction = document.createElement('span');
     //console.log(fraction)
-	newFraction.innerHTML = fraction;
+	newFraction.innerHTML = `<div style="display: flex; justfy center"><span style="flex: 1; text-align:right; margin-right: 2px; font-size: 10pt;">${fraction.split("/")[0]}</span> / <span style="flex: 1; text-align:left; margin-left: 2px; font-size: 8pt;">${fraction.split("/")[1]}</span></div>`
+    //console.log(fraction.split("/"))
 	newFraction.style = 'float: right; color: #888';
-	original.getElementsByClassName('title bronze')[0].append(newFraction);
+	
+
+
+    let newProgressdd = document.createElement('div');
+	newProgressdd.innerHTML = newFraction.innerHTML;
+    newProgressdd.style = 'float: right; color: #888';
+	newProgressdd.style.marginLeft = '10px';
+    newProgressdd.style.width = '10px';
+    original.getElementsByClassName('title bronze')[0].append(newProgressdd);
 
 	let progressPerc = original.getElementsByClassName('progperc')[0];
 	let newProgressPerc = document.createElement('div');
 	newProgressPerc.innerHTML = progressPerc.innerHTML;
 	newProgressPerc.style.marginLeft = '10px';
-
     newProgressPerc.style.width = '10px';
 
 	original.getElementsByClassName('progresscontainer')[0].parentElement.style.display = 'flex';
@@ -4655,10 +4782,14 @@ function moveRowContent(original) {
 	original.getElementsByClassName('progress')[0].style.width = '90%';
 	original.getElementsByClassName('prog;')[0].append(newProgressPerc);
 
+    original.getElementsByClassName('progress-cell')[0].style = 'padding-right: 0px; text-align: center;';
 	original.getElementsByClassName('progress-cell')[0].style.width = '150px';
 
+
 	original.getElementsByClassName('progress-cell')[0].removeChild(original.getElementsByClassName('progperc')[0]);
-	if (timer) {
+	let plat_cell_offset = 0
+    if (timer) {
+        plat_cell_offset = 38
         if (timer == ".") {
             timer = '0 seconds'
         }
@@ -4667,10 +4798,24 @@ function moveRowContent(original) {
         }
 		let newTimer = document.createElement('div');
 		newTimer.innerHTML = timer;
+        newTimer.style = "text-align: center;"
 		newTimer.style.color = dateHTML.style.color;
+        newTimer.style.paddingTop = '2px';
 		newTimer.style.fontWeight = dateHTML.style.fontWeight;
 		original.getElementsByClassName('progress-cell')[0].append(newTimer)
 	}
+    else {
+        plat_cell_offset = 31
+    }
+
+	if (trophyHTML){
+        original.removeChild(trophyHTML)
+        let newPlatCell = document.createElement('div');
+        newPlatCell.style ='width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI;'
+        newPlatCell.innerHTML = `<div style="position:absolute; left:-35px; top:-${plat_cell_offset}px;"><img width="auto" height="40px" float="left"  src="https://i.imgur.com/VnkHuFc.png">`
+        //insertBefore(newPlatCell, original.getElementsByClassName('title gold')[0])
+        original.getElementsByClassName('progress-cell')[0].append(newPlatCell)
+    }
 
 	let newEl = document.createElement('td');
 	const num1 = completionRateString.innerText.split('/')[0].split(' ')[1];
@@ -4681,8 +4826,8 @@ function moveRowContent(original) {
 
 	newEl.innerHTML = `
 	<div style="display: flex; justfy center"> <span style="flex: 1; text-align:right; margin-right: 2px">Difficulty </span> - <span style="flex: 1; text-align:left; margin-left: 2px"> ${difficulty.outerHTML}</span></div>
-	<div style="display: flex; justfy center"> <span style="flex: 1; text-align:right; margin-right: 2px"">Completion Rate </span> - <span  style="flex: 1; text-align:left; margin-left: 2px""><span style="color: ${difficulty.style.color}"> ${completionpercent.toFixed(1)}%</span> (${num1}/${denom1})</span></div>
-	<div style="display: flex; justfy center"> <span style="flex: 1; text-align:right; margin-right: 2px"">Difficulty Points </span> - <span  style="flex: 1; text-align:left; margin-left: 2px""> ${completionRateString.innerText.split('(')[1].split(')')[0].split(' ')[0]}</span></div>
+	<div style="display: flex; justfy center"> <span style="flex: 1; text-align:right; margin-right: 2px">Completion Rate </span> - <span  style="flex: 1; text-align:left; margin-left: 2px"><span style="color: ${difficulty.style.color}"> ${completionpercent.toFixed(1)}%</span> (${num1}/${denom1})</span></div>
+	<div style="display: flex; justfy center"> <span style="flex: 1; text-align:right; margin-right: 2px">Difficulty Points </span> - <span  style="flex: 1; text-align:left; margin-left: 2px"> ${completionRateString.innerText.split('(')[1].split(')')[0].split(' ')[0]}</span></div>
 	`;
 	newEl.style.width = '75%';
 	original.append(newEl);
