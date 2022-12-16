@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.2
+// @version       1.8.3
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -15,6 +15,19 @@ GM_addStyle ( `
     html, body {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
+    a, a.game-title {
+        
+        text-decoration: none !important;
+        text-decoration-line: none !important;
+        text-decoration-thickness: initial !important;
+        text-decoration-style: initial !important;
+        text-decoration-color: initial !important;
+    }
+    a:hover , a.game-title:hover {
+
+        text-decoration: none !important;
+    }
+
     .mainBG {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
@@ -32,6 +45,9 @@ GM_addStyle ( `
        padding: 0px !important;
        border-radius: 999px !important;
     }
+   .section_content .user_details .progresscontainer {
+       width: 100%;
+   }
     #subnav {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
@@ -69,6 +85,13 @@ GM_addStyle ( `
     }
     .filter-row, .recent-trophies {
         background-color: #1d2126 !important;
+    }
+
+    .gameMain div.platformlabel {
+       -webkit-transform: rotate(0deg)  !important;
+       top: -25px  !important;
+       position: absolute  !important;
+       bottom: auto  !important;
     }
 `
 
@@ -3613,10 +3636,17 @@ function measureText(str, fontSize) {
 
 
     if ((document.URL.split('/')[3]) === "games") {
-        //let rows = document.getElementsByClassName('gameCell');
-        //for (let i = 0; i < rows.length; ++i) {
-        //    checkRegionGame(rows[i]);
-        //}
+
+GM_addStyle ( `
+    .gameTable td {
+        padding-top: 30px !important;
+    }
+`)
+
+        let rows = document.getElementsByClassName('gameCell');
+        for (let i = 0; i < rows.length; ++i) {
+            checkRegionGame(rows[i]);
+        }
         console.log("code 1")
     }
     else if ((((document.URL.split('/').length) === 7) && (document.URL.split('/')[3] === '')) || ((document.URL.split('/').length) === 6) || ((document.URL.split('/').length) === 4)) {
@@ -4103,6 +4133,247 @@ height: 200px; !important
                 let table = document.getElementById('usergamelist');
                 table.style.tableLayout = 'fixed';
                 table.style.width = '1020px'
+
+
+
+
+
+
+
+
+
+
+
+                let cur_userHeader= document.getElementsByClassName("userHeader")[0]
+
+                let __recentTrophies = document.createElement("ul");
+                __recentTrophies.id = ["trophies-recent-container"];
+                __recentTrophies.class = "trophies-recent-container flex"
+                __recentTrophies.style = "text-align:left; display: block; margin-left: auto; margin-right: auto; width: auto; height: 55px; color: #1d2126; background-color: #1d2126; position:relative; !important"
+
+                insertBefore(__recentTrophies, cur_userHeader);
+
+
+                let fff = document.createElement("ul");
+                let cur_recentTrophies = document.getElementsByClassName("hc-preview")
+                console.log(cur_recentTrophies)
+                for (let i = 0; i < cur_recentTrophies.length; ++i) {
+                    let rt = cur_recentTrophies[i]
+                    let __length = rt.length
+                    let __rarity = rt.innerText
+                    let __img = rt.firstChild.children[0].currentSrc
+                    let __trophy_link = rt.children[0].href
+                    let __innerHTML = rt.childNodes[1].innerHTML
+                    let __game_name = rt.getElementsByClassName("game_title")[0].innerText
+                    let __trophy_name = rt.getElementsByClassName("title")[0].innerText
+                    let __trophy_description = rt.getElementsByClassName("description")[0].innerText
+                    let __trophy_timestamp = rt.getElementsByClassName("date_earned")[0].title
+                    let __trophy_timestamp_inner = rt.getElementsByClassName("date_earned")[0].innerText
+                    let __game_link = `https://psntrophyleaders.com/user/view/${__trophy_link.split('/')[5]}/${__trophy_link.split('/')[6]}`
+                    let __game_img = rt.getElementsByClassName("game_image")[0].children[0]
+                    let __game_img_src = __game_img.src
+                    let __trophy_type = rt.getElementsByClassName("title")[0].children[0].className
+                    let __rarity_src = "https://i.imgur.com/y45e4ng.png"
+                    if (__rarity == "Common") {
+                        __rarity_src = "https://i.imgur.com/0LuKHfY.png"
+                    }
+                    else if (__rarity == "Rare") {
+                        __rarity_src = "https://i.imgur.com/ppJobwB.png"
+                    }
+                    else if (__rarity == "Very Rare") {
+                        __rarity_src = "https://i.imgur.com/a00IBi5.png"
+                    }
+                    else if (__rarity == "Ultra Rare") {
+                        __rarity_src = "https://i.imgur.com/y45e4ng.png"
+                    }
+                    else {
+                        __rarity_src = "https://i.imgur.com/y45e4ng.png"
+                    }
+                    let __game_img_height = "91"
+                    if (__game_img.height == __game_img.width) {
+                        __game_img_height = "53"
+                    }
+                    else {
+                        __game_img_height = "91"
+                    }
+                    let __time = __trophy_timestamp_inner.split(' ')[0].replace(/\s/g,'')
+                    console.log(__time)
+                    if (__time == "Lastyear") {
+                      __trophy_timestamp_inner = __trophy_timestamp
+                    }
+
+                    if (__trophy_description.length > 40) {
+                      __trophy_description = __trophy_description.slice(0,40) + "..."
+                    }
+
+                    if (i == 0){
+                        fff.id = "recent-trophies"
+                        fff.className = "recent-trophies flex"
+                    }
+                    let empty = ""
+                    fff.innerHTML = fff.innerHTML + `
+
+			    <li class="${i}" data-id="${i}">
+					<div class="info">
+						<div class="box">
+							<table>
+								<tr class="text container">
+									<td style="width: 100%; padding-left: 56px; text-align:left;">
+										<div class="ellipsis">
+                                            <span class="${__trophy_type}"</span>
+											<b>
+                                                <a class="title" href="${__trophy_link}">
+												    ${__trophy_name}
+											    </a>
+                                            </b>
+
+										</div>
+										<div class="ellipsis">
+											<span>${__trophy_description}</span>
+										</div>
+										<div class="ellipsis">
+											<span class="timestamp_info">
+												<b><span style="color: #74962d">${__trophy_timestamp_inner}</span></b>${empty/*in <a style="color: #4486c6" href="${__game_link}" rel="nofollow">${__game_name}</a>*/}
+											</span>
+										</div>
+				                	    <div class="imgg">
+				                	        <a href="${__game_link}" class="" style="position:absolute; right: 4px; top: 3px;">
+				                	            <picture class="trophy" alt="PLACEHOLDER">
+				                	                <source srcset="${__game_img_src}, ${__game_img_src} 1.1x">
+				                	                <img src="${__game_img_src}" style="background-color:#001118; height:45px; width: auto;" />
+				                	            </picture>
+				                	        </a>
+				                	    </div>
+				                	    <div class="rarityy">
+				                	        <a href="${__game_link}" class="" style="position:absolute; right: ${__game_img_height}px; top: 16px;">
+				                	            <picture class="trophy" alt="PLACEHOLDER">
+				                	                <source srcset="${__rarity_src}, ${__rarity_src} 1.1x">
+				                	                <img src="${__rarity_src}" style="background-color:rgba(0,0,0,0); height:20px; width: auto;" />
+				                	            </picture>
+				                	        </a>
+				                	    </div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="icon">
+						<a href="${__trophy_link}" class="">
+							<picture class="trophy" alt="PLACEHOLDER">
+								<source srcset="${__img}, ${__img} 1.1x">
+								<img src="${__img}" style="background-color:#001118; height:45px; width: auto;" />
+							</picture>
+						</a>
+					</div>
+				</li>
+                    `
+                    __recentTrophies.append(fff)
+                    if (i == cur_recentTrophies.length -1){
+                        //console.log("removing")
+                        remove(document.getElementsByClassName("recent-trophies")[1].children[0].children[0])
+                    }
+                }
+
+                doAnimation()
+
+
+
+
+				GM_addStyle ( `
+
+
+				.flex {
+					display: -moz-box;
+					display: -ms-flexbox;
+					display: flex;
+				}
+				.box {
+					padding-left: 0px;
+					border: 2px solid #5a5e62;
+					position: absolute;
+					left: 2px;
+					width: 394px;
+					height: 51px;
+					border-radius: 5px;
+					background: #ddd;
+				}
+				.box.light {
+					background: #0000ff;
+				}
+				.box + div.title {
+					margin-top: 10px;
+				}
+				*, *:before, *:after {
+				  box-sizing: inherit;
+				}
+
+
+				ul.recent-trophies {
+					margin-bottom: 0px;
+					margin-left: 5px;
+					overflow: hidden;
+					height: 65px;
+					-webkit-justify-content: space-between;
+					justify-content: space-between;
+				}
+				ul.recent-trophies li {
+					display: block;
+					float: left;
+					width: 55px;
+					height: 55px;
+					overflow: hidden;
+					position: relative;
+					background: #1d2126;
+					transition: width 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+				}
+				ul.recent-trophies li.active {
+					width: 400px;
+				}
+				ul.recent-trophies li:last-child {
+					margin-right: 0;
+				}
+				ul.recent-trophies li > div {
+					float: left;
+					position: absolute;
+				}
+				ul.recent-trophies li .info {
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					overflow: hidden;
+					transition: opacity 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+				}
+				ul.recent-trophies li.active .info {
+					opacity: 1;
+				}
+				.text container {
+					border-radius: 5px;
+					background: #ddd;
+				}
+				ul.recent-trophies li .info {
+					padding-left: 40px;
+					width: 400px;
+					height: 100%;
+				}
+				ul.recent-trophies li .info table {
+					height: 100%;
+				}
+				ul.recent-trophies li .icon {
+				margin-left: 7px;
+					padding: 5px 5px 0 0;
+					transition: margin 0.75s cubic-bezier(0.77, 0, 0.175, 1);
+				}
+				ul.recent-trophies li.active .icon {
+					margin-left: 7px;
+				}
+				ul.recent-trophies li:last-child .icon {
+					padding-right: 0px;
+				}
+				`)
+
+
+
                 let rows = document.getElementsByClassName('gamerow');
                 totalProgress = rows.length;
                 var loadingInterval = setInterval(() => {
@@ -4198,7 +4469,83 @@ height: 200px; !important
     //}, 1000);
 })();
 
-/*function checkRegionGame(row) {
+function doAnimation() {
+			var recentTrophy = 0;
+			var shouldSwitchRC = true;
+			var recentTrophies = $('.recent-trophies > li:visible');
+recentTrophies.eq(recentTrophy).addClass('active');
+			function switchRecentTrophy()
+			{
+				if (!shouldSwitchRC)
+				{
+					return;
+				}
+				$('.recent-trophies > li').removeClass('active');
+
+				recentTrophies = $('.recent-trophies > li:visible');
+
+				if (recentTrophy >= (recentTrophies.length - 1))
+				{
+					recentTrophy = 0;
+				}
+				else
+				{
+					recentTrophy++;
+				}
+
+				recentTrophies.eq(recentTrophy).addClass('active');
+			}
+
+			$(function()
+			{
+				$('#recent-trophies').mouseenter(function()
+				{
+					shouldSwitchRC = false;
+				});
+
+				$('#recent-trophies').mouseleave(function()
+				{
+					shouldSwitchRC = true;
+				});
+
+				$('#recent-trophies > li').mouseenter(function()
+				{
+					var that = $(this);
+					if (!that.hasClass('active'))
+					{
+						recentTrophies.eq(recentTrophy).removeClass('active');
+						recentTrophy = that.attr('data-id');
+						that.addClass('active');
+					}
+				});
+
+				setInterval(function()
+				{
+					switchRecentTrophy();
+				}, 3000);
+			});
+
+}
+
+function checkRegionGame(row) {
+
+
+
+
+
+    let _Label = row ? row.getElementsByClassName('platformlabel') : document.getElementsByClassName('platformlabel');
+    for (let i = 0; i < _Label.length; ++i) {
+        let platformlabelstyle = _Label[i].parentNode.children[i]
+        platformlabelstyle.style = `left: ${33*i}px !important;`
+        //console.log(platformlabelstyle)
+    }
+    //console.log(_Label)
+
+
+
+
+
+
 	let url = decodeURI(row.getElementsByClassName('user-select')[0]);
     let game = url.split('/')[5]
     if (arrayVR.includes(game)) addTagGame(row, 'VR')
@@ -4221,11 +4568,19 @@ height: 200px; !important
 
 function addTagGame(row, label) {
     let Label = row ? row.getElementsByClassName('platformlabel') : document.getElementsByClassName('platformlabel');
-    //Label.style = '-webkit-transform: rotate(-180deg)';
+
+    //
+    //Label.style = 'webkit-transform: rotate(-180deg)';
+
 	let lastLabel = Label[Label.length-1];
 	let newLabel = document.createElement('div');
+
+    //
 	//newLabel.style = 'bottom: 37px; height: 14px; line-height: 14px; width: 15px'
-    newLabel.style.left = '-3.5px'
+
+
+
+    newLabel.style.left= `${(Label.length) * 33}px`
     newLabel.style.bottom = '37px'
     newLabel.style.height = '14px'
     newLabel.style.lineHeight = '14px'
@@ -4306,7 +4661,7 @@ function addTagGame(row, label) {
 	newLabel.classList = ['platformlabel']
 
 	insertBefore(newLabel, lastLabel);
-}*/
+}
 
 function injectLoadingBar() {
 	let newLoadingBar = document.createElement('div');
