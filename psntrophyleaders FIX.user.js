@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.4
+// @version       1.8.5
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -39,7 +39,7 @@ GM_addStyle ( `
        border-radius: 999px !important;
     }
    .progressbar {
-       background-color: #e1e1e1 !important;
+       background-color: #aeccff !important;
        height: 5px !important;
        border: 0px !important;
        padding: 0px !important;
