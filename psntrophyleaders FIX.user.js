@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.3
+// @version       1.8.4
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -4189,12 +4189,12 @@ height: 200px; !important
                     else {
                         __rarity_src = "https://i.imgur.com/y45e4ng.png"
                     }
-                    let __game_img_height = "91"
+                    let __game_img_height = 91
                     if (__game_img.height == __game_img.width) {
-                        __game_img_height = "53"
+                        __game_img_height = 53
                     }
                     else {
-                        __game_img_height = "91"
+                        __game_img_height = 91
                     }
                     let __time = __trophy_timestamp_inner.split(' ')[0].replace(/\s/g,'')
                     console.log(__time)
@@ -4202,9 +4202,9 @@ height: 200px; !important
                       __trophy_timestamp_inner = __trophy_timestamp
                     }
 
-                    if (__trophy_description.length > 40) {
+                    /*if (__trophy_description.length > 40) {
                       __trophy_description = __trophy_description.slice(0,40) + "..."
-                    }
+                    }*/
 
                     if (i == 0){
                         fff.id = "recent-trophies"
@@ -4223,19 +4223,23 @@ height: 200px; !important
                                             <span class="${__trophy_type}"</span>
 											<b>
                                                 <a class="title" href="${__trophy_link}">
-												    ${__trophy_name}
+												    <acronym title="${__trophy_name}">${__trophy_name}</acronym>
 											    </a>
                                             </b>
 
 										</div>
-										<div class="ellipsis">
-											<span>${__trophy_description}</span>
+										<div class="ellipsis" style="width: 999px">
+											<span><acronym title="${__trophy_description}">${__trophy_description}</acronym></span>
 										</div>
 										<div class="ellipsis">
 											<span class="timestamp_info">
-												<b><span style="color: #74962d">${__trophy_timestamp_inner}</span></b>${empty/*in <a style="color: #4486c6" href="${__game_link}" rel="nofollow">${__game_name}</a>*/}
+												<b><span style="color: #74962d"><acronym title="${__trophy_timestamp}">${__trophy_timestamp_inner}</acronym><span></b>${empty/*in <a style="color: #4486c6" href="${__game_link}" rel="nofollow">${__game_name}</a>*/}
 											</span>
 										</div>
+
+				                	    <div class="box2" style="color: #5a5e62; width: ${28 + __game_img_height}px;">
+				                	    </div>
+
 				                	    <div class="imgg">
 				                	        <a href="${__game_link}" class="" style="position:absolute; right: 4px; top: 3px;">
 				                	            <picture class="trophy" alt="PLACEHOLDER">
@@ -4294,6 +4298,15 @@ height: 200px; !important
 					left: 2px;
 					width: 394px;
 					height: 51px;
+					border-radius: 5px;
+					background: #ddd;
+				}
+				.box2 {
+					padding-left: 0px;
+					position: absolute;
+					right: 0px;
+                    top: 0px;
+					height: 47px;
 					border-radius: 5px;
 					background: #ddd;
 				}
@@ -4469,61 +4482,66 @@ height: 200px; !important
     //}, 1000);
 })();
 
+
 function doAnimation() {
-			var recentTrophy = 0;
-			var shouldSwitchRC = true;
-			var recentTrophies = $('.recent-trophies > li:visible');
-recentTrophies.eq(recentTrophy).addClass('active');
-			function switchRecentTrophy()
-			{
-				if (!shouldSwitchRC)
-				{
-					return;
-				}
-				$('.recent-trophies > li').removeClass('active');
+    let first_load = true
+    var recentTrophy = 0;
+    var shouldSwitchRC = true;
+    var recentTrophies = $('.recent-trophies > li:visible');
+    if (first_load) {
+        recentTrophies.eq(recentTrophy).addClass('active');
+        first_load = false
+    }
 
-				recentTrophies = $('.recent-trophies > li:visible');
+    function switchRecentTrophy()
+    {
+        if (!shouldSwitchRC)
+        {
+            return;
+        }
+        $('.recent-trophies > li').removeClass('active');
+        recentTrophies = $('.recent-trophies > li:visible');
 
-				if (recentTrophy >= (recentTrophies.length - 1))
-				{
-					recentTrophy = 0;
-				}
-				else
-				{
-					recentTrophy++;
-				}
+        if (recentTrophy >= (recentTrophies.length - 1))
+        {
+            recentTrophy = 0;
+        }
+        else
+        {
+            recentTrophy++;
+        }
 
-				recentTrophies.eq(recentTrophy).addClass('active');
-			}
+        recentTrophies.eq(recentTrophy).addClass('active');
+    }
 
-			$(function()
-			{
-				$('#recent-trophies').mouseenter(function()
-				{
-					shouldSwitchRC = false;
-				});
+    $(function()
+      {
+        $('#recent-trophies').mouseenter(function()
+                                         {
+            shouldSwitchRC = false;
+        });
 
-				$('#recent-trophies').mouseleave(function()
-				{
-					shouldSwitchRC = true;
-				});
+        $('#recent-trophies').mouseleave(function()
+                                         {
+            shouldSwitchRC = true;
+        });
 
-				$('#recent-trophies > li').mouseenter(function()
-				{
-					var that = $(this);
-					if (!that.hasClass('active'))
-					{
-						recentTrophies.eq(recentTrophy).removeClass('active');
-						recentTrophy = that.attr('data-id');
-						that.addClass('active');
-					}
-				});
+        $('#recent-trophies > li').mouseenter(function()
+                                              {
+            var that = $(this);
+            if (!that.hasClass('active'))
+            {
+                recentTrophies.eq(recentTrophy).removeClass('active');
+                recentTrophy = that.attr('data-id');
+                that.addClass('active');
+            }
+        });
 
-				setInterval(function()
-				{
-					switchRecentTrophy();
-				}, 3000);
-			});
+        setInterval(function()
+                    {
+            switchRecentTrophy();
+        }, 3000);
+    });
 
 }
 
