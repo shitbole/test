@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.5
+// @version       1.8.6
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -16,7 +16,6 @@ GM_addStyle ( `
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
     a, a.game-title {
-        
         text-decoration: none !important;
         text-decoration-line: none !important;
         text-decoration-thickness: initial !important;
@@ -28,18 +27,19 @@ GM_addStyle ( `
         text-decoration: none !important;
     }
 
+
     .mainBG {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
    .progresscontainer {
-       background-color: #292b2f !important;
+       background-color: #292b2fbd !important;
        height: 5px !important;
        border: 0px !important;
        padding: 1px !important;
        border-radius: 999px !important;
     }
    .progressbar {
-       background-color: #aeccff !important;
+       background-color: #83a4e5 !important;
        height: 5px !important;
        border: 0px !important;
        padding: 0px !important;
@@ -90,9 +90,21 @@ GM_addStyle ( `
     .gameMain div.platformlabel {
        -webkit-transform: rotate(0deg)  !important;
        top: -25px  !important;
+       right: auto !important;
        position: absolute  !important;
        bottom: auto  !important;
+
     }
+    .gameHeadContainer {
+        border: 3px solid #ccc !important;
+        box-shadow: 0px 0px 6px 1px #000 !important;
+    }
+    .gameHeadSpace {
+        border-radius: 4px !important;
+        -webkit-border-radius: 4px !important;
+        padding-right: 2px !important;
+    }
+
 `
 
 
@@ -3737,6 +3749,61 @@ GM_addStyle ( `
                 //= `font-family: Microsoft YaHei UI;`
 
 
+GM_addStyle ( `
+    #id-avatar {
+        overflow: visible !important;
+    }
+
+    .profileLogo img.plus {
+        position: absolute;
+        top: -15px;
+        left: -25px;
+        width: 50px;
+        z-index: 999 !important;
+    }
+
+    .profileLogo {
+        position: sticky !important;
+        top: 20px !important;
+        z-index: 997 !important;
+    }
+
+    .avatar-large {
+        position: sticky !important;
+        top: 20px !important;
+        z-index: 998 !important;
+
+        transition: width .2s, height .2s, transform .2s;
+    }
+    #id-avatar img.avatar-large {
+        width: 160px;
+        height: 160px;
+        background-color: #001118;
+        border-radius: 5px 5px 5px 5px !important;
+        -moz-border-radius: 5px 5px 5px 5px !important;
+        -webkit-border-radius: 5px 5px 5px 5px !important;
+        box-shadow: 0px 0px 5px 1px #0000008c;
+    }
+    .usergrouper.lifetime-member {
+        border-radius: 5px 5px 5px 5px !important;
+        -moz-border-radius: 5px 5px 5px 5px !important;
+        -webkit-border-radius: 5px 5px 5px 5px !important;
+    }
+`)
+                let Lifetime_Member = document.getElementsByClassName('usergrouper')[0].parentElement
+                if (Lifetime_Member) {
+                    Lifetime_Member.style = `
+        padding: 2px; background-color: #FFFFFF; color: #169DFC;
+        border-radius: 5px 5px 5px 5px !important;
+        -moz-border-radius: 5px 5px 5px 5px !important;
+        -webkit-border-radius: 5px 5px 5px 5px !important;
+                    `
+                }
+                let Cheater_Team = document.getElementsByClassName('team_cheater')[0]
+                if (Cheater_Team) {
+                    Cheater_Team.title = `PSNTL Cheater Removal Team`
+                }
+                var new_avatar_bool = false
                 let new_avatar = document.getElementsByClassName('avatar-large')[0].currentSrc.slice(0, -5) + "xl.png"
                 GM_xmlhttpRequest({
                     method: 'GET',
@@ -3745,9 +3812,28 @@ GM_addStyle ( `
                     onload: function(res) {
                         if (res.status == 404) {
                             console.log('could not locate higher res avatar');
+
+			                                	GM_addStyle ( `
+
+                                                .avatar-large:hover {
+                                                    transform: scale(1.5) translate(26px, 26px);
+                                                    cursor: url('${document.getElementsByClassName('avatar-large')[0].currentSrc}'), auto;
+                                                }
+
+                                                `)
+                            document.getElementsByClassName('avatar-large')[0].src = document.getElementsByClassName('avatar-large')[0].currentSrc
                         }
                         else {
                             if (new_avatar) {
+				                                GM_addStyle ( `
+
+                                                .avatar-large:hover {
+                                                    transform: scale(2) translate(40px, 40px);
+
+                                                    cursor: url('${document.getElementsByClassName('avatar-large')[0].currentSrc.slice(0, -5) + "xl.png"}'), auto;
+                                                }
+
+                                                `)
                                 document.getElementsByClassName('avatar-large')[0].src = new_avatar
                             }
                         }
@@ -3756,6 +3842,8 @@ GM_addStyle ( `
                         console.log('fatal error');
                     }
                 });
+
+
 
 
                 //console.log(avatarSrc)
@@ -4156,7 +4244,30 @@ height: 200px; !important
 
                 let fff = document.createElement("ul");
                 let cur_recentTrophies = document.getElementsByClassName("hc-preview")
-                console.log(cur_recentTrophies)
+                //console.log(cur_recentTrophies)
+
+
+
+
+
+                /*const now = Date.now()
+                console.log(now)
+
+
+                let last_update_date = document.getElementById('update_info').children[0].innerHTML.split('formatDate("')[1].split('")')[0]
+                console.log(last_update_date + '000')
+                console.log((now - last_update_date))
+
+
+
+
+                /*var d = last_update_date.diff(now, 'days'); // 9
+                console.log(d);*/
+
+                //let defference_time = new Date(now - last_update_date)
+                //console.log(defference_time)*/
+
+
                 for (let i = 0; i < cur_recentTrophies.length; ++i) {
                     let rt = cur_recentTrophies[i]
                     let __length = rt.length
@@ -4197,7 +4308,7 @@ height: 200px; !important
                         __game_img_height = 91
                     }
                     let __time = __trophy_timestamp_inner.split(' ')[0].replace(/\s/g,'')
-                    console.log(__time)
+                    //console.log(__time)
                     if (__time == "Lastyear") {
                       __trophy_timestamp_inner = __trophy_timestamp
                     }
@@ -4256,6 +4367,11 @@ height: 200px; !important
 				                	            </picture>
 				                	        </a>
 				                	    </div>
+
+
+
+
+
 									</td>
 								</tr>
 							</table>
@@ -4277,6 +4393,7 @@ height: 200px; !important
                         remove(document.getElementsByClassName("recent-trophies")[1].children[0].children[0])
                     }
                 }
+
 
                 doAnimation()
 
@@ -4399,6 +4516,9 @@ height: 200px; !important
                     currentProgress++;
                     updateLoadingBar(currentProgress, totalProgress);
                 }, 1);
+
+
+
                 console.log("code 3")
             }
         }
@@ -4482,7 +4602,6 @@ height: 200px; !important
     //}, 1000);
 })();
 
-
 function doAnimation() {
     let first_load = true
     var recentTrophy = 0;
@@ -4493,52 +4612,41 @@ function doAnimation() {
         first_load = false
     }
 
-    function switchRecentTrophy()
-    {
-        if (!shouldSwitchRC)
-        {
+    function switchRecentTrophy() {
+        if (!shouldSwitchRC) {
             return;
         }
         $('.recent-trophies > li').removeClass('active');
         recentTrophies = $('.recent-trophies > li:visible');
 
-        if (recentTrophy >= (recentTrophies.length - 1))
-        {
+        if (recentTrophy >= (recentTrophies.length - 1)) {
             recentTrophy = 0;
         }
-        else
-        {
+        else {
             recentTrophy++;
         }
-
         recentTrophies.eq(recentTrophy).addClass('active');
     }
 
-    $(function()
-      {
-        $('#recent-trophies').mouseenter(function()
-                                         {
+    $(function() {
+        $('#recent-trophies').mouseenter(function() {
             shouldSwitchRC = false;
         });
 
-        $('#recent-trophies').mouseleave(function()
-                                         {
+        $('#recent-trophies').mouseleave(function() {
             shouldSwitchRC = true;
         });
 
-        $('#recent-trophies > li').mouseenter(function()
-                                              {
+        $('#recent-trophies > li').mouseenter(function() {
             var that = $(this);
-            if (!that.hasClass('active'))
-            {
+            if (!that.hasClass('active')) {
                 recentTrophies.eq(recentTrophy).removeClass('active');
                 recentTrophy = that.attr('data-id');
                 that.addClass('active');
             }
         });
 
-        setInterval(function()
-                    {
+        setInterval(function() {
             switchRecentTrophy();
         }, 3000);
     });
@@ -4557,6 +4665,12 @@ function checkRegionGame(row) {
         platformlabelstyle.style = `left: ${33*i}px !important;`
         //console.log(platformlabelstyle)
     }
+
+
+
+    $(document.getElementById('search-content')).bind('DOMNodeInserted DOMNodeRemoved', function(){
+
+    });
     //console.log(_Label)
 
 
@@ -5243,6 +5357,10 @@ function modifyProgressBar(row) {
         }*/
 		let percent = row.getElementsByClassName('percent_earned')[0].innerText.trim().replace('%', '');
 
+        let percentcolour = Math.ceil(255 * (percent / 100));
+        let R = 255-(percentcolour/2)
+        let G = 0+percentcolour
+
 		let newProgressBar = document.createElement('div');
 		newProgressBar.style = "width: 240px; height: 59px; display: flex; flex-direction: column; justify-content: center; align-items:center";
 		newProgressBar.classList.add('progress-cell');
@@ -5255,7 +5373,7 @@ function modifyProgressBar(row) {
         class="progresscontainer stacked softshadow"
         style="width: calc(100% - 80px)">
 	  <div
-          class="progressbar" style="float: left; width: ${percent}%;">
+          class="progressbar" style="float: left; width: ${percent}%; background-color: rgb(${R} ${G} 0) !important;">
       </div>
 	</div>
 
@@ -5263,7 +5381,7 @@ function modifyProgressBar(row) {
 
 
 
-    <div style="margin-left: 10px; width: 10px; font-weight: bold; color: green;"> ${percent}% </div>
+    <div style="margin-left: 10px; width: 10px; font-weight: 150; -webkit-text-stroke-width: 0.2px; -webkit-text-stroke-color: black; color: rgb(${R} ${G} 0)"> ${percent}% </div>
 	</div>
 	<div style="color: black; width: 166px; text-align: right;  font-size: 16px"> <b>${num}</b> /</span>  <span  style="font-size: 10pt">${denum}</span></div>
 	`;
