@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.6
+// @version       1.8.7
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3790,9 +3790,9 @@ GM_addStyle ( `
         -webkit-border-radius: 5px 5px 5px 5px !important;
     }
 `)
-                let Lifetime_Member = document.getElementsByClassName('usergrouper')[0].parentElement
+                let Lifetime_Member = document.getElementsByClassName('usergrouper')[0]
                 if (Lifetime_Member) {
-                    Lifetime_Member.style = `
+                    Lifetime_Member.parentElement.style = `
         padding: 2px; background-color: #FFFFFF; color: #169DFC;
         border-radius: 5px 5px 5px 5px !important;
         -moz-border-radius: 5px 5px 5px 5px !important;
