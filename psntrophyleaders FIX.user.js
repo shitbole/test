@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.7
+// @version       1.8.8
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3785,11 +3785,31 @@ GM_addStyle ( `
         box-shadow: 0px 0px 5px 1px #0000008c;
     }
     .usergrouper.lifetime-member {
-        border-radius: 5px 5px 5px 5px !important;
-        -moz-border-radius: 5px 5px 5px 5px !important;
-        -webkit-border-radius: 5px 5px 5px 5px !important;
+        border-radius: 5px 5px 0px 0px !important;
+        -moz-border-radius: 5px 5px 0px 0px !important;
+        -webkit-border-radius: 5px 5px 0px 0px !important;
     }
+    .iconTrophy {
+        z-index: 996 !important;
+        transition: transform .2s;
+    }
+    .iconTrophy:hover {
+        transform: scale(1.5) rotate(-15deg);
+    }
+    .iconTrophy2 {
+        z-index: 996 !important;
+        transition: transform .2s;
+    }
+    .iconTrophy2:hover {
+        transform: scale(1.3);
+
+
+    }
+
 `)
+
+
+
                 let Lifetime_Member = document.getElementsByClassName('usergrouper')[0]
                 if (Lifetime_Member) {
                     Lifetime_Member.parentElement.style = `
@@ -3816,11 +3836,10 @@ GM_addStyle ( `
 			                                	GM_addStyle ( `
 
                                                 .avatar-large:hover {
-                                                    transform: scale(1.5) translate(26px, 26px);
-                                                    cursor: url('${document.getElementsByClassName('avatar-large')[0].currentSrc}'), auto;
+                                                    transform: scale(1.5) translate(25px, 25px);
                                                 }
 
-                                                `)
+                                                `)//cursor: url('${document.getElementsByClassName('avatar-large')[0].currentSrc}'), auto;
                             document.getElementsByClassName('avatar-large')[0].src = document.getElementsByClassName('avatar-large')[0].currentSrc
                         }
                         else {
@@ -3829,11 +3848,9 @@ GM_addStyle ( `
 
                                                 .avatar-large:hover {
                                                     transform: scale(2) translate(40px, 40px);
-
-                                                    cursor: url('${document.getElementsByClassName('avatar-large')[0].currentSrc.slice(0, -5) + "xl.png"}'), auto;
                                                 }
 
-                                                `)
+                                                `) //cursor: url('${document.getElementsByClassName('avatar-large')[0].currentSrc.slice(0, -5) + "xl.png"}'), auto;
                                 document.getElementsByClassName('avatar-large')[0].src = new_avatar
                             }
                         }
@@ -3945,6 +3962,53 @@ GM_addStyle ( `
                     topstatsnum -= 1;
                 }
 
+
+
+
+
+
+
+let add = 0
+
+                let boardrank = document.getElementById('boardrank');
+                //console.log(boardrank)
+
+                let bonusTrophies = document.createElement("div");
+                bonusTrophies.id = ["bonusTrophies"];
+                bonusTrophies.class = "bonusTrophiesContainer"
+                bonusTrophies.style = `text-align:right; display: block; font-family: 'Microsoft YaHei UI'; margin-left: auto; margin-right: auto; width: auto; height: 150px; color: #1d2126; background-color: #1d2126; position:sticky; top: ${200+add}px; !important`
+
+                bonusTrophies.innerHTML = `
+                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:40px; right:20px;">${platinumtrophies}</big>
+                                                               <img class="iconTrophy" style="position:absolute; top:20px; left:20px;" width=auto height=50px  src="https://i.imgur.com/VnkHuFc.png">
+
+                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:90px; right:20px;">${goldtrophies}</big>
+                                                               <img class="iconTrophy" style="position:absolute; top:70px; left:20px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+
+                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:140px; right:20px;">${silvertrophies}</big>
+                                                               <img class="iconTrophy" style="position:absolute; top:120px; left:20px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+
+                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:190px; right:20px;">${bronzetrophies}</big>
+                                                               <img class="iconTrophy" style="position:absolute; top:170px; left:20px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+
+                                                        `
+
+
+
+
+
+                insertBefore(bonusTrophies, boardrank)
+
+
+
+
+
+
+
+
+
+
+
                 let bottomstatselement = document.createElement("div");
                 bottomstatselement.id = ["bottomrightstats"];
                 bottomstatselement.style='width: 800px; height: 60px; position:relative; font-family: Microsoft YaHei UI;'
@@ -3963,13 +4027,13 @@ GM_addStyle ( `
                 newtopstatselement.id = ["newtoprightstats"];
                 newtopstatselement.style='width: 800px; height: 80px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
                 newtopstatselement.innerHTML = `<big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:20px;">${bronzetrophies}</big>
-                                                               <img style="position:absolute; bottom:15px; right:100px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <img class="iconTrophy"style="position:absolute; bottom:15px; right:100px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:135px;">${silvertrophies}</big>
-                                                               <img style="position:absolute; bottom:15px; right:215px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <img class="iconTrophy"style="position:absolute; bottom:15px; right:215px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:250px;">${goldtrophies}</big>
-                                                               <img style="position:absolute; bottom:15px; right:330px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <img class="iconTrophy"style="position:absolute; bottom:15px; right:330px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; font-weight: bold; position:absolute; bottom:20px; right:345px;">${platinumtrophies}</big>
-                                                               <img style="position:absolute; bottom:15px; right:425px;" width=auto height=50px  src="https://i.imgur.com/VnkHuFc.png">
+                                                               <img class="iconTrophy" style="position:absolute; bottom:15px; right:425px;" width=auto height=50px  src="https://i.imgur.com/VnkHuFc.png">
 
 
 
@@ -3977,7 +4041,7 @@ GM_addStyle ( `
                                                                <big style="width: 80px; text-align: center; font-size: 18px; font-weight: bold; position:absolute; bottom:45px; right:480px;">Total</big>
 
                                                                <big style="width: 80px; text-align: left; font-size: 25px; font-weight: bold; position:absolute; bottom:26px; right:555px;">${level}</big>
-                                                               <img style="position:absolute; bottom:14px; right:635px;" width=auto height=55px  src="${imagesource}">
+                                                               <img class="iconTrophy2" style="position:absolute; bottom:14px; right:635px;" width=auto height=55px  src="${imagesource}">
 
 
 
