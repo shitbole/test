@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.8.8
+// @version       1.9.0
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3819,6 +3819,11 @@ GM_addStyle ( `
         -webkit-border-radius: 5px 5px 5px 5px !important;
                     `
                 }
+                let addBufferSticky= 0
+                let profile_badge = document.getElementsByClassName('profile_badge')[0]
+                if (profile_badge) {
+                    addBufferSticky = 50
+                }
                 let Cheater_Team = document.getElementsByClassName('team_cheater')[0]
                 if (Cheater_Team) {
                     Cheater_Team.title = `PSNTL Cheater Removal Team`
@@ -3968,7 +3973,7 @@ GM_addStyle ( `
 
 
 
-let add = 0
+
 
                 let boardrank = document.getElementById('boardrank');
                 //console.log(boardrank)
@@ -3976,7 +3981,7 @@ let add = 0
                 let bonusTrophies = document.createElement("div");
                 bonusTrophies.id = ["bonusTrophies"];
                 bonusTrophies.class = "bonusTrophiesContainer"
-                bonusTrophies.style = `text-align:right; display: block; font-family: 'Microsoft YaHei UI'; margin-left: auto; margin-right: auto; width: auto; height: 150px; color: #1d2126; background-color: #1d2126; position:sticky; top: ${200+add}px; !important`
+                bonusTrophies.style = `text-align:right; display: block; font-family: 'Microsoft YaHei UI'; margin-left: auto; margin-right: auto; width: auto; height: 150px; color: #1d2126; background-color: #1d2126; position:sticky; top: ${200+addBufferSticky}px; !important`
 
                 bonusTrophies.innerHTML = `
                                                                <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:40px; right:20px;">${platinumtrophies}</big>
@@ -5092,10 +5097,32 @@ function checkRegion(row) {
     }*/
 
 
-    if (game === '十三機兵防衛圏-ps4') {
+
+
+
+    let nameStyle = row.getElementsByClassName('game-title')[0]
+    if (!nameStyle) {
+        nameStyle = row.getElementsByClassName('gametitle')[0]
+    }
+    let fixedName = nameStyle.innerText.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','')
+    nameStyle.innerText = fixedName
+    nameStyle.title = 'View trophies for ' + fixedName
+    if (game == '十三機兵防衛圏-ps4') {
         const newText = '13 Sentinels: Aegis Rim'
 		let aaaa = document.createElement('div');
-        let nameStyle = row.getElementsByClassName('gametitle')[0]
+        
+	    aaaa.innerHTML = `<a href="${url}" class="game-title" title="View trophies for ${newText}">${newText}</a>`;
+		aaaa.style.color = nameStyle.color;
+		aaaa.style.fontWeight = nameStyle.fontWeight;
+		nameStyle.innerText = ''
+        nameStyle.append(aaaa)
+
+    }
+
+    if (game == 'coolpaintr-ps4-3' | game == 'coolpaintr-ps4-4') {
+        const newText = 'CoolPaintr Deluxe'
+		let aaaa = document.createElement('div');
+
 	    aaaa.innerHTML = `<a href="${url}" class="game-title" title="View trophies for ${newText}">${newText}</a>`;
 		aaaa.style.color = nameStyle.color;
 		aaaa.style.fontWeight = nameStyle.fontWeight;
