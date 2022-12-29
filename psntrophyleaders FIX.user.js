@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.0
+// @version       1.9.1
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -131,7 +131,165 @@ var REMOVE_FLAGGLOSS = true
 
 
 
-
+const arrayDELISTEDorange = [
+'babylons-fall-ps5',
+'babylons-fall-ps4',
+'assetto-corsa-ps4-1',
+'will-a-wonderful-world-ps4-2',
+'will-a-wonderful-world-ps4-1',
+'godzilla-ps4',
+'walking-dead-the-telltale-series-collection-ps4',
+'sherlock-holmes-the-devils-daughter-ps4',
+'sherlock-holmes-the-devils-daughter-ps4-1',
+'sherlock-holmes-the-devils-daughter-ps4-2',
+'sherlock-holmes-crimes-and-punishments-ps4-ps3',
+'ドラゴンクエストxi　過ぎ去りし時を求めて-ps4',
+];
+const arrayDELISTED = [
+'fall-guys-ps4',
+'affected-the-manor-ps4-1',
+'affected-the-manor-ps4',
+'catan-ps3',
+'cybxus-heart-ps4-3',
+'grand-theft-auto-3-ps4',
+'bellator-ps3',
+'grand-theft-auto-vice-city-ps4',
+'aborigenus-ps4-2',
+'castle-of-no-escape-2-ps4-2',
+'nightmares-from-the-deep-3-davy-jones-ps4',
+'nightmares-from-the-deep-2-the-sirens-call-ps4',
+'walking-dead-the-final-season-ps4-1',
+'sea-of-memories-ps4-1',
+'walking-dead-the-final-season-ps4',
+'1000-top-rated-ps4',
+'adams-venture-chronicles-ps3',
+'battle-rockets-psvita',
+'grand-theft-auto-san-andreas-ps4',
+'invector-ps4',
+'nightmares-from-the-deep-the-cursed-heart-ps4',
+'octonaut-ps4',
+'octonaut-ps4-1',
+'octonaut-ps4-3',
+'whiteboyz-wit-attitude-the-pursuit-of-money-ps4',
+'whiteboyz-wit-attitude-the-pursuit-of-money-ps4-1',
+'will-a-wonderful-world-ps4',
+'will：素晴らしき世界-ps4',
+'ドラゴンクエスト無料版-ps4',
+];
+const arrayCODE = [
+'メモリーズオフ-innocent-fille-　ノエル-fullbloom-ps4',
+'ペルソナ４-ダンシング・オールナイト-ps4',
+];
+const arrayPHYSICAL = [
+'foxyland-2-psvita-3',
+'mooseman-psvita',
+'foxyland-psvita-3',
+'just-ignore-them-psvita-2',
+'nicole-psvita',
+'steinsgate-ps3-1',
+'tales-from-the-borderlands-ps4-ps3',
+'takotan-psvita-4',
+'task-force-kampas-psvita-4',
+'winters-daydream-psvita-3',
+'walking-dead-the-final-season-ps4-3',
+'walking-dead-the-final-season-ps4-2',
+];
+const arrayDIGITAL = [
+'tales-from-the-borderlands-ps4',
+'walking-dead-the-final-season-ps4',
+'sly-3-psvita',
+'assassins-creed-chronicles-china-ps4',
+'assassins-creed-chronicles-india-ps4',
+'assassins-creed-chronicles-russia-ps4',
+'walking-dead-the-final-season-ps4-1',
+];
+const arrayREMOVEVITA = [
+'alteric-ps4-psvita',
+'alteric-ps4-psvita-1',
+'one-eyed-kutkh-ps4-psvita-1',
+'batman-arkham-origins-ps3-psvita',
+'creepy-road-ps4-psvita',
+'月の彼方で逢いましょう-ps4-psvita',
+'creepy-road-ps4-psvita-1',
+'deep-ones-ps4-psvita-1',
+'deep-ones-ps4-psvita-2',
+'drowning-ps4-psvita',
+'drowning-ps4-psvita-1',
+'one-eyed-kutkh-ps4-psvita',
+'energy-balance-ps4-psvita',
+'energy-balance-ps4-psvita-2',
+'energy-cycle-edge-ps4-psvita',
+'energy-cycle-edge-ps4-psvita-2',
+'energy-cycle-ps4-psvita',
+'energy-cycle-ps4-psvita-2',
+'energy-invasion-ps4-psvita',
+'energy-invasion-ps4-psvita-1',
+'iconoclasts-ps4-psvita',
+'metropolis-lux-obscura-ps4-psvita',
+'metropolis-lux-obscura-ps4-psvita-1',
+'mooseman-ps4-psvita',
+'mooseman-ps4-psvita-1',
+'north-ps4-psvita',
+'north-ps4-psvita-1',
+'planet-rix-13-ps4-psvita-1',
+'planet-rix-13-ps4-psvita-2',
+'save-the-ninja-clan-ps4-psvita',
+'save-the-ninja-clan-ps4-psvita-1',
+'sigi-a-fart-for-melusina-ps4-psvita',
+'sigi-a-fart-for-melusina-ps4-psvita-1',
+'skytime-ps4-psvita',
+'skytime-ps4-psvita-1',
+'spiral-splatter-ps4-psvita-2',
+'spiral-splatter-ps4-psvita-3',
+'steinsgate-0-ps4-ps3-psvita',
+'twin-robots-ps4-psvita-1',
+'twin-robots-ps4-psvita-3',
+'キスベル-ps4-psvita',
+'ホチキス-ps4-psvita',
+];
+const arrayREMOVEPS3 = [
+'hohokum-ps4-ps3-psvita-3',
+'7scarlet-ps3-psvita',
+'steinsgate-0-ps4-ps3-psvita',
+'steinsgate-0-ps4-ps3-psvita-1',
+'かりぐらし恋愛-ps4-ps3-psvita',
+'スキとスキとでサンカク恋愛-ps4-ps3-psvita',
+'レイジングループ-ps4-ps3-psvita',
+];
+const arrayREMOVEPS4 = [
+'alteric-ps4-psvita-2',
+'alteric-ps4-psvita-3',
+'deep-ones-ps4-psvita',
+'deep-ones-ps4-psvita-3',
+'drowning-ps4-psvita-2',
+'one-eyed-kutkh-ps4-psvita-3',
+'one-eyed-kutkh-ps4-psvita-2',
+'drowning-ps4-psvita-3',
+'energy-balance-ps4-psvita-1',
+'energy-balance-ps4-psvita-3',
+'energy-cycle-edge-ps4-psvita-1',
+'energy-cycle-edge-ps4-psvita-3',
+'energy-cycle-ps4-psvita-1',
+'energy-cycle-ps4-psvita-3',
+'energy-invasion-ps4-psvita-2',
+'energy-invasion-ps4-psvita-3',
+'its-spring-again-ps4-psvita',
+'its-spring-again-ps4-psvita-1',
+'metropolis-lux-obscura-ps4-psvita-2',
+'metropolis-lux-obscura-ps4-psvita-3',
+'north-ps4-psvita-2',
+'north-ps4-psvita-3',
+'planet-rix-13-ps4-psvita',
+'planet-rix-13-ps4-psvita-3',
+'sigi-a-fart-for-melusina-ps4-psvita-2',
+'sigi-a-fart-for-melusina-ps4-psvita-3',
+'spiral-splatter-ps4-psvita',
+'spiral-splatter-ps4-psvita-1',
+'steinsgate-0-ps4-ps3-psvita-1',
+'twin-robots-ps4-psvita',
+'twin-robots-ps4-psvita-2',
+'콥스-파티-blood-drive-ps4-psvita',
+];
 
 const arrayOR =[
 /*'invector-ps4',
@@ -3471,162 +3629,7 @@ const arrayVR = [
 '超级节拍-ps4',
 
 ]
-const arrayDELISTEDorange = [
-'babylons-fall-ps5',
-'babylons-fall-ps4',
-'assetto-corsa-ps4-1',
-'will-a-wonderful-world-ps4-2',
-'will-a-wonderful-world-ps4-1',
-'godzilla-ps4',
-'walking-dead-the-telltale-series-collection-ps4',
-'sherlock-holmes-the-devils-daughter-ps4',
-'sherlock-holmes-the-devils-daughter-ps4-1',
-'sherlock-holmes-the-devils-daughter-ps4-2',
-'sherlock-holmes-crimes-and-punishments-ps4-ps3',
-];
-const arrayDELISTED = [
-'fall-guys-ps4',
-'catan-ps3',
-'cybxus-heart-ps4-3',
-'grand-theft-auto-3-ps4',
-'bellator-ps3',
-'grand-theft-auto-vice-city-ps4',
-'aborigenus-ps4-2',
-'castle-of-no-escape-2-ps4-2',
-'nightmares-from-the-deep-3-davy-jones-ps4',
-'nightmares-from-the-deep-2-the-sirens-call-ps4',
-'walking-dead-the-final-season-ps4-1',
-'sea-of-memories-ps4-1',
-'walking-dead-the-final-season-ps4',
-'1000-top-rated-ps4',
-'adams-venture-chronicles-ps3',
-'battle-rockets-psvita',
-'grand-theft-auto-san-andreas-ps4',
-'invector-ps4',
-'nightmares-from-the-deep-the-cursed-heart-ps4',
-'octonaut-ps4',
-'octonaut-ps4-1',
-'octonaut-ps4-3',
-'whiteboyz-wit-attitude-the-pursuit-of-money-ps4',
-'whiteboyz-wit-attitude-the-pursuit-of-money-ps4-1',
-'will-a-wonderful-world-ps4',
-'will：素晴らしき世界-ps4',
-'ドラゴンクエスト無料版-ps4',
-];
-const arrayCODE = [
-'メモリーズオフ-innocent-fille-　ノエル-fullbloom-ps4',
-'ペルソナ４-ダンシング・オールナイト-ps4',
-];
-const arrayPHYSICAL = [
-'foxyland-2-psvita-3',
-'mooseman-psvita',
-'foxyland-psvita-3',
-'just-ignore-them-psvita-2',
-'nicole-psvita',
-'steinsgate-ps3-1',
-'tales-from-the-borderlands-ps4-ps3',
-'takotan-psvita-4',
-'task-force-kampas-psvita-4',
-'winters-daydream-psvita-3',
-'walking-dead-the-final-season-ps4-3',
-'walking-dead-the-final-season-ps4-2',
-];
-const arrayDIGITAL = [
-'tales-from-the-borderlands-ps4',
-'walking-dead-the-final-season-ps4',
-'sly-3-psvita',
-'assassins-creed-chronicles-china-ps4',
-'assassins-creed-chronicles-india-ps4',
-'assassins-creed-chronicles-russia-ps4',
-'walking-dead-the-final-season-ps4-1',
-];
-const arrayREMOVEVITA = [
-'alteric-ps4-psvita',
-'alteric-ps4-psvita-1',
-'one-eyed-kutkh-ps4-psvita-1',
-'batman-arkham-origins-ps3-psvita',
-'creepy-road-ps4-psvita',
-'月の彼方で逢いましょう-ps4-psvita',
-'creepy-road-ps4-psvita-1',
-'deep-ones-ps4-psvita-1',
-'deep-ones-ps4-psvita-2',
-'drowning-ps4-psvita',
-'drowning-ps4-psvita-1',
-'one-eyed-kutkh-ps4-psvita',
-'energy-balance-ps4-psvita',
-'energy-balance-ps4-psvita-2',
-'energy-cycle-edge-ps4-psvita',
-'energy-cycle-edge-ps4-psvita-2',
-'energy-cycle-ps4-psvita',
-'energy-cycle-ps4-psvita-2',
-'energy-invasion-ps4-psvita',
-'energy-invasion-ps4-psvita-1',
-'iconoclasts-ps4-psvita',
-'metropolis-lux-obscura-ps4-psvita',
-'metropolis-lux-obscura-ps4-psvita-1',
-'mooseman-ps4-psvita',
-'mooseman-ps4-psvita-1',
-'north-ps4-psvita',
-'north-ps4-psvita-1',
-'planet-rix-13-ps4-psvita-1',
-'planet-rix-13-ps4-psvita-2',
-'save-the-ninja-clan-ps4-psvita',
-'save-the-ninja-clan-ps4-psvita-1',
-'sigi-a-fart-for-melusina-ps4-psvita',
-'sigi-a-fart-for-melusina-ps4-psvita-1',
-'skytime-ps4-psvita',
-'skytime-ps4-psvita-1',
-'spiral-splatter-ps4-psvita-2',
-'spiral-splatter-ps4-psvita-3',
-'steinsgate-0-ps4-ps3-psvita',
-'twin-robots-ps4-psvita-1',
-'twin-robots-ps4-psvita-3',
-'キスベル-ps4-psvita',
-'ホチキス-ps4-psvita',
-];
-const arrayREMOVEPS3 = [
-'hohokum-ps4-ps3-psvita-3',
-'7scarlet-ps3-psvita',
-'steinsgate-0-ps4-ps3-psvita',
-'steinsgate-0-ps4-ps3-psvita-1',
-'かりぐらし恋愛-ps4-ps3-psvita',
-'スキとスキとでサンカク恋愛-ps4-ps3-psvita',
-'レイジングループ-ps4-ps3-psvita',
-];
-const arrayREMOVEPS4 = [
-'alteric-ps4-psvita-2',
-'alteric-ps4-psvita-3',
-'deep-ones-ps4-psvita',
-'deep-ones-ps4-psvita-3',
-'drowning-ps4-psvita-2',
-'one-eyed-kutkh-ps4-psvita-3',
-'one-eyed-kutkh-ps4-psvita-2',
-'drowning-ps4-psvita-3',
-'energy-balance-ps4-psvita-1',
-'energy-balance-ps4-psvita-3',
-'energy-cycle-edge-ps4-psvita-1',
-'energy-cycle-edge-ps4-psvita-3',
-'energy-cycle-ps4-psvita-1',
-'energy-cycle-ps4-psvita-3',
-'energy-invasion-ps4-psvita-2',
-'energy-invasion-ps4-psvita-3',
-'its-spring-again-ps4-psvita',
-'its-spring-again-ps4-psvita-1',
-'metropolis-lux-obscura-ps4-psvita-2',
-'metropolis-lux-obscura-ps4-psvita-3',
-'north-ps4-psvita-2',
-'north-ps4-psvita-3',
-'planet-rix-13-ps4-psvita',
-'planet-rix-13-ps4-psvita-3',
-'sigi-a-fart-for-melusina-ps4-psvita-2',
-'sigi-a-fart-for-melusina-ps4-psvita-3',
-'spiral-splatter-ps4-psvita',
-'spiral-splatter-ps4-psvita-1',
-'steinsgate-0-ps4-ps3-psvita-1',
-'twin-robots-ps4-psvita',
-'twin-robots-ps4-psvita-2',
-'콥스-파티-blood-drive-ps4-psvita',
-];
+
 
 function measureText(str, fontSize) {
   const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.2796875,0.2765625,0.3546875,0.5546875,0.5546875,0.8890625,0.665625,0.190625,0.3328125,0.3328125,0.3890625,0.5828125,0.2765625,0.3328125,0.2765625,0.3015625,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.5546875,0.2765625,0.2765625,0.584375,0.5828125,0.584375,0.5546875,1.0140625,0.665625,0.665625,0.721875,0.721875,0.665625,0.609375,0.7765625,0.721875,0.2765625,0.5,0.665625,0.5546875,0.8328125,0.721875,0.7765625,0.665625,0.7765625,0.721875,0.665625,0.609375,0.721875,0.665625,0.94375,0.665625,0.665625,0.609375,0.2765625,0.3546875,0.2765625,0.4765625,0.5546875,0.3328125,0.5546875,0.5546875,0.5,0.5546875,0.5546875,0.2765625,0.5546875,0.5546875,0.221875,0.240625,0.5,0.221875,0.8328125,0.5546875,0.5546875,0.5546875,0.5546875,0.3328125,0.5,0.2765625,0.5546875,0.5,0.721875,0.5,0.5,0.5,0.3546875,0.259375,0.353125,0.5890625]
@@ -3636,6 +3639,7 @@ function measureText(str, fontSize) {
     .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
     .reduce((cur, acc) => acc + cur) * fontSize
 }
+var code = 0;
 
 (function() {
     //setTimeout(function() {
@@ -3648,7 +3652,7 @@ function measureText(str, fontSize) {
 
 
     if ((document.URL.split('/')[3]) === "games") {
-
+        code = 1
 GM_addStyle ( `
     .gameTable td {
         padding-top: 30px !important;
@@ -3659,6 +3663,7 @@ GM_addStyle ( `
         for (let i = 0; i < rows.length; ++i) {
             checkRegionGame(rows[i]);
         }
+
         console.log("code 1")
     }
     else if ((((document.URL.split('/').length) === 7) && (document.URL.split('/')[3] === '')) || ((document.URL.split('/').length) === 6) || ((document.URL.split('/').length) === 4)) {
@@ -3668,6 +3673,7 @@ GM_addStyle ( `
 
 
         if (document.URL.split('/')[3] === 'game') {
+            code = 2
             document.getElementById('mainbody').style = `box-shadow: 0px -11px 20px 0px #000;`
             injectLoadingBar();
 			checkRegion(null);
@@ -3685,6 +3691,7 @@ GM_addStyle ( `
 						currentProgress++;
 						updateLoadingBar(currentProgress, totalProgress);
 					}, 1);
+
             console.log("code 2")
             return // game + no user
         }
@@ -3693,6 +3700,7 @@ GM_addStyle ( `
                 console.log("code 2a") //tournamnets
             }
             else{
+                code = 3
                 injectLoadingBar();
                 let userInfo = document.getElementsByClassName('userInfo')[0];
                 let userName = userInfo.children[0].children[0].innerText.replace(/\s/g,'').split('(')[0]
@@ -4599,6 +4607,7 @@ height: 200px; !important
                 console.log('detected viewing trophy without user')
             }
             else {
+                code = 4
                 injectLoadingBar();
                 checkRegion(null);
                 inlineTitleTags();
@@ -4630,10 +4639,12 @@ height: 200px; !important
             }
         }
         else {
+            code = 444
             console.log("code 444")
         }
     }
     else if ((document.URL.split('/').length) === 8) {
+        code = 5
         console.log("code 5")
         return // trophy
     }
@@ -4659,6 +4670,7 @@ height: 200px; !important
         return // trophy
     }*/
     else if ((document.URL.split('/').length) === 5) {
+        code = 7
         console.log('code 7')
     }
     else {
@@ -5095,43 +5107,86 @@ function checkRegion(row) {
             }
         }
     }*/
-
-
-
-
-
+    if (((document.URL.split('/').length) === 7) || ((document.URL.split('/')[3] === 'user') && ((document.URL.split('/').length) === 8))) {
+        if ((((document.URL.split('/').length) === 7)) || (((document.URL.split('/').length) === 8) && (document.URL.split('/')[7] === ''))) {
+            if (document.getElementById('individual_swirl')) {
+                console.log('detected viewing trophy without user')
+            }
+            else {
+                fixtag(game)
+            }
+        }
+    }
     let nameStyle = row.getElementsByClassName('game-title')[0]
-    if (!nameStyle) {
-        nameStyle = row.getElementsByClassName('gametitle')[0]
+    if (document.URL.split('/')[3] === 'game') {
+        fixtag(game)
     }
-    let fixedName = nameStyle.innerText.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','')
-    nameStyle.innerText = fixedName
-    nameStyle.title = 'View trophies for ' + fixedName
-    if (game == '十三機兵防衛圏-ps4') {
-        const newText = '13 Sentinels: Aegis Rim'
-		let aaaa = document.createElement('div');
-        
-	    aaaa.innerHTML = `<a href="${url}" class="game-title" title="View trophies for ${newText}">${newText}</a>`;
-		aaaa.style.color = nameStyle.color;
-		aaaa.style.fontWeight = nameStyle.fontWeight;
-		nameStyle.innerText = ''
-        nameStyle.append(aaaa)
-
+    else {
+        if (!nameStyle) {
+            nameStyle = row.getElementsByClassName('gametitle')[0]
+        }
+        let fixedName = fixstrings(nameStyle.innerText)
+        nameStyle.innerText = fixedName
+        nameStyle.title = 'View trophies for ' + fixedName
     }
+    console.log(code)
+    if (code == 3){
+        if (game == '十三機兵防衛圏-ps4') {
+            const newText = '13 Sentinels: Aegis Rim'
+            let aaaa = document.createElement('div');
 
-    if (game == 'coolpaintr-ps4-3' | game == 'coolpaintr-ps4-4') {
-        const newText = 'CoolPaintr Deluxe'
-		let aaaa = document.createElement('div');
+            aaaa.innerHTML = `<a href="${url}" class="game-title" title="View trophies for ${newText}">${newText}</a>`;
+            aaaa.style.color = nameStyle.color;
+            aaaa.style.fontWeight = nameStyle.fontWeight;
+            nameStyle.innerText = ''
+            nameStyle.append(aaaa)
 
-	    aaaa.innerHTML = `<a href="${url}" class="game-title" title="View trophies for ${newText}">${newText}</a>`;
-		aaaa.style.color = nameStyle.color;
-		aaaa.style.fontWeight = nameStyle.fontWeight;
-		nameStyle.innerText = ''
-        nameStyle.append(aaaa)
+        }
 
+        if (game == 'coolpaintr-ps4-3' | game == 'coolpaintr-ps4-4') {
+            const newText = 'CoolPaintr Deluxe'
+            let aaaa = document.createElement('div');
+
+            aaaa.innerHTML = `<a href="${url}" class="game-title" title="View trophies for ${newText}">${newText}</a>`;
+            aaaa.style.color = nameStyle.color;
+            aaaa.style.fontWeight = nameStyle.fontWeight;
+            nameStyle.innerText = ''
+            nameStyle.append(aaaa)
+
+        }
     }
 }
 
+
+function fixtag(game) {
+    GM_addStyle ( `
+            .platformlabel{
+                top: -4px !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+        `)
+    console.log(game)
+    if (game == 'coolpaintr-ps4-3' | game == 'coolpaintr-ps4-4') {
+        let aaac = document.querySelector("#gametitle > div")
+        if (aaac) {
+            let new_aaac = aaac.innerText + " Deluxe"
+            aaac.innerText = new_aaac
+        }
+    }
+    let game_name =document.querySelector("#gametitle > div.main")
+    let game_name2 = document.querySelector("#gametitle > div.sub")
+    if (game_name && game_name2) {
+        let new_name = game_name.innerText + " " + game_name2.innerText
+        console.log(game)
+        let fixed_name = fixstrings(new_name)
+        game_name.innerText = fixed_name
+        remove(game_name2)
+    }
+    else {
+        return
+    }
+}
 
 function removeTag(row, platform) {
     var label
@@ -5247,6 +5302,9 @@ function addTag(row, label) {
 }
 
 
+function fixstrings(str) {
+    return str.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','')
+}
 
 function moveRowContent(original) {
 	let offset = original.getElementsByClassName('platformlabel').length - 1;
