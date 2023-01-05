@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.1
+// @version       1.9.2
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -158,9 +158,7 @@ const arrayDELISTED = [
 'castle-of-no-escape-2-ps4-2',
 'nightmares-from-the-deep-3-davy-jones-ps4',
 'nightmares-from-the-deep-2-the-sirens-call-ps4',
-'walking-dead-the-final-season-ps4-1',
 'sea-of-memories-ps4-1',
-'walking-dead-the-final-season-ps4',
 '1000-top-rated-ps4',
 'adams-venture-chronicles-ps3',
 'battle-rockets-psvita',
@@ -4480,6 +4478,7 @@ height: 200px; !important
 				GM_addStyle ( `
 
 
+
 				.flex {
 					display: -moz-box;
 					display: -ms-flexbox;
@@ -4913,6 +4912,30 @@ function checkRegion(row) {
     if (!row) {
         row = document
         row.getElementsByClassName('platformlabel')[row.getElementsByClassName('platformlabel').length-1].parentNode.style.padding = '0px'
+
+        let gameIMG = document.getElementsByClassName('gameImage')[0]
+        let manual_height = 0;
+        let manual_width = 0;
+        let scale_amount = 1.5;
+        if (gameIMG.naturalHeight > 500) {
+            manual_height = 31
+            manual_width = 16
+            scale_amount = 2
+
+        }
+
+        gameIMG.style = `background-color:#001118; width:${200}px; height:auto;`
+			                                	GM_addStyle ( `
+
+                                               .gameImage {
+                                                   position: relative !important;
+                                                   z-index: 998 !important;
+                                                   transition: width .2s, height .2s, transform .2s;
+                                               }
+                                                .gameImage:hover {
+                                                    transform: scale(${scale_amount}) translate(${34 + manual_width}px, ${19 + manual_height}px);
+                                                }
+                                                `)
         if ((document.URL.split('/').length) === 6) {
             game = decodeURI(url.split('/')[5]);
         }
@@ -5174,14 +5197,23 @@ function fixtag(game) {
             aaac.innerText = new_aaac
         }
     }
-    let game_name =document.querySelector("#gametitle > div.main")
+    // gets used if there isn't a sub div
+    let game_name_original = document.querySelector("#gametitle > div")
+
+    let game_name = document.querySelector("#gametitle > div.main")
     let game_name2 = document.querySelector("#gametitle > div.sub")
+
     if (game_name && game_name2) {
         let new_name = game_name.innerText + " " + game_name2.innerText
-        console.log(game)
+        console.log("code AF1: " + game_name_original.innerText)
         let fixed_name = fixstrings(new_name)
         game_name.innerText = fixed_name
         remove(game_name2)
+    }
+    else if (game_name_original) {
+        console.log("code AF2: " + game_name_original.innerText)
+        let fixed_name = fixstrings(game_name_original.innerText)
+        game_name_original.innerText = fixed_name
     }
     else {
         return
