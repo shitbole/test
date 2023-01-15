@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.2
+// @version       1.9.3
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -26,10 +26,20 @@ GM_addStyle ( `
 
         text-decoration: none !important;
     }
-
-
     .mainBG {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+    }
+    div.platformlabel.ps3 {
+        padding: 2px 7px !important;
+    }
+    div.platformlabel.ps4 {
+        padding: 2px 7px !important;
+    }
+    div.platformlabel.ps5 {
+        padding: 2px 7px !important;
+    }
+    div.platformlabel.psv {
+        padding: 2px 7px !important;
     }
    .progresscontainer {
        background-color: #292b2fbd !important;
@@ -40,6 +50,13 @@ GM_addStyle ( `
     }
    .progressbar {
        background-color: #83a4e5 !important;
+       height: 5px !important;
+       border: 0px !important;
+       padding: 0px !important;
+       border-radius: 999px !important;
+    }
+   .partialprogressbar {
+       background-color: #8cf !important;
        height: 5px !important;
        border: 0px !important;
        padding: 0px !important;
@@ -4387,10 +4404,10 @@ height: 200px; !important
                     if (__time == "Lastyear") {
                       __trophy_timestamp_inner = __trophy_timestamp
                     }
-
-                    /*if (__trophy_description.length > 40) {
+                    let __trophy_acronym = __trophy_description
+                    if (__trophy_description.length > 50) {
                       __trophy_description = __trophy_description.slice(0,40) + "..."
-                    }*/
+                    }
 
                     if (i == 0){
                         fff.id = "recent-trophies"
@@ -4415,7 +4432,7 @@ height: 200px; !important
 
 										</div>
 										<div class="ellipsis" style="width: 999px">
-											<span><acronym title="${__trophy_description}">${__trophy_description}</acronym></span>
+											<span><acronym title="${__trophy_acronym}">${__trophy_description}</acronym></span>
 										</div>
 										<div class="ellipsis">
 											<span class="timestamp_info">
@@ -4423,8 +4440,7 @@ height: 200px; !important
 											</span>
 										</div>
 
-				                	    <div class="box2" style="color: #5a5e62; width: ${28 + __game_img_height}px;">
-				                	    </div>
+
 
 				                	    <div class="imgg">
 				                	        <a href="${__game_link}" class="" style="position:absolute; right: 4px; top: 3px;">
@@ -4434,18 +4450,6 @@ height: 200px; !important
 				                	            </picture>
 				                	        </a>
 				                	    </div>
-				                	    <div class="rarityy">
-				                	        <a href="${__game_link}" class="" style="position:absolute; right: ${__game_img_height}px; top: 16px;">
-				                	            <picture class="trophy" alt="PLACEHOLDER">
-				                	                <source srcset="${__rarity_src}, ${__rarity_src} 1.1x">
-				                	                <img src="${__rarity_src}" style="background-color:rgba(0,0,0,0); height:20px; width: auto;" />
-				                	            </picture>
-				                	        </a>
-				                	    </div>
-
-
-
-
 
 									</td>
 								</tr>
@@ -4456,12 +4460,22 @@ height: 200px; !important
 						<a href="${__trophy_link}" class="">
 							<picture class="trophy" alt="PLACEHOLDER">
 								<source srcset="${__img}, ${__img} 1.1x">
-								<img src="${__img}" style="background-color:#001118; height:45px; width: auto;" />
+								<img src="${__img}" style="background-color:#001118; height:45px; width: 45px;" />
 							</picture>
 						</a>
 					</div>
 				</li>
                     `
+  				                	            /*<picture class="trophy" alt="PLACEHOLDER">
+				                	                <source srcset="${__rarity_src}, ${__rarity_src} 1.1x">
+				                	                <img src="${__rarity_src}" style="background-color:rgba(0,0,0,0); height:20px; width: auto;" />
+				                	            </picture>
+				                	        </a>*/
+
+
+
+
+
                     __recentTrophies.append(fff)
                     if (i == cur_recentTrophies.length -1){
                         //console.log("removing")
@@ -4473,11 +4487,11 @@ height: 200px; !important
                 doAnimation()
 
 
-
-
 				GM_addStyle ( `
 
-
+				.small.progresscontainer {
+				   width: 140px !important;
+				}
 
 				.flex {
 					display: -moz-box;
