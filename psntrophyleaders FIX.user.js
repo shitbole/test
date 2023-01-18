@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.4
+// @version       1.9.5
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -32,29 +32,21 @@ GM_addStyle ( `
     }
     div.platformlabel.ps3 {
         padding: 1px 7px !important;
-        font-family: "DP", sans !important;
-        font-size: 9px;
         font-weight: normal !important;
         text-align: center;
     }
     div.platformlabel.ps4 {
         padding: 1px 7px !important;
-        font-family: "DP", sans !important;
-        font-size: 9px;
         font-weight: normal !important;
         text-align: center;
     }
     div.platformlabel.ps5 {
         padding: 0px 7px !important;
-        font-family: "DP", sans !important;
-        font-size: 9px;
         font-weight: normal !important;
         text-align: center;
     }
     div.platformlabel.psv {
         padding: 1px 7px !important;
-        font-family: "DP", sans !important;
-        font-size: 9px;
         font-weight: normal !important;
         text-align: center;
     }
