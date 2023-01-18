@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.5
+// @version       1.9.7
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -5206,11 +5206,32 @@ function checkRegion(row) {
 
 function fixtag(game) {
     GM_addStyle ( `
-            .platformlabel{
+            .gameDetailTitle a {
+                line-height: 15px !important;
+            }
+        `)
+    GM_addStyle ( `
+            .platformlabel.ps5{
                 top: -4px !important;
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
+            .platformlabel.ps4 {
+                top: -4px !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+            .platformlabel.psv{
+                top: -4px !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+            .platformlabel.ps3{
+                top: -4px !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+
         `)
     console.log(game)
     if (game == 'coolpaintr-ps4-3' | game == 'coolpaintr-ps4-4') {
@@ -5266,10 +5287,16 @@ function addTag(row, label) {
 	//newLabel.style = 'bottom: 37px; height: 14px; line-height: 14px; width: 15px'
     newLabel.style.bottom = '37px'
     newLabel.style.height = '12px'
-
     newLabel.style.width = '15px'
-    newLabel.style.padding = '2px 4px'
     newLabel.style.color = 'white';
+    if (code == 3) {
+        newLabel.style.padding = '2px 4px'
+    }
+    else {
+        newLabel.style.padding = '-3px 4px'
+        newLabel.style.top = '-3px'
+        newLabel.style.position = 'relative'
+    }
     if (label === 'OR') {
         newLabel.style.backgroundColor= '#5c5c5c'
         newLabel.innerHTML = `<acronym title="Original">${label}</acronym>`
