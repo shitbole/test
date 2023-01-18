@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.3
+// @version       1.9.4
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -10,6 +10,7 @@
 // @grant         GM_addStyle
 // @grant         GM_xmlhttpRequest
 // ==/UserScript==
+
 
 GM_addStyle ( `
     html, body {
@@ -30,16 +31,32 @@ GM_addStyle ( `
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
     div.platformlabel.ps3 {
-        padding: 2px 7px !important;
+        padding: 1px 7px !important;
+        font-family: "DP", sans !important;
+        font-size: 9px;
+        font-weight: normal !important;
+        text-align: center;
     }
     div.platformlabel.ps4 {
-        padding: 2px 7px !important;
+        padding: 1px 7px !important;
+        font-family: "DP", sans !important;
+        font-size: 9px;
+        font-weight: normal !important;
+        text-align: center;
     }
     div.platformlabel.ps5 {
-        padding: 2px 7px !important;
+        padding: 0px 7px !important;
+        font-family: "DP", sans !important;
+        font-size: 9px;
+        font-weight: normal !important;
+        text-align: center;
     }
     div.platformlabel.psv {
-        padding: 2px 7px !important;
+        padding: 1px 7px !important;
+        font-family: "DP", sans !important;
+        font-size: 9px;
+        font-weight: normal !important;
+        text-align: center;
     }
    .progresscontainer {
        background-color: #292b2fbd !important;
@@ -4405,8 +4422,8 @@ height: 200px; !important
                       __trophy_timestamp_inner = __trophy_timestamp
                     }
                     let __trophy_acronym = __trophy_description
-                    if (__trophy_description.length > 50) {
-                      __trophy_description = __trophy_description.slice(0,40) + "..."
+                    if (__trophy_description.length > 45) {
+                      __trophy_description = __trophy_description.slice(0,45) + "..."
                     }
 
                     if (i == 0){
@@ -5256,9 +5273,10 @@ function addTag(row, label) {
 	let newLabel = document.createElement('div');
 	//newLabel.style = 'bottom: 37px; height: 14px; line-height: 14px; width: 15px'
     newLabel.style.bottom = '37px'
-    newLabel.style.height = '14px'
-    newLabel.style.lineHeight = '14px'
+    newLabel.style.height = '12px'
+
     newLabel.style.width = '15px'
+    newLabel.style.padding = '2px 4px'
     newLabel.style.color = 'white';
     if (label === 'OR') {
         newLabel.style.backgroundColor= '#5c5c5c'
