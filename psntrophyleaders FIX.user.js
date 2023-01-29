@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.7
+// @version       1.9.8
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -44,6 +44,7 @@ GM_addStyle ( `
         padding: 0px 7px !important;
         font-weight: normal !important;
         text-align: center;
+        border: 1px solid #b1b1b1 !important;
     }
     div.platformlabel.psv {
         padding: 1px 7px !important;
@@ -160,6 +161,9 @@ var REMOVE_FLAGGLOSS = true
 const arrayDELISTEDorange = [
 'babylons-fall-ps5',
 'babylons-fall-ps4',
+'minecraft-story-mode-ps3',
+'minecraft-story-mode-ps4',
+'minecraft-story-mode-season-2-ps4',
 'assetto-corsa-ps4-1',
 'will-a-wonderful-world-ps4-2',
 'will-a-wonderful-world-ps4-1',
@@ -3673,8 +3677,6 @@ var code = 0;
 
 	var currentProgress = 0;
 	var totalProgress = 0;
-
-
     if ((document.URL.split('/')[3]) === "games") {
         code = 1
 GM_addStyle ( `
