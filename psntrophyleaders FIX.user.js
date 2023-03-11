@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.9
+// @version       2.0.0
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -142,6 +142,15 @@ GM_addStyle ( `
         border-radius: 4px !important;
         -webkit-border-radius: 4px !important;
         padding-right: 2px !important;
+    }
+    tr.oddrow, tr.odd {
+        background-color: #ededed;
+    }
+    tr.complete.odd, tr.earned.odd {
+        background-color: #e6ede5 !important;
+    }
+    tr.complete.even, tr.earned.even {
+        background-color: #e6ede5 !important;
     }
 
 `
@@ -5260,7 +5269,8 @@ function fixtag(game) {
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
-
+            .date_earned .date {color: 	#74962D; display:block;}
+            .date_earned .time {color: #88AA55}
         `)
     GM_addStyle ( `
             .platformlabel.ps5{
@@ -5492,6 +5502,8 @@ function moveRowContent(original) {
     //console.log(nbn[5+offset].innerText.substring(1, 3))
     //                                                                                                            console.log("starting replace1")
 	const date = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split('on ')[1].substring(0, 12).replace('i', ''): '';
+
+
     //                                                                                                            console.log("got replace1")
 	const timestamp = dateHTML.innerText.split('on ')[1] ? dateHTML.innerText.split(date)[1].substring(0, 12).replace('i', ''): '';
     //                                                                                                            console.log("got replace2")
@@ -5510,7 +5522,7 @@ function moveRowContent(original) {
 	original.getElementsByClassName('difficultyText')[0].classList = [];
 
 	//dateHTML.innerHTML = dateHTML.innerHTML;
-	dateHTML.innerText = timestamp;
+	dateHTML.innerText = timestamp.split('.')[0];
 	//dateHTML.style.color = dateHTML.style.color;
 	dateHTML.style.fontWeight = 'bold';
     if (FirstTag == "PS5") {
