@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       1.9.8
+// @version       1.9.9
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -10,6 +10,18 @@
 // @grant         GM_addStyle
 // @grant         GM_xmlhttpRequest
 // ==/UserScript==
+
+
+
+
+
+
+
+var REMOVE_ID = true
+
+
+
+
 
 
 GM_addStyle ( `
@@ -31,12 +43,12 @@ GM_addStyle ( `
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
     }
     div.platformlabel.ps3 {
-        padding: 1px 7px !important;
+        padding: 1px 8px !important;
         font-weight: normal !important;
         text-align: center;
     }
     div.platformlabel.ps4 {
-        padding: 1px 7px !important;
+        padding: 1px 8px !important;
         font-weight: normal !important;
         text-align: center;
     }
@@ -47,7 +59,7 @@ GM_addStyle ( `
         border: 1px solid #b1b1b1 !important;
     }
     div.platformlabel.psv {
-        padding: 1px 7px !important;
+        padding: 1px 8px !important;
         font-weight: normal !important;
         text-align: center;
     }
@@ -177,6 +189,9 @@ const arrayDELISTEDorange = [
 ];
 const arrayDELISTED = [
 'fall-guys-ps4',
+'marvel-ultimate-alliance-ps4',
+'legend-of-korra-ps4',
+'marvel-ultimate-alliance-2-ps4',
 'affected-the-manor-ps4-1',
 'affected-the-manor-ps4',
 'catan-ps3',
@@ -5208,34 +5223,73 @@ function checkRegion(row) {
 
 function fixtag(game) {
     GM_addStyle ( `
+            .gameDetailTitle {
+                font-size: 14pt;
+            }
             .gameDetailTitle a {
                 line-height: 15px !important;
+                position: relative !important;
+                height: 12px  !important;
+                top: 3px !important;
+            }
+            .platformlabel {
+                line-height: 12px !important;
+                height: 11px  !important;
+                position: relative !important;
+                top: -2px !important;
             }
         `)
     GM_addStyle ( `
-            .platformlabel.ps5{
+            .div.platformlabel.ps5{
                 top: -4px !important;
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
-            .platformlabel.ps4 {
+            .div.platformlabel.ps4 {
                 top: -4px !important;
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
-            .platformlabel.psv{
+            .div.platformlabel.psv{
                 top: -4px !important;
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
-            .platformlabel.ps3{
+            .div.platformlabel.ps3{
                 top: -4px !important;
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
 
         `)
-    console.log(game)
+    GM_addStyle ( `
+            .platformlabel.ps5{
+                top: -2px !important;
+                height: 13px  !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+            .platformlabel.ps4 {
+                top: -2px !important;
+                height: 13px  !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+            .platformlabel.psv{
+                top: -2px !important;
+                height: 13px  !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+            .platformlabel.ps3{
+                top: -2px !important;
+                height: 13px  !important;
+                position: relative !important;
+                padding: 2px 5px 2px 6px !important;
+            }
+
+        `)
+    //console.log(game)
     if (game == 'coolpaintr-ps4-3' | game == 'coolpaintr-ps4-4') {
         let aaac = document.querySelector("#gametitle > div")
         if (aaac) {
@@ -5388,6 +5442,11 @@ function addTag(row, label) {
 
 
 function fixstrings(str) {
+    if (REMOVE_ID) {
+        if (str.slice(-4) == "_00)") {
+            str = str.slice(0, -15)
+        }
+    }
     return str.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','')
 }
 
@@ -5701,12 +5760,13 @@ function parseGameDetails() {
             remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
         }
     }
-    }, 150);
+        remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.gameDetailTitle > table > tbody > tr:nth-child(2)"))
+    }, 100);
     if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
         let user = ''
         let usr = document.getElementsByClassName('username')[0]
         if (usr) {
-            user = usr.innerText
+            user = usr.innerText.split(' ')[0]
         }
         let newEl2 = document.createElement('div');
         newEl2.style=`width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;`
