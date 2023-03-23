@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.0
+// @version       2.0.1
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -17,7 +17,10 @@
 
 
 
+// admin only
 var REMOVE_ID = true
+
+
 
 
 
@@ -108,10 +111,18 @@ GM_addStyle ( `
     .sort-row {
         background-color: #33383e !important;
         color: #cecece !important;
+        margin-bottom: 2px; !important
+    }
+    #mainbody, #welcomebody, .mainbody {
+        background-color: #1d2126;
     }
     .page-header {
         background-color: #1d2126 !important;
         color: #cecece !important;
+    }
+    .mainSection {
+        background-color: #ededed !important;
+        color: #ededed !important;
     }
     .options {
         background-color: #1d2126 !important;
@@ -4343,6 +4354,7 @@ height: 200px; !important
                 links.children[0].style = `background-color: #1d2126; !important"`
                 links.children[1].style = `display: table-cell; background-color: #1d2126; padding: 10px; !important"`
 
+
                 document.getElementById('mainbody').style = `box-shadow: -10px 145px 50px 145px #000;`
 
                 let table = document.getElementById('usergamelist');
@@ -4627,8 +4639,37 @@ height: 200px; !important
 				}
 				`)
 
+GM_addStyle ( `
+    .game-image-cell {
+        background-color: #333;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+    .trophy-border, .game-border {
+        padding: 3px 3px 3px 3px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
 
 
+
+
+
+#custom_leaderboard.user tr td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.ps3_leaderboard td {
+    text-align: left;
+    padding: 10px 4px;
+}
+.image-cell {
+    width: 90px !important;
+}
+`)
+                remove(document.getElementsByClassName('sort-row')[0])
                 let rows = document.getElementsByClassName('gamerow');
                 totalProgress = rows.length;
                 var loadingInterval = setInterval(() => {
@@ -4672,6 +4713,25 @@ height: 200px; !important
 
                 let table = document.getElementById('game_details_table');
                 let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+
+
+
+
+
+
+
+                addButton("junktxt");
+
+
+
+
+
+
+
+
+
+
                 totalProgress = rows.length;
                 var loadingInterval = setInterval(() => {
                     if (currentProgress >= totalProgress) {
@@ -4730,6 +4790,192 @@ height: 200px; !important
     }
     //}, 1000);
 })();
+
+
+let i
+let oldtime
+let newtime
+let firsttime
+let lasttime
+let gap
+function addButton(text, onclick, cssObj) {
+    cssObj = cssObj || {
+        position: "relative",
+        top: "0%",
+        left: "-1%",
+        "z-index": 3,
+        fontWeight: "600",
+        fontSize: "12px",
+        backgroundColor: "#0099cc",
+        color: "white",
+        border: "none",
+        padding: "1px 10px",
+    }
+
+    let button = document.createElement("button"),
+    btnStyle = button.style;
+    button.innerHTML = 'Load Time Gaps';
+    button.onclick = onpress;
+
+    function onpress() {
+
+
+          GM_addStyle ( `
+               .gamesLeft .date_earned {
+                    min-width: 200px;
+                    vertical-align: top !important;
+                    padding-top: 2px;
+               }
+               .date_earned {
+                   text-align: right;
+               }
+          `)
+
+        let cells = document.getElementsByClassName('earned');
+        for(i = 0; i < cells.length; i++) {
+            if (valid(cells[i])) {
+                let timestamp = cells[i].children[7].children[0].innerText
+                if (i == 0) {
+                    firsttime = timestamp
+                    oldtime = timestamp
+                    gap = 0
+                }
+                else if (i > 0) {
+                    gap = timestamp - oldtime
+                    oldtime = timestamp
+                }
+
+
+
+                let timeGaps = document.createElement('div');
+                timeGaps.classList = ["timeGaps"];
+                timeGaps.style = 'padding-top: 6px !important; color: #aabb49;'
+                timeGaps.innerText = secondsToTime(gap, i)
+                document.getElementsByClassName("time")[i].append(timeGaps)
+
+
+                //console.log(timestamp + ", gap: " + secondsToTime(gap))
+            }
+        }
+
+
+
+
+
+
+
+
+
+        button.innerHTML = 'Loading..'
+        button.style.backgroundColor = "#0077cc",
+        button.style.padding = "1px 20px";
+        setTimeout(function() {
+            button.innerHTML = 'Done!'
+            button.style.backgroundColor = "#005fcc",
+            button.style.padding = "1px 20px";
+            setTimeout(function() {
+                button.style.display = 'none';
+            }, 1000);
+        }, 200);
+    }
+    Object.keys(cssObj).forEach(key => (btnStyle[key] = cssObj[key]));
+    document.getElementsByClassName("filter-row")[0].childNodes[0].insertBefore(button, document.getElementsByClassName("filter-row")[0].childNodes[0].childNodes[0]);
+    return button;
+}
+
+
+function secondsToTime(sec, i){
+    const second = Math.floor(sec % 60).toString()
+    const minute = Math.floor(sec % 3600 / 60).toString()
+    const hour = Math.floor(sec / 3600 % 24).toString()
+
+    const day = Math.floor((sec / 3600) / 24).toString()
+    const week = Math.floor(day / 7).toString()
+    const month = Math.floor(day / 30).toString()
+    const year = Math.floor(day / 365).toString()
+
+    if (i ==0) {
+        return "First Trophy"
+    }
+
+
+
+
+    let result = "+ "
+
+    if (year > 1) {
+        result = result + year + " years, "
+    }
+    else if (year > 0) {
+        result = result + year + " year, "
+    }
+
+
+    if (month > 1) {
+        result = result + month + " months, "
+    }
+    else if (month > 0) {
+        result = result + month + " month, "
+    }
+
+
+    if (week > 1) {
+        result = result + week + " weeks, "
+    }
+    else if (week > 0) {
+        result = result + week + " week, "
+    }
+
+
+
+    if (day > 1) {
+        result = result + day + " days, "
+    }
+    else if (day > 0) {
+        result = result + day + " day, "
+    }
+
+
+    if (hour > 1) {
+        result = result + hour + " hours, "
+    }
+    else if (hour > 0) {
+        result = result + hour + " hour, "
+    }
+
+
+    if (minute > 1) {
+        result = result + minute + " minutes and "
+    }
+    else if (minute > 0) {
+        result = result + minute + " minute and "
+    }
+
+    if (second == 0) {
+        result = result + "0 seconds"
+    }
+    if (second > 1) {
+        result = result + second + " seconds"
+    }
+    else if (second > 0) {
+        result = result + second + " second"
+    }
+
+
+
+    return result
+}
+
+
+function valid(a) {
+    if (a.children[7].children[0]) {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
 
 function doAnimation() {
     let first_load = true
@@ -5269,8 +5515,13 @@ function fixtag(game) {
                 position: relative !important;
                 padding: 2px 5px 2px 6px !important;
             }
-            .date_earned .date {color: 	#74962D; display:block;}
-            .date_earned .time {color: #88AA55}
+            .date_earned .date {
+                color: #74962D;
+                display:block;
+            }
+            .date_earned .time {
+                color: #88AA55
+            }
         `)
     GM_addStyle ( `
             .platformlabel.ps5{
@@ -5465,6 +5716,8 @@ function moveRowContent(original) {
     let FirstTag = original.getElementsByClassName('platformlabel')[0].innerText
     //                                                                                                         console.log("got innerText")
     let gameIMG = original.getElementsByClassName('game-image-cell')[0]
+    //                                                                                                          console.log("got game-image-cell")
+
     //                                                                                                          console.log("got game-image-cell")
     let newGameIMG = document.createElement('span');
     if (gameIMG.naturalHeight > 1) {
