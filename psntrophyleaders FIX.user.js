@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.2
+// @version       2.0.3
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6041,7 +6041,7 @@ function parseGameDetails() {
         difficultyPoints = completionRateString.innerText.split('/')[0].split(' ')[1];
         remove(document.querySelector("#gamesHeader > div.page-right > div > table > tbody > tr > td.gamestats"))
         const trophies = document.getElementsByClassName('trophy_totals')[0]
-        trophies.style = `border-top: unset; padding-left: 210px`
+        trophies.style = `border-top: unset; padding-left: 150px;`
     }
     else {
 
@@ -6066,6 +6066,10 @@ function parseGameDetails() {
         let currentpoints = 0
         let totalpoints = 0
 
+        let noPlat = false
+        let __trophy_totalsWIDTH = 211
+        let __progress_floatWIDTH = 295
+
         let spriteTrophies = document.getElementsByClassName('sprite')[0];
         if (spriteTrophies.children.length == 5) {
             platinumtrophies = spriteTrophies.children[0].innerText
@@ -6075,6 +6079,9 @@ function parseGameDetails() {
             trophycount = spriteTrophies.children[4].innerText
         }
         else {
+            //document.getElementsByClassName('trophy_totals').style = `width: ${__trophy_totalsWIDTH}px;`;
+            noPlat = true
+            platinumtrophies = '0/'
             goldtrophies = spriteTrophies.children[0].innerText
             silvertrophies = spriteTrophies.children[1].innerText
             bronzetrophies = spriteTrophies.children[2].innerText
@@ -6086,8 +6093,15 @@ function parseGameDetails() {
         let totalsilvertrophies = silvertrophies.split("/")[1] & silvertrophies.split("/")[1] | 0
         let totalbronzetrophies = bronzetrophies.split("/")[1] & bronzetrophies.split("/")[1] | 0
         let totaltrophycount = trophycount.split("/")[1] & trophycount.split("/")[1] | 0
-        if (platinumtrophies.split("/")[1]) {
-            totalpoints = (parseInt(platinumtrophies.split("/")[1]*300) + parseInt(totalgoldtrophies*90) + parseInt(totalsilvertrophies*30) + parseInt(totalbronzetrophies*15))
+        if (noPlat) {
+            __trophy_totalsWIDTH = 155
+            __progress_floatWIDTH = 240
+            totalpoints = (parseInt(totalgoldtrophies*90) + parseInt(totalsilvertrophies*30) + parseInt(totalbronzetrophies*15))
+        }
+        else {
+            if (platinumtrophies.split("/")[1]) {
+                totalpoints = (parseInt(platinumtrophies.split("/")[1]*300) + parseInt(totalgoldtrophies*90) + parseInt(totalsilvertrophies*30) + parseInt(totalbronzetrophies*15))
+            }
         }
         /*if (goldtrophies.split("/")[1]) {
             totalgoldtrophies = goldtrophies.split("/")[1]
@@ -6135,9 +6149,40 @@ function parseGameDetails() {
         let gameTrophiesInfo = document.createElement('div');
         gameTrophiesInfo.class = "gameTrophiesInfo"
         gameTrophiesInfo.style=`width: 0px; height: 0px; position:relative;`
+        if (noPlat) {
+                /// game has no platinum at all
+                gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
 
-        if (parseInt(platinumtrophies) > 0) {
-            gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
+
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; position:absolute; bottom:40px; right:345px;"><b>${goldtrophies.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalgoldtrophies}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:340px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; position:absolute; bottom:40px; right:260px;"><b>${silvertrophies.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalsilvertrophies}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:255px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; position:absolute; bottom:40px; right:175px;"><b>${bronzetrophies.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalbronzetrophies}</span></big>
+
+
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 14px; position:absolute; bottom:0px; right:375px;"><b>${trophycount.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totaltrophycount}</span></big>
+                                                               <big style="width: 80px; text-align: center; font-size: 13px; position:absolute; bottom:-15px; right:375px;">Trophies</big>
+
+
+
+                                                               <big style="width: 100px; text-align: center; font-size: 14px; position:absolute; bottom:0px; right:238px;"><b>${currentpoints.toLocaleString()}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalpoints}</span></big>
+                                                               <big style="width: 100px; text-align: center; font-size: 13px; position:absolute; bottom:-15px; right:238px;">Points</big>
+
+                                                          </span>
+                                                          `;
+        }
+        else {
+            if (parseInt(platinumtrophies) > 0) {
+
+                /// game has plat and is obtained
+                gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
 
 
 
@@ -6166,13 +6211,14 @@ function parseGameDetails() {
                                                           </span>
                                                           `;
 
-        }
-        else {
-            gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
+            }
+            else {
+                /// game has plat and is NOT obtained
+                gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
 
 
 
-
+                                                               <img class="iconTrophyOpaque" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
 
                                                                <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; position:absolute; bottom:40px; right:345px;"><b>${goldtrophies.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalgoldtrophies}</span></big>
@@ -6197,6 +6243,7 @@ function parseGameDetails() {
                                                           </span>
                                                           `;
 
+            }
         }
 
 
@@ -6329,13 +6376,13 @@ GM_addStyle ( `
             //const width = document.getElementsByClassName('page-header')[0].offsetWidth - document.getElementsByClassName('gameImage')[0].offsetWidth - 50;
             //console.log(width)
             //650 = correct, 850 = wrong
-            document.getElementsByClassName('progress_float')[0].style = `width: ${295}px; margin-left: 70px; margin-top: 74px !important; display: flex; justify-content: flex-end`;
+            document.getElementsByClassName('progress_float')[0].style = `width: ${__progress_floatWIDTH}px; margin-left: 70px; margin-top: 74px !important; display: flex; justify-content: flex-end`;
             document.getElementsByClassName('progress_float')[0].children[0].style.display = "none";
             document.getElementsByClassName('progress_float')[0].getElementsByClassName('progresscontainer')[0].style.width = "250px";
             document.getElementsByClassName('progress_float')[0].children[1].style.marginRight = '10px';
             document.getElementsByClassName('progress_float')[0].children[1].style.marginTop = '2px';
 
-            document.getElementsByClassName('trophy_totals')[0].style = `border-top: unset; width: ${211}px; display: flex; justify-content: flex-end; position: absolute; margin-top: 15px;`;
+            document.getElementsByClassName('trophy_totals')[0].style = `border-top: unset; width: ${__trophy_totalsWIDTH}px; display: flex; justify-content: flex-end; position: absolute; margin-top: 15px;`;
             //document.getElementsByClassName('trophy_totals')[0].getElementsByClassName('total')[0].style = 'border-left: unset; color: white !important;';
             remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.sub"))
 
