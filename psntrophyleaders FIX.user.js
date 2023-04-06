@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.3
+// @version       2.0.5
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6033,27 +6033,6 @@ function parseGameDetails() {
 
     const difficulty = document.getElementsByClassName('difficultyText')[0].children[0];
 	const completionRateString = document.getElementsByClassName('difficultyText')[0].children[1];
-    
-    var num1, denom1, difficultyPoints
-    if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
-        num1 = document.getElementsByClassName('center')[0].children[0].innerText;
-        denom1 = document.getElementsByClassName('center')[0].children[1].children[0].children[0].innerText;
-        difficultyPoints = completionRateString.innerText.split('/')[0].split(' ')[1];
-        remove(document.querySelector("#gamesHeader > div.page-right > div > table > tbody > tr > td.gamestats"))
-        const trophies = document.getElementsByClassName('trophy_totals')[0]
-        trophies.style = `border-top: unset; padding-left: 150px;`
-    }
-    else {
-
-        num1 = completionRateString.innerText.split('/')[0].split(' ')[1];
-        denom1 = completionRateString.innerText.split('/')[1].split(' ')[1];
-        difficultyPoints = completionRateString.innerText.split('(')[1].split(')')[0].split(' ')[0]
-    }
-    const num = num1.replace(',', '');
-    const denom = denom1.replace(',', '');
-    const completionpercent = ((parseInt(num) / parseInt(denom)) * 100)
-
-
 
 
 
@@ -6087,6 +6066,45 @@ function parseGameDetails() {
             bronzetrophies = spriteTrophies.children[2].innerText
             trophycount = spriteTrophies.children[3].innerText
         }
+
+
+
+
+
+
+
+
+    var num1, denom1, difficultyPoints
+    if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
+        num1 = document.getElementsByClassName('center')[0].children[0].innerText;
+        denom1 = document.getElementsByClassName('center')[0].children[1].children[0].children[0].innerText;
+        difficultyPoints = completionRateString.innerText.split('/')[0].split(' ')[1];
+        remove(document.querySelector("#gamesHeader > div.page-right > div > table > tbody > tr > td.gamestats"))
+        if (noPlat) {
+            const trophies = document.getElementsByClassName('trophy_totals')[0]
+            trophies.style = `border-top: unset; padding-left: 150px;`
+        }
+        else {
+            const trophies = document.getElementsByClassName('trophy_totals')[0]
+            trophies.style = `border-top: unset; padding-left: 217px;`
+        }
+    }
+    else {
+
+        num1 = completionRateString.innerText.split('/')[0].split(' ')[1];
+        denom1 = completionRateString.innerText.split('/')[1].split(' ')[1];
+        difficultyPoints = completionRateString.innerText.split('(')[1].split(')')[0].split(' ')[0]
+    }
+    const num = num1.replace(',', '');
+    const denom = denom1.replace(',', '');
+    const completionpercent = ((parseInt(num) / parseInt(denom)) * 100)
+
+
+
+
+
+
+
         currentpoints = (parseInt(platinumtrophies.split("/")[0]*300) + parseInt(goldtrophies.split("/")[0]*90) + parseInt(silvertrophies.split("/")[0]*30) + parseInt(bronzetrophies.split("/")[0]*15))
 
         let totalgoldtrophies = goldtrophies.split("/")[1] & goldtrophies.split("/")[1] | 0
@@ -6322,8 +6340,8 @@ GM_addStyle ( `
         newEl.style=`width: 0px; height: 0px; position:relative;`
         newEl.innerHTML = `
                                        <span style="font-size: 10pt; position: absolute; left:185px; bottom: 13px; width: 284px; z-index: 40;">
-                                            <div class="pieGraph type1" style="text-align:center;">${difficulty.outerHTML}${completionpercent.toFixed(1)}%<br>${difficultyPoints} Points</div>
-                                            <div class="pieGraph type1" style="--p:${completionpercent};--c:${difficulty.style.color};"> </div>
+                                            <div class="pieGraph type1" style="text-align:center;"></div>
+                                            <div class="pieGraph type1" style="text-align:center; --p:${completionpercent};--c:${difficulty.style.color};">${difficulty.outerHTML}<span style="font-size: 18px;">${completionpercent.toFixed(1)}%</span>${difficultyPoints} Points</div>
                                        </span>
 
                                        <big style="display: flex; width: 250px; font-size: 10pt; text-align:center; position: absolute; left:120px; bottom: -129px;  z-index: 41;">
