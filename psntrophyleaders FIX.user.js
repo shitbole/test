@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.5
+// @version       2.0.6
 // @author       Luhari & DenDigger
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -159,6 +159,9 @@ GM_addStyle ( `
     }
     tr.complete.even, tr.earned.even {
         background-color: #e6ede5 !important;
+    }
+    tr.complete.hid, tr.earned.hid {
+        background-color: #e4de42 !important;
     }
 
 `
@@ -4933,14 +4936,29 @@ function addButton(text, onclick, cssObj) {
 
 
 function secondsToTime(sec, i){
-    const second = Math.floor(sec % 60).toString()
+    /*const second = Math.floor(sec % 60).toString()
     const minute = Math.floor(sec % 3600 / 60).toString()
     const hour = Math.floor(sec / 3600 % 24).toString()
 
-    const day = Math.floor((sec / 3600) / 24).toString()
-    const week = Math.floor(day / 7).toString()
-    const month = Math.floor(day / 30).toString()
-    const year = Math.floor(day / 365).toString()
+    const day = Math.floor((sec / 3600)/ 24 % 7).toString()
+    const week = Math.floor(((sec / 3600)/ 24)/ 7 % 30).toString()
+    const month = Math.floor((((sec / 3600)/ 24)/ 7) / 30 % 12).toString()
+    const year = Math.floor((((sec / 3600)/ 24)/ 7) / 30 / 12).toString()*/
+
+
+    let minute = Math.floor(sec / 60);
+    sec = sec % 60;
+    let hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    let day = Math.floor(hour / 24);
+    let day_ = day
+    hour = hour % 24;
+    let week = Math.floor(day / 7);
+    day = day % 7;
+    let month = Math.floor(day_ / 30.4167);
+    week = week % 4;
+    let year = Math.floor(month / 12);
+    month = month % 12;
 
     if (i ==0) {
         return "First Trophy"
@@ -4999,14 +5017,14 @@ function secondsToTime(sec, i){
         result = result + minute + " minute and "
     }
 
-    if (second == 0) {
+    if (sec == 0) {
         result = result + "0 seconds"
     }
-    if (second > 1) {
-        result = result + second + " seconds"
+    if (sec > 1) {
+        result = result + sec + " seconds"
     }
-    else if (second > 0) {
-        result = result + second + " second"
+    else if (sec > 0) {
+        result = result + sec + " second"
     }
 
 
@@ -6204,7 +6222,7 @@ function parseGameDetails() {
 
 
 
-                                                               <img class="iconTrophy" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/VnkHuFc.png">
+                                                               <img class="iconTrophyPlat" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/VnkHuFc.png">
 
                                                                <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; position:absolute; bottom:40px; right:345px;"><b>${goldtrophies.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalgoldtrophies}</span></big>
@@ -6237,6 +6255,7 @@ function parseGameDetails() {
 
 
                                                                <img class="iconTrophyOpaque" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
+                                                               <img class="iconTrophyOpaqueInvis" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
 
                                                                <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
                                                                <big style="width: 80px; text-align: left; font-size: 18px; position:absolute; bottom:40px; right:345px;"><b>${goldtrophies.split("/")[0]}</b><span  style="font-size: 9pt; color: #8b8b8b;">${totalgoldtrophies}</span></big>
@@ -6281,18 +6300,26 @@ GM_addStyle ( `
     .iconTrophy:hover {
         transform: scale(1.5) rotate(-15deg);
     }
-    .iconTrophy2 {
+    .iconTrophyPlat {
         z-index: 996 !important;
         transition: transform .2s;
     }
-    .iconTrophy2:hover {
-        transform: scale(1.3);
+    .iconTrophyPlat:hover {
+        transform: scale(1.75) rotate(-15deg);
     }
     #gamesHeader {
         height: 150px !important;
     }
 
-
+    .iconTrophyOpaqueInvis {
+        z-index: 997 !important;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.2s linear;
+    }
+    .iconTrophyOpaqueInvis:hover {
+      visibility: visible;
+      opacity: 1;
+    }
 
 
 
@@ -6345,7 +6372,7 @@ GM_addStyle ( `
                                        </span>
 
                                        <big style="display: flex; width: 250px; font-size: 10pt; text-align:center; position: absolute; left:120px; bottom: -129px;  z-index: 41;">
-                                            <big style="width: 250px; text-align: center; font-size: 14px; height: 18px"><span style="color: #EEE">${num1} / ${denom1}</span></div>
+                                            <big style="width: 250px; text-align: center; font-size: 14px; height: 18px"><span style="color: #EEE"><acronym title="Users Completed / Game Owners">${num1} / ${denom1}</acronym></span></div>
                                        </span>
 
                                        `;
