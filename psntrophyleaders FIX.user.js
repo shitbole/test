@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.6
-// @author       Luhari & DenDigger
+// @version       2.0.7
+// @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
 // @match       https://psntrophyleaders.com/*
