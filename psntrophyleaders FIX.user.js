@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.7
+// @version       2.0.8
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -259,6 +259,10 @@ const arrayPHYSICAL = [
 ];
 const arrayDIGITAL = [
 'tales-from-the-borderlands-ps4',
+'bioshock-2-remastered-ps4-1',
+'bioshock-2-remastered-ps4',
+'bioshock-remastered-ps4-1',
+'bioshock-remastered-ps4',
 'walking-dead-the-final-season-ps4',
 'sly-3-psvita',
 'assassins-creed-chronicles-china-ps4',
@@ -267,6 +271,7 @@ const arrayDIGITAL = [
 'walking-dead-the-final-season-ps4-1',
 ];
 const arrayREMOVEVITA = [
+'ratchet-clank-into-the-nexus-ps3-psvita',
 'alteric-ps4-psvita',
 'alteric-ps4-psvita-1',
 'one-eyed-kutkh-ps4-psvita-1',
@@ -6069,6 +6074,7 @@ function parseGameDetails() {
 
         let spriteTrophies = document.getElementsByClassName('sprite')[0];
         if (spriteTrophies.children.length == 5) {
+            console.log('flow1')
             platinumtrophies = spriteTrophies.children[0].innerText
             goldtrophies = spriteTrophies.children[1].innerText
             silvertrophies = spriteTrophies.children[2].innerText
@@ -6076,6 +6082,7 @@ function parseGameDetails() {
             trophycount = spriteTrophies.children[4].innerText
         }
         else {
+            console.log('flow2')
             //document.getElementsByClassName('trophy_totals').style = `width: ${__trophy_totalsWIDTH}px;`;
             noPlat = true
             platinumtrophies = '0/'
@@ -6084,9 +6091,16 @@ function parseGameDetails() {
             bronzetrophies = spriteTrophies.children[2].innerText
             trophycount = spriteTrophies.children[3].innerText
         }
-
-
-
+        //console.log('' + goldtrophies.slice(0, 1))
+        if (goldtrophies.slice(0, 1)== "/") {
+            goldtrophies = "0" + goldtrophies
+        }
+        if (silvertrophies.slice(0, 1)== "/") {
+            silvertrophies = "0" + silvertrophies
+        }
+         if (bronzetrophies.slice(0, 1)== "/") {
+            bronzetrophies = "0" + bronzetrophies
+        }
 
 
 
@@ -6186,6 +6200,7 @@ function parseGameDetails() {
         gameTrophiesInfo.class = "gameTrophiesInfo"
         gameTrophiesInfo.style=`width: 0px; height: 0px; position:relative;`
         if (noPlat) {
+            //console.log('game act 1')
                 /// game has no platinum at all
                 gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
 
@@ -6215,6 +6230,7 @@ function parseGameDetails() {
                                                           `;
         }
         else {
+            //console.log('game act 2')
             if (parseInt(platinumtrophies) > 0) {
 
                 /// game has plat and is obtained
@@ -6249,6 +6265,7 @@ function parseGameDetails() {
 
             }
             else {
+                //console.log('game act 3')
                 /// game has plat and is NOT obtained
                 gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:50px; bottom: -90px; width: 284px; z-index: 38;">
 
@@ -6424,6 +6441,12 @@ GM_addStyle ( `
             document.getElementsByClassName('progress_float')[0].style = `width: ${__progress_floatWIDTH}px; margin-left: 70px; margin-top: 74px !important; display: flex; justify-content: flex-end`;
             document.getElementsByClassName('progress_float')[0].children[0].style.display = "none";
             document.getElementsByClassName('progress_float')[0].getElementsByClassName('progresscontainer')[0].style.width = "250px";
+            console.log(document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.width)
+            if (document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.width == "0%") {
+                document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.visibility = "hidden";
+            }
+
+
             document.getElementsByClassName('progress_float')[0].children[1].style.marginRight = '10px';
             document.getElementsByClassName('progress_float')[0].children[1].style.marginTop = '2px';
 
