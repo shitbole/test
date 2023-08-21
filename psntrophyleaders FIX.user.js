@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.0.8
+// @version       2.0.9
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -5347,6 +5347,12 @@ function checkRegion(row) {
             else if ((flagregion == "Russia") | (flagregion == "Russian Federation")) {
                 addTag(row, 'RU')
             }
+            else if (flagregion == "Saudi Arabia") {
+                addTag(row, 'SA')
+            }
+            else if (flagregion == "Australia") {
+                addTag(row, 'AU')
+            }
             else {
                 console.log("unknown flag: " + flagregion)
             }
@@ -5727,12 +5733,20 @@ function addTag(row, label) {
         newLabel.innerHTML = `<acronym title="Germany">${label}</acronym>`
     }
     else if (label === 'ES') {
-        newLabel.style.backgroundColor= '#089e67'
+        newLabel.style.backgroundColor= '#FF00BA'
         newLabel.innerHTML = `<acronym title="Spain">${label}</acronym>`
     }
     else if (label === 'RU') {
         newLabel.style.backgroundColor= '#690052'
         newLabel.innerHTML = `<acronym title="Russia">${label}</acronym>`
+    }
+    else if (label === 'SA') {
+        newLabel.style.backgroundColor= '#089e67'
+        newLabel.innerHTML = `<acronym title="Saudi Arabia">${label}</acronym>`
+    }
+    else if (label === 'AU') {
+        newLabel.style.backgroundColor= '#00B5FF'
+        newLabel.innerHTML = `<acronym title="Australia">${label}</acronym>`
     }
     else if (label === 'VR') {
         newLabel.style.backgroundColor= '#0068bf'
