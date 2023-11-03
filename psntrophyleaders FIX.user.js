@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.0
+// @version       2.1.1
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -4726,8 +4726,9 @@ td.title-cell {
                         clearInterval(loadingInterval);
                         return;
                     }
-                    moveRowContent(rows[currentProgress]);
+                    
                     checkRegion(rows[currentProgress]);
+                    moveRowContent(rows[currentProgress]);
                     currentProgress++;
                     updateLoadingBar(currentProgress, totalProgress);
                 }, 1);
@@ -5524,7 +5525,7 @@ function checkRegion(row) {
         nameStyle.innerText = fixedName
         nameStyle.title = 'View trophies for ' + fixedName
     }
-    console.log(code)
+    //console.log(code)
     if (code == 3){
         if (game == '十三機兵防衛圏-ps4') {
             const newText = '13 Sentinels: Aegis Rim'
@@ -5793,7 +5794,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV')
+    return str.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
