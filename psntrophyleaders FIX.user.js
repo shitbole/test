@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.1
+// @version       2.1.2
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -4505,6 +4505,11 @@ height: 200px; !important
                         fff.id = "recent-trophies"
                         fff.className = "recent-trophies flex"
                     }
+                    let __bg_color = "001118"
+                    if (__game_link.slice(-22) == "final-fantasy-xiii-ps3") {
+                        __bg_color = "ffffff"
+                    }
+
                     let empty = ""
                     fff.innerHTML = fff.innerHTML + `
 
@@ -4538,7 +4543,7 @@ height: 200px; !important
 				                	        <a href="${__game_link}" class="" style="position:absolute; right: 4px; top: 3px;">
 				                	            <picture class="trophy" alt="PLACEHOLDER">
 				                	                <source srcset="${__game_img_src}, ${__game_img_src} 1.1x">
-				                	                <img src="${__game_img_src}" style="background-color:#001118; height:45px; width: auto;" />
+				                	                <img src="${__game_img_src}" style="background-color:#${__bg_color}; height:45px; width: auto;" />
 				                	            </picture>
 				                	        </a>
 				                	    </div>
@@ -4552,7 +4557,7 @@ height: 200px; !important
 						<a href="${__trophy_link}" class="">
 							<picture class="trophy" alt="PLACEHOLDER">
 								<source srcset="${__img}, ${__img} 1.1x">
-								<img src="${__img}" style="background-color:#001118; height:45px; width: 45px;" />
+								<img class= "trophyicon" src="${__img}" style=" height:45px; width: 45px;" />
 							</picture>
 						</a>
 					</div>
@@ -4640,6 +4645,13 @@ height: 200px; !important
 				}
 				ul.recent-trophies li.active {
 					width: 400px;
+				}
+				ul.recent-trophies li .trophyicon {
+                    background-color: #1d2126;
+                    transition: background-color 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+				}
+				ul.recent-trophies li.active .trophyicon {
+					background-color:#001118;
 				}
 				ul.recent-trophies li:last-child {
 					margin-right: 0;
@@ -5290,8 +5302,12 @@ function checkRegion(row) {
             scale_amount = 2
 
         }
-
-        gameIMG.style = `background-color:#001118; width:${200}px; height:auto;`
+        let __bg_color = "001118"
+        if (game == "final-fantasy-xiii-ps3") {
+            __bg_color = "ffffff"
+        }
+        console.log("f333f3f: " +game)
+        gameIMG.style = `background-color:#${__bg_color}; width:${200}px; height:auto;`
 			                                	GM_addStyle ( `
 
                                                .gameImage {
@@ -5806,9 +5822,13 @@ function moveRowContent(original) {
     //                                                                                                          console.log("got game-image-cell")
 
     //                                                                                                          console.log("got game-image-cell")
+    let __bg_color = "001118"
+    if (original.getElementsByClassName('user gameImageLink')[0].href.slice(-22) == "final-fantasy-xiii-ps3") {
+        __bg_color = "ffffff"
+    }
     let newGameIMG = document.createElement('span');
     if (gameIMG.naturalHeight > 1) {
-        newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#001118; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
+        newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#${__bg_color}; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
         insertBefore(newGameIMG, original.getElementsByClassName('game-image-cell')[0])
         original.getElementsByClassName('game-image-cell')[0].remove()
     }
