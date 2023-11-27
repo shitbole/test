@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.2
+// @version       2.1.3
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -211,6 +211,7 @@ const arrayDELISTED = [
 'fall-guys-ps4',
 'marvel-ultimate-alliance-ps4',
 'legend-of-korra-ps4',
+'side-bullet-ps5',
 'marvel-ultimate-alliance-2-ps4',
 'affected-the-manor-ps4-1',
 'affected-the-manor-ps4',
@@ -3709,12 +3710,19 @@ function measureText(str, fontSize) {
 }
 var code = 0;
 
+var currentTime = 0;
+
+var timeLow = 99999999999;
+var timeHigh = 0;
+var loadPercent = 0;
+var __completionpercent = 0;
+
 (function() {
     //setTimeout(function() {
     'use strict';
 
     console.log('number of / splits: ', document.URL.split('/').length)
-
+    currentTime = new Date().getTime().toString().slice(0, -3);
 	var currentProgress = 0;
 	var totalProgress = 0;
     if ((document.URL.split('/')[3]) === "games") {
@@ -4744,9 +4752,7 @@ td.title-cell {
                     currentProgress++;
                     updateLoadingBar(currentProgress, totalProgress);
                 }, 1);
-
-
-
+                console.log('current time: ' + currentTime)
                 console.log("code 3")
             }
         }
@@ -4798,6 +4804,8 @@ td.title-cell {
 
 
 
+                let panel_right = document.getElementsByClassName('page-right')[0]
+                panel_right.style = `height: 160px !important`
 
 
 
@@ -4887,9 +4895,20 @@ function addButton(text, onclick, cssObj) {
     button.onclick = onpress;
 
     function onpress() {
-
+/*
+               .trophy_title {
+                    vertical-align: top !important;
+                    padding-top: 2px;
+               }
+               .trophy_image {
+                    vertical-align: top !important;
+                    padding-top: 2px;
+               }
+ */
 
           GM_addStyle ( `
+
+
                .gamesLeft .date_earned {
                     min-width: 200px;
                     vertical-align: top !important;
@@ -4920,7 +4939,7 @@ function addButton(text, onclick, cssObj) {
                 timeGaps.classList = ["timeGaps"];
                 timeGaps.style = 'padding-top: 6px !important; color: #aabb49;'
                 timeGaps.innerText = secondsToTime(gap, i)
-                document.getElementsByClassName("time")[i].append(timeGaps)
+                document.getElementsByClassName("date_earned")[i].append(timeGaps)
 
 
                 //console.log(timestamp + ", gap: " + secondsToTime(gap))
@@ -4952,6 +4971,15 @@ function addButton(text, onclick, cssObj) {
     return button;
 }
 
+function simplifytime(time) {
+    let splits = time.split(',')
+
+    if (splits.length > 1) {
+        let splits2 = splits[0] + "," + splits[1]
+        return splits2.split(' and ')[0]
+    }
+    return splits[0]
+}
 
 function secondsToTime(sec, i){
     /*const second = Math.floor(sec % 60).toString()
@@ -5271,12 +5299,48 @@ function injectLoadingBar() {
 }
 
 function updateLoadingBar(currentProgress, totalProgress) {
+    loadPercent = ((currentProgress/totalProgress)*100)
 	let loadingBar = document.getElementsByClassName('loadingBar')[0];
 	if (loadingBar && loadingBar.children[0]) {
-		loadingBar.children[1].children[0].style = "float: left; width:" + currentProgress/totalProgress*100 + "%";
+		loadingBar.children[1].children[0].style = "float: left; width:" + loadPercent + "%";
 		loadingBar.children[0].children[0].innerHTML = currentProgress + " / " + totalProgress;
         if (currentProgress === totalProgress) {
             loadingBar.children[0].children[1].innerHTML = "100%";
+            if (code == 4) {
+                if (timeHigh != timeLow) {
+                    console.log("attempted % colour: " + __completionpercent.toString())
+                    let aditionaltext = "Time Elapsed: "
+                    let complete_colour = "9d9d9"
+                    let percentcolour = Math.ceil(255 * (__completionpercent.toString().slice(0, -1) / 100));
+                    let R = 255-(percentcolour * 0.375)
+                    let G = 110+(percentcolour * 0.5686)
+
+                    if (__completionpercent.toString() == "100%") {
+                        aditionaltext = "Completed in: "
+                        complete_colour = "9fff6e"
+                    }
+                    else {
+                        timeHigh = currentTime
+                    }
+
+                    let timesimple = simplifytime(secondsToTime(timeHigh-timeLow).slice(2))
+                    let timegap = document.createElement('div');
+                    timegap.class = "timeGap"
+                    timegap.style=`width: 0px; height: 0px; position:relative;`
+                    timegap.innerHTML = `
+                                       <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
+                                            <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
+                                            <span style="color: #9d9d9; font-size: 13px;">${aditionaltext}
+                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${secondsToTime(timeHigh-timeLow).slice(2)}">${timesimple}</acronym>
+                                            </span></div>
+                                       </span>
+
+                                       `;
+
+                    timegap.style.paddingTop = '0px';
+                    document.getElementsByClassName('trophy_totals')[0].appendChild(timegap);
+                }
+            }
         }
         else {
             loadingBar.children[0].children[1].innerHTML = (currentProgress/totalProgress*100).toFixed(1) + "%";
@@ -5986,6 +6050,20 @@ function moveRowContent(original) {
 }
 
 function modifyProgressBar(row) {
+
+    let earned = row.getElementsByClassName('date_earned')[0]
+    if (earned) {
+        earned = earned.children[0].innerText
+    }
+    if ((earned < timeLow) && (earned != 0)) {
+        timeLow = earned
+        //nsole.log("New lowest timestamp: " + timeLow)
+    }
+    if ((earned > timeHigh) && (earned != 0)) {
+        timeHigh = earned
+        //console.log("New highest timestamp: " + timeHigh)
+    }
+
 	if (!row.classList.contains('dlc_header')) {
         let trophyHTML = row.getElementsByClassName('sonytrophyrare')[0];
         if (trophyHTML) {
@@ -6417,14 +6495,14 @@ GM_addStyle ( `
 
         let newEl = document.createElement('div');
         newEl.class = "gameTrophiesInfo"
-        newEl.style=`width: 0px; height: 0px; position:relative;`
+        newEl.style=`width: 0px; height: 6px; position:relative;`
         newEl.innerHTML = `
-                                       <span style="font-size: 10pt; position: absolute; left:185px; bottom: 13px; width: 284px; z-index: 40;">
+                                       <span style="font-size: 10pt; position: absolute; left:185px; bottom: 4px; width: 284px; z-index: 40;">
                                             <div class="pieGraph type1" style="text-align:center;"></div>
                                             <div class="pieGraph type1" style="text-align:center; --p:${completionpercent};--c:${difficulty.style.color};">${difficulty.outerHTML}<span style="font-size: 18px;">${completionpercent.toFixed(1)}%</span>${difficultyPoints} Points</div>
                                        </span>
 
-                                       <big style="display: flex; width: 250px; font-size: 10pt; text-align:center; position: absolute; left:120px; bottom: -129px;  z-index: 41;">
+                                       <big style="display: flex; width: 250px; font-size: 10pt; text-align:center; position: absolute; left:120px; bottom: -140px;  z-index: 41;">
                                             <big style="width: 250px; text-align: center; font-size: 14px; height: 18px"><span style="color: #EEE"><acronym title="Users Completed / Game Owners">${num1} / ${denom1}</acronym></span></div>
                                        </span>
 
@@ -6477,7 +6555,10 @@ GM_addStyle ( `
             document.getElementsByClassName('progress_float')[0].style = `width: ${__progress_floatWIDTH}px; margin-left: 70px; margin-top: 74px !important; display: flex; justify-content: flex-end`;
             document.getElementsByClassName('progress_float')[0].children[0].style.display = "none";
             document.getElementsByClassName('progress_float')[0].getElementsByClassName('progresscontainer')[0].style.width = "250px";
-            console.log(document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.width)
+
+            console.log("? percent = "+document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.width)
+            __completionpercent = document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.width
+
             if (document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.width == "0%") {
                 document.getElementsByClassName('progress_float')[0].getElementsByClassName('progressbar')[0].style.visibility = "hidden";
             }
@@ -6525,7 +6606,40 @@ GM_addStyle ( `
         }
     }
         remove(document.querySelector("#gamesHeader > div:nth-child(2) > div > table > tbody > tr > td > div.gameDetailTitle > table > tbody > tr:nth-child(2)"))
-    }, 100);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }, 0);
     if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
         let user = ''
         let usr = document.getElementsByClassName('username')[0]
