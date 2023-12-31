@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.3
+// @version       2.1.4
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -29,6 +29,7 @@ var REMOVE_ID = true
 GM_addStyle ( `
     html, body {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
+        scroll-behavior: smooth;
     }
     a, a.game-title {
         text-decoration: none !important;
@@ -79,6 +80,41 @@ GM_addStyle ( `
        padding: 0px !important;
        border-radius: 999px !important;
     }
+
+
+
+
+.progressbar.____animated {
+    position: relative;
+    transition: 0.6s;
+    background-image: linear-gradient(
+      -90deg,
+
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0) 15%,
+      transparent 15%,
+      transparent 100%
+    );
+    z-index: 999 !important;
+    background-size: 320px 10px;
+    border-radius: 0px;
+    overflow: hidden;
+
+    animation: __shine 0.6s linear;
+}
+  @keyframes __shine {
+    0% {
+      background-position: 000px 000px;
+    }
+    100% {
+      background-position: 320px 000px;
+    }
+  }
+
+
+
+
+
    .partialprogressbar {
        background-color: #8cf !important;
        height: 5px !important;
@@ -163,9 +199,28 @@ GM_addStyle ( `
     tr.complete.hid, tr.earned.hid {
         background-color: #e4de42 !important;
     }
+.page-top__btn {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 48px;
+    background-position: -235px 0;
+    -moz-background-size: 371px auto;
+    -o-background-size: 371px auto;
+    -webkit-background-size: 371px auto;
+    background-size: 371px auto;
+    display: block;
+    background-image: url(/promo/h/0/mF84bpD3wyv5DJOV-i1B7bFMG8.png);
+    background-repeat: no-repeat;
+    position: fixed;
+    bottom: 12px;
+    right: -48px;
+    opacity: 0;
+    cursor: pointer
+}
+
 
 `
-
 
 /*
    tr.oddrow, tr.odd {
@@ -216,12 +271,9 @@ const arrayDELISTED = [
 'affected-the-manor-ps4-1',
 'affected-the-manor-ps4',
 'catan-ps3',
-'cybxus-heart-ps4-3',
 'grand-theft-auto-3-ps4',
 'bellator-ps3',
 'grand-theft-auto-vice-city-ps4',
-'aborigenus-ps4-2',
-'castle-of-no-escape-2-ps4-2',
 'nightmares-from-the-deep-3-davy-jones-ps4',
 'nightmares-from-the-deep-2-the-sirens-call-ps4',
 'sea-of-memories-ps4-1',
@@ -3716,6 +3768,7 @@ var timeLow = 99999999999;
 var timeHigh = 0;
 var loadPercent = 0;
 var __completionpercent = 0;
+let global_fixed_name = "";
 
 (function() {
     //setTimeout(function() {
@@ -3725,6 +3778,85 @@ var __completionpercent = 0;
     currentTime = new Date().getTime().toString().slice(0, -3);
 	var currentProgress = 0;
 	var totalProgress = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      GM_addStyle ( `
+                                          .toTOP {
+                                              color: #fff !important;
+                                              text-align: center;
+                                              font-size: 30px;
+                                              display: inline-block;
+                                              position: fixed;
+                                              padding-top: 14px;
+                                              height: 41px;
+                                              width: 55px;
+                                              right: 30px;
+                                              bottom: 30px;
+                                              z-index: 69;
+                                              box-shadow: 0 0 10px rgb(0 0 0);
+                                              overflow: hidden;
+                                              border-radius: 6px;
+                                              white-space: nowrap;
+                                              background: #7e7e7ea6;
+                                              visibility: hidden;
+                                              opacity: 0;
+                                              -webkit-transform: translateZ(0);
+                                              transform: translateZ(0);
+                                              -webkit-transition: opacity .3s 0s, visibility .3s 0s;
+                                              -moz-transition: opacity .3s 0s, visibility .3s 0s;
+                                              transition: opacity .3s 0s, visibility .3s 0s;
+                                              font-family: INITIAL;
+                                          }
+                                          @media only screen and (min-width: 200px) {
+                                             .toTOP.vis {
+                                                visibility: visible;
+                                                opacity: .6;
+                                              }
+                                             .toTOP.vis:hover {
+                                                opacity: 1;
+                                             }
+                                          }
+
+                                      `)
+
+
+
+    let _____xd = document.getElementsByClassName('mainBG')[0];
+    let toTOPbutton = document.createElement("a");
+    toTOPbutton.innerHTML = `
+                                          <a href="#" class="toTOP">
+                                          ^
+                                          </a>
+                                          `
+    insertBefore(toTOPbutton, _____xd);
+    $(window).scroll(function(e) {
+        var topDistance = $(this).scrollTop();
+        var screenWidth = $(window).width();
+        (topDistance > 250 ? $('.toTOP').addClass('vis') : $('.toTOP').removeClass('vis'));
+    });
+
+
+
+
+
+
+
+
+
+
+
+
     if ((document.URL.split('/')[3]) === "games") {
         code = 1
 GM_addStyle ( `
@@ -3753,7 +3885,7 @@ GM_addStyle ( `
 
 
 
-                GM_addStyle ( `
+                GM_addStyle( `
                     .gamesContent {
                         background-color: #1d2126;
                     }
@@ -4866,6 +4998,7 @@ td.title-cell {
         return
     }
     //}, 1000);
+    doAnimation2()
 })();
 
 
@@ -5088,7 +5221,6 @@ function valid(a) {
     }
 }
 
-
 function doAnimation() {
     let first_load = true
     var recentTrophy = 0;
@@ -5308,7 +5440,7 @@ function updateLoadingBar(currentProgress, totalProgress) {
             loadingBar.children[0].children[1].innerHTML = "100%";
             if (code == 4) {
                 if (timeHigh != timeLow) {
-                    console.log("attempted % colour: " + __completionpercent.toString())
+                    //console.log("attempted % colour: " + __completionpercent.toString())
                     let aditionaltext = "Time Elapsed: "
                     let complete_colour = "9d9d9"
                     let percentcolour = Math.ceil(255 * (__completionpercent.toString().slice(0, -1) / 100));
@@ -5370,7 +5502,7 @@ function checkRegion(row) {
         if (game == "final-fantasy-xiii-ps3") {
             __bg_color = "ffffff"
         }
-        console.log("f333f3f: " +game)
+        console.log("GAME URL: " +game)
         gameIMG.style = `background-color:#${__bg_color}; width:${200}px; height:auto;`
 			                                	GM_addStyle ( `
 
@@ -5732,6 +5864,7 @@ function fixtag(game) {
     else if (game_name_original) {
         console.log("code AF2: " + game_name_original.innerText)
         let fixed_name = fixstrings(game_name_original.innerText)
+        global_fixed_name = fixed_name
         game_name_original.innerText = fixed_name
     }
     else {
@@ -6063,7 +6196,20 @@ function modifyProgressBar(row) {
         timeHigh = earned
         //console.log("New highest timestamp: " + timeHigh)
     }
-
+GM_addStyle ( `
+#game_details_table img.dlc_image {
+    border-radius: 5px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: -159px;
+    width: 200px;
+    height: auto;
+    position: relative;
+    left: -2px;
+    bottom: -6px;
+    vertical-align: middle;
+    background-color: #001118;
+}
+`)
 	if (!row.classList.contains('dlc_header')) {
         let trophyHTML = row.getElementsByClassName('sonytrophyrare')[0];
         if (trophyHTML) {
@@ -6116,7 +6262,7 @@ function modifyProgressBar(row) {
         class="progresscontainer stacked softshadow"
         style="width: calc(100% - 80px)">
 	  <div
-          class="progressbar" style="float: left; width: ${percent}%; background-color: rgb(${R} ${G} 0) !important;">
+          class='progressbar' style="float: left; width: ${percent}%; background-color: rgb(${R} ${G} 0) !important;">
       </div>
 	</div>
 
@@ -6134,7 +6280,334 @@ function modifyProgressBar(row) {
 
 		row.appendChild(newProgressBar);
 
+        doAnimation2()
+
 	}
+    else {
+        //DLC
+        let dlc_header = row.getElementsByClassName('dlc_header')[0];
+        if (dlc_header) {
+            dlc_header.style = "padding-top: 0px; background-color: #1d2126 !important"
+            let dlc_header2 = dlc_header.getElementsByClassName('dlc_header')[0];
+            dlc_header2.style = "height: 124px !important; background-color: rgb(40 45 50); background-image: linear-gradient(to bottom, #5a5a5a, #282d32 2%, #282d32 80%, #24282c 100%) !important; border-radius: 0px 0px 0px 0px !important; border: 0px solid #282d32 !important;"
+
+        }
+
+        let temp_dlc_content = ''
+        let dlc_content = row.getElementsByClassName('dlc_content')[0];
+        if (dlc_content) {
+            temp_dlc_content = dlc_content
+            let temp = ""
+            let trophy_totals = row.getElementsByClassName('trophy_totals')[0];
+            let dlcType = dlc_content.children[0].innerText
+            let dlcName = ""
+            if (dlc_content.children[0].innerText != "Base Game") {
+                temp = dlcType
+                dlcType = dlcType.split(':')[0]
+                dlcName = temp.split(dlcType+':  ').slice(-1)
+                dlcName = fixstrings(dlcName.toString())
+                dlcType = dlcType.replace('Pack ',' ')
+                dlcName = dlcName.replace(global_fixed_name+": ",'')
+            }
+
+
+            if (dlcName == "") {
+                dlcName = global_fixed_name
+            }
+            if (dlcType == "") {
+                dlcType = "Base Game"
+            }
+
+            let _aplat = ''
+            let _aplattotal = ''
+            let _aplatcurr = ''
+            let _agold = ''
+            let _agoldtotal = ''
+            let _agoldcurr = ''
+            let _asilver = ''
+            let _asilvertotal = ''
+            let _asilvercurr = ''
+            let _abronze = ''
+            let _abronzetotal = ''
+            let _abronzecurr = ''
+            let _atotal = ''
+            let _atotaltotal = ''
+            let _atotalcurr = ''
+
+            let _acurrentpoints = 0
+            let _atotalpoints = 0
+            let __Plat = false
+            let ___trophy_totalsWIDTH = 211
+            let ___progress_floatWIDTH = 295
+
+            let prog = dlc_header.getElementsByClassName('prog')[0];
+
+            _aplat = dlc_content.getElementsByClassName('platinum')[0];
+            _agold = dlc_content.getElementsByClassName('gold')[0];
+            _asilver = dlc_content.getElementsByClassName('silver')[0];
+            _abronze = dlc_content.getElementsByClassName('bronze')[0];
+            _atotal = dlc_content.getElementsByClassName('total')[0];
+
+            if (_aplat) {
+                _aplatcurr = _aplat.innerText.split('/')[0]
+                _aplattotal = _aplat.innerText.split('/')[1]
+            }
+            if (_agold) {
+                _agoldcurr = _agold.innerText.split('/')[0]
+                _agoldtotal = _agold.innerText.split('/')[1]
+            }
+            if (_asilver) {
+                _asilvercurr = _asilver.innerText.split('/')[0]
+                _asilvertotal = _asilver.innerText.split('/')[1]
+            }
+            if (_abronze) {
+                _abronzecurr = _abronze.innerText.split('/')[0]
+                _abronzetotal = _abronze.innerText.split('/')[1]
+            }
+            if (_atotal) {
+                _atotalcurr = _atotal.innerText.split(' / ')[0] | _atotal.innerText.split('/')[0]
+                _atotaltotal = _atotal.innerText.split(' / ')[1] | _atotal.innerText.split('/')[1]
+            }
+
+
+            _acurrentpoints = (parseInt(_aplatcurr*300) + parseInt(_agoldcurr*90) + parseInt(_asilvercurr*30) + parseInt(_abronzecurr*15))
+            if (parseInt(_aplattotal) > 0) {
+                __Plat = true
+                ___trophy_totalsWIDTH = 155
+                ___progress_floatWIDTH = 240
+            }
+            _atotalpoints = (parseInt(_aplattotal*300) + parseInt(_agoldtotal*90) + parseInt(_asilvertotal*30) + parseInt(_abronzetotal*15))
+
+
+            if (_aplattotal == 0) {
+                _aplattotal = ""
+            }
+            else {
+                _aplattotal = " /" + _aplattotal
+            }
+            if (_agoldtotal == 0) {
+                _agoldtotal = ""
+            }
+            else {
+                _agoldtotal = " /" + _agoldtotal
+            }
+            if (_asilvertotal == 0) {
+                _asilvertotal = ""
+            }
+            else {
+                _asilvertotal = " /" + _asilvertotal
+            }
+            if (_abronzetotal == 0) {
+                _abronzetotal = ""
+            }
+            else {
+                _abronzetotal = " /" + _abronzetotal
+            }
+            if (_atotaltotal == 0) {
+                _atotaltotal = ""
+            }
+            else {
+                _atotaltotal = " /" + _atotaltotal
+            }
+            if (_atotalpoints == 0) {
+                _atotalpoints = ""
+            }
+            else {
+                _atotalpoints = " /" + _atotalpoints
+            }
+
+
+
+
+
+
+            if (_agoldtotal == " /undefined") {
+                _agoldtotal = ""
+            }
+            if (_asilvertotal == " /undefined") {
+                _asilvertotal = ""
+            }
+            if (_abronzetotal == " /undefined") {
+                _abronzetotal = ""
+            }
+            if (_atotalpoints == " /NaN") {
+                _atotalpoints = ""
+            }
+
+            //console.log("dlcType: " + dlcType)
+            //console.log("dlcName: " + dlcName)
+            //console.log(": " + dlcName)
+
+            if (dlc_header) {
+                let _titles = document.createElement('div');
+                _titles.class = "__titles"
+                _titles.style=`width: 0px; height: 0px; position:relative;`
+                _titles.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 44;">
+
+                                                                            <big style="width: 241px;text-align: left;font-size: 13px;color: #ddd;position:absolute;top: -80px;right: -316px;font-size: 16px;vertical-align: top;">${dlcName}</big>
+                                                                            <big style="width: 171px;text-align: left;font-size: 13px;color: #ddd;position:absolute;bottom: -3px;right: -246px;font-size: 13px;">${dlcType}</big>
+                                                          </span>
+                                                          `;
+                dlc_header.children[0].appendChild(_titles);
+            }
+
+            let dlc_img = trophy_totals.parentNode.parentNode.getElementsByClassName('dlc_image')[0]
+            if (dlc_img) {
+                dlc_img = dlc_img.src
+                let dlc_src = dlc_img
+            }
+            else {
+                let main_game_src = document.querySelector("#gamesHeader > div.page-left > a > img").src
+                console.log()
+                let _gamesrc = document.createElement('div');
+                _gamesrc.class = "__gamesrc"
+                _gamesrc.style=`width: 0px; height: 0px; position:relative;`
+                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -868px;bottom: -307px;height: 300px;z-index: 45;">
+                                       <div style="float:left;"><img border="0" class="dlc_image" src="${main_game_src}" alt=""></div>
+                `
+                dlc_header.parentNode.appendChild(_gamesrc);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+            let percentage = 0
+            let temp_dir = ''
+            if (prog) {
+                percentage = prog.parentNode.children[2].innerText.split(" %")[0]
+                temp_dir = prog.parentNode.parentNode
+                // console.log(prog.parentNode)
+                remove(prog.parentNode)
+
+                let __newProgressBar = document.createElement('div');
+                __newProgressBar.class = "___progresscontainer"
+                __newProgressBar.style=`width: 0px; height: 0px; position:relative; font-weight:normal;`
+                __newProgressBar.innerHTML = `
+                                                             <div class="progress_float" style="width: 755px; margin-left: 54px; display: flex; justify-content: flex-end; margin-top: 61px !important;">
+                                                                 <span style="font-size: 0.8em; color: rgb(255, 153, 153); display: none;">
+                                                                 </span>
+                                                                 <div class="prog" style="margin-right: 10px; margin-top: 2px;">
+                                                                     <div class="progresscontainer" style="background-color: #4046507d !important; width: 250px;">
+                                                                         <div class="progressbar" style="float:left; width: ${percentage}%;">
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 ${percentage}%
+                                                             </div>`;
+                __newProgressBar.style.paddingTop = '0px';
+                if (__newProgressBar.getElementsByClassName('progressbar')[0].style.width == "0%") {
+                    __newProgressBar.getElementsByClassName('progressbar')[0].style.visibility = "hidden";
+                }
+                temp_dir.parentNode.appendChild(__newProgressBar);
+            }
+
+
+        let __gameTrophiesInfo = document.createElement('div');
+        __gameTrophiesInfo.class = "__gameTrophiesInfo"
+        __gameTrophiesInfo.style=`width: 0px; height: 0px; position:relative;`
+        if (parseInt(_aplatcurr) > 0) {
+            /// game has platinum (obtained)
+            __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 38;">
+
+                                                               <img class="iconTrophyPlat" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/VnkHuFc.png">
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:345px;"><b>${_agoldcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_agoldtotal}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:340px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:260px;"><b>${_asilvercurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_asilvertotal}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:255px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:175px;"><b>${_abronzecurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_abronzetotal}</span></big>
+
+
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:375px;"><b>${_atotalcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotaltotal}</span></big>
+                                                               <big style="width: 80px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:375px;">Trophies</big>
+
+
+
+                                                               <big style="width: 100px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:238px;"><b>${_acurrentpoints}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotalpoints}</span></big>
+                                                               <big style="width: 100px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:238px;">Points</big>
+
+                                                          </span>
+                                                          `;
+        }
+        else {
+                if (__Plat) {
+                    /// game has platinum (unobtained)
+                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 38;">
+
+                                                               <img class="iconTrophyOpaque" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
+                                                               <img class="iconTrophyOpaqueInvis" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:345px;"><b>${_agoldcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_agoldtotal}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:340px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:260px;"><b>${_asilvercurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_asilvertotal}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:255px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:175px;"><b>${_abronzecurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_abronzetotal}</span></big>
+
+
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:375px;"><b>${_atotalcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotaltotal}</span></big>
+                                                               <big style="width: 80px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:375px;">Trophies</big>
+
+
+
+                                                               <big style="width: 100px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:238px;"><b>${_acurrentpoints}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotalpoints}</span></big>
+                                                               <big style="width: 100px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:238px;">Points</big>
+
+                                                          </span>
+                                                          `;
+               }
+               else {
+                    /// game has NO platinum
+                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 38;">
+
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:345px;"><b>${_agoldcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_agoldtotal}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:340px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:260px;"><b>${_asilvercurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_asilvertotal}</span></big>
+
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:255px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:175px;"><b>${_abronzecurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_abronzetotal}</span></big>
+
+
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:375px;"><b>${_atotalcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotaltotal}</span></big>
+                                                               <big style="width: 80px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:375px;">Trophies</big>
+
+
+
+                                                               <big style="width: 100px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:238px;"><b>${_acurrentpoints}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotalpoints}</span></big>
+                                                               <big style="width: 100px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:238px;">Points</big>
+
+                                                          </span>
+                                                          `;
+               }
+           }
+        __gameTrophiesInfo.style.paddingTop = '0px';
+        dlc_header.parentNode.appendChild(__gameTrophiesInfo);
+        }
+        remove(dlc_content)
+    }
 }
 
 function parseGameDetails() {
@@ -6488,11 +6961,6 @@ GM_addStyle ( `
 `)
 
 
-
-
-
-
-
         let newEl = document.createElement('div');
         newEl.class = "gameTrophiesInfo"
         newEl.style=`width: 0px; height: 6px; position:relative;`
@@ -6657,6 +7125,16 @@ GM_addStyle ( `
                                        </div>`
            document.getElementsByClassName('gamestats center')[0].appendChild(newEl2);
     }
+}
+
+function doAnimation2() {
+    $(".progressbar").mouseenter(function(){
+        //$(this).removeClass("____animated")
+        $(this).bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
+            $(this).removeClass("____animated")
+        })
+        $(this).addClass("____animated")
+    })
 }
 
 function insertBefore(newNode, existingNode) {
