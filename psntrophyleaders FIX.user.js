@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.5
+// @version       2.1.6
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6201,8 +6201,8 @@ GM_addStyle ( `
     border-radius: 5px;
     -moz-border-radius: 2px;
     -webkit-border-radius: -159px;
-    width: 200px;
-    height: auto;
+    width: auto;
+    height: 110px;
     position: relative;
     left: -2px;
     bottom: -6px;
@@ -6441,36 +6441,47 @@ GM_addStyle ( `
             //console.log("dlcType: " + dlcType)
             //console.log("dlcName: " + dlcName)
             //console.log(": " + dlcName)
+            let ps5_pos_offset = 0;
+            let dlc_img = trophy_totals.parentNode.parentNode.getElementsByClassName('dlc_image')[0]
+            let do_later = false
+            let _gamesrc
+            if (dlc_img) {
+                if (dlc_img.naturalHeight == dlc_img.naturalWidth) {
+                    ps5_pos_offset = 85
+                }
+                dlc_img = dlc_img.src
+            }
+            else {
+                do_later = true
+                let main_game_src = document.querySelector("#gamesHeader > div.page-left > a > img")
+                if (main_game_src.naturalHeight == main_game_src.naturalWidth) {
+                    ps5_pos_offset = 85
+                }
+                _gamesrc = document.createElement('div');
+                _gamesrc.class = "__gamesrc"
+                _gamesrc.style=`width: 0px; height: 0px; position:relative;`
+                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -868px;bottom: -307px;height: 300px;z-index: 45;">
+                                       <div style="float:left;"><img border="0" class="dlc_image" src="${main_game_src.src}" alt=""></div>
+                `
 
+            }
             if (dlc_header) {
                 let _titles = document.createElement('div');
                 _titles.class = "__titles"
                 _titles.style=`width: 0px; height: 0px; position:relative;`
                 _titles.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 44;">
 
-                                                                            <big style="width: 241px;text-align: left;font-size: 13px;color: #ddd;position:absolute;top: -80px;right: -316px;font-size: 16px;vertical-align: top;">${dlcName}</big>
-                                                                            <big style="width: 171px;text-align: left;font-size: 13px;color: #ddd;position:absolute;bottom: -3px;right: -246px;font-size: 13px;">${dlcType}</big>
+                                                                            <big style="width: ${241+ps5_pos_offset}px;text-align: left;font-size: 13px;color: #ddd;position:absolute;top: -80px;right: -316px;font-size: 16px;vertical-align: top;">${dlcName}</big>
+                                                                            <big style="width: ${171+ps5_pos_offset}px;text-align: left;font-size: 13px;color: #ddd;position:absolute;bottom: -3px;right: -246px;font-size: 13px;">${dlcType}</big>
                                                           </span>
                                                           `;
                 dlc_header.children[0].appendChild(_titles);
             }
-
-            let dlc_img = trophy_totals.parentNode.parentNode.getElementsByClassName('dlc_image')[0]
-            if (dlc_img) {
-                dlc_img = dlc_img.src
-                let dlc_src = dlc_img
-            }
-            else {
-                let main_game_src = document.querySelector("#gamesHeader > div.page-left > a > img").src
-                console.log()
-                let _gamesrc = document.createElement('div');
-                _gamesrc.class = "__gamesrc"
-                _gamesrc.style=`width: 0px; height: 0px; position:relative;`
-                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -868px;bottom: -307px;height: 300px;z-index: 45;">
-                                       <div style="float:left;"><img border="0" class="dlc_image" src="${main_game_src}" alt=""></div>
-                `
+            if (do_later) {
                 dlc_header.parentNode.appendChild(_gamesrc);
             }
+
+
 
 
 
