@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.4
+// @version       2.1.5
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6285,16 +6285,20 @@ GM_addStyle ( `
 	}
     else {
         //DLC
+        let dlc_content = row.getElementsByClassName('dlc_content')[0];
         let dlc_header = row.getElementsByClassName('dlc_header')[0];
+        let extra_padding = 0
         if (dlc_header) {
-            dlc_header.style = "padding-top: 0px; background-color: #1d2126 !important"
+            if (dlc_content.children[0].innerText != "Base Game") {
+                extra_padding = 20
+            }
+            dlc_header.style = `padding-top: ${extra_padding}px; background-color: #1d2126 !important`
             let dlc_header2 = dlc_header.getElementsByClassName('dlc_header')[0];
             dlc_header2.style = "height: 124px !important; background-color: rgb(40 45 50); background-image: linear-gradient(to bottom, #5a5a5a, #282d32 2%, #282d32 80%, #24282c 100%) !important; border-radius: 0px 0px 0px 0px !important; border: 0px solid #282d32 !important;"
 
         }
 
         let temp_dlc_content = ''
-        let dlc_content = row.getElementsByClassName('dlc_content')[0];
         if (dlc_content) {
             temp_dlc_content = dlc_content
             let temp = ""
@@ -6470,20 +6474,19 @@ GM_addStyle ( `
 
 
 
-
-
-
-
-
-
-
-
-
-
             let percentage = 0
+            let bonus_position = 0
             let temp_dir = ''
             if (prog) {
                 percentage = prog.parentNode.children[2].innerText.split(" %")[0]
+                if (percentage > 99) {
+                    bonus_position = 15
+                }
+                else {
+                    if (percentage > 9) {
+                        bonus_position = 7.5
+                    }
+                }
                 temp_dir = prog.parentNode.parentNode
                 // console.log(prog.parentNode)
                 remove(prog.parentNode)
@@ -6492,7 +6495,7 @@ GM_addStyle ( `
                 __newProgressBar.class = "___progresscontainer"
                 __newProgressBar.style=`width: 0px; height: 0px; position:relative; font-weight:normal;`
                 __newProgressBar.innerHTML = `
-                                                             <div class="progress_float" style="width: 755px; margin-left: 54px; display: flex; justify-content: flex-end; margin-top: 61px !important;">
+                                                             <div class="progress_float" style="width: ${755+bonus_position}px; margin-left: 54px; display: flex; justify-content: flex-end; margin-top: 61px !important;">
                                                                  <span style="font-size: 0.8em; color: rgb(255, 153, 153); display: none;">
                                                                  </span>
                                                                  <div class="prog" style="margin-right: 10px; margin-top: 2px;">
@@ -6516,7 +6519,7 @@ GM_addStyle ( `
         __gameTrophiesInfo.style=`width: 0px; height: 0px; position:relative;`
         if (parseInt(_aplatcurr) > 0) {
             /// game has platinum (obtained)
-            __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 38;">
+            __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
 
                                                                <img class="iconTrophyPlat" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/VnkHuFc.png">
 
@@ -6546,7 +6549,7 @@ GM_addStyle ( `
         else {
                 if (__Plat) {
                     /// game has platinum (unobtained)
-                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 38;">
+                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
 
                                                                <img class="iconTrophyOpaque" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
                                                                <img class="iconTrophyOpaqueInvis" style="position:absolute; bottom:0px; right:479px;" width=auto height=75px  src="https://i.imgur.com/R1rU1Qn.png">
@@ -6576,7 +6579,7 @@ GM_addStyle ( `
                }
                else {
                     /// game has NO platinum
-                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -103px; width: 284px; z-index: 38;">
+                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
 
 
                                                                <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
