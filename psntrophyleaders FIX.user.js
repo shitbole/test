@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.6
+// @version       2.1.7
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -317,7 +317,6 @@ const arrayDIGITAL = [
 'bioshock-remastered-ps4-1',
 'bioshock-remastered-ps4',
 'walking-dead-the-final-season-ps4',
-'sly-3-psvita',
 'assassins-creed-chronicles-china-ps4',
 'assassins-creed-chronicles-india-ps4',
 'assassins-creed-chronicles-russia-ps4',
@@ -3768,7 +3767,7 @@ var timeLow = 99999999999;
 var timeHigh = 0;
 var loadPercent = 0;
 var __completionpercent = 0;
-let global_fixed_name = "";
+let global_fixed_name = " ";
 
 (function() {
     //setTimeout(function() {
@@ -5339,75 +5338,75 @@ function addTagGame(row, label) {
     newLabel.style.color = 'white';
     if (label === 'OR') {
         newLabel.style.backgroundColor= '#5c5c5c'
-        newLabel.innerHTML = `<acronym title="Original">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Original">${label} </acronym>`
     }
     else if (label === 'RR') {
         newLabel.style.backgroundColor= '#b8b8b8'
         newLabel.style.color = 'black';
-        newLabel.innerHTML = `<acronym title="Re-Released">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Re-Released">${label} </acronym>`
     }
 	else if (label === 'EU') {
         newLabel.style.backgroundColor= '#940000';
-        newLabel.innerHTML = `<acronym title="Europe">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Europe">${label} </acronym>`
     }
     else if (label === 'NA') {
         newLabel.style.backgroundColor= '#FF8C00'
-        newLabel.innerHTML = `<acronym title="North America">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="North America">${label} </acronym>`
     }
     else if (label === 'AS') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Asia">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Asia">${label} </acronym>`
     }
     else if (label === 'HK') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Hong Kong">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Hong Kong">${label} </acronym>`
     }
     else if (label === 'JP') {
         newLabel.style.backgroundColor= '#14C9CC'
-        newLabel.innerHTML = `<acronym title="Japan">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Japan">${label} </acronym>`
     }
     else if (label === 'KR') {
         newLabel.style.backgroundColor= '#9BCC14'
-        newLabel.innerHTML = `<acronym title="Korea">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Korea">${label} </acronym>`
     }
     else if (label === 'CN') {
         newLabel.style.backgroundColor= '#030180'
-        newLabel.innerHTML = `<acronym title="China">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="China">${label} </acronym>`
     }
     else if (label === 'GR') {
         newLabel.style.backgroundColor= '#CC067A'
-        newLabel.innerHTML = `<acronym title="Germany">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Germany">${label} </acronym>`
     }
     else if (label === 'ES') {
         newLabel.style.backgroundColor= '#089e67'
-        newLabel.innerHTML = `<acronym title="Spain">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Spain">${label} </acronym>`
     }
     else if (label === 'RU') {
         newLabel.style.backgroundColor= '#690052'
-        newLabel.innerHTML = `<acronym title="Russia">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Russia">${label} </acronym>`
     }
     else if (label === 'VR') {
         newLabel.style.backgroundColor= '#0068bf'
-        newLabel.innerHTML = `<acronym title="VR Required to 100%">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="VR Required to 100%">${label} </acronym>`
     }
     else if (label === 'DELISTED') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label} </acronym>`
     }
     else if (label === 'PHYSICAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Never got a digital release">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a digital release">${label} </acronym>`
     }
     else if (label === 'DIGITAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '45px'
-        newLabel.innerHTML = `<acronym title="Never got a physical release">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a physical release">${label} </acronym>`
     }
 	else {
         newLabel.style.backgroundColor= 'red'; // change this to another specific color for each region if you want
-        newLabel.innerHTML = `<acronym title="${label}">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="${label}">${label} </acronym>`
     }
 	newLabel.classList = ['platformlabel']
 
@@ -5907,93 +5906,93 @@ function addTag(row, label) {
     }
     if (label === 'OR') {
         newLabel.style.backgroundColor= '#5c5c5c'
-        newLabel.innerHTML = `<acronym title="Original">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Original">${label} </acronym>`
     }
     else if (label === 'RR') {
         newLabel.style.backgroundColor= '#b8b8b8'
         newLabel.style.color = 'black';
-        newLabel.innerHTML = `<acronym title="Re-Released">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Re-Released">${label} </acronym>`
     }
 	else if (label === 'EU') {
         newLabel.style.backgroundColor= '#940000';
-        newLabel.innerHTML = `<acronym title="Europe">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Europe">${label} </acronym>`
     }
     else if (label === 'NA') {
         newLabel.style.backgroundColor= '#FF8C00'
-        newLabel.innerHTML = `<acronym title="North America">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="North America">${label} </acronym>`
     }
     else if (label === 'AS') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Asia">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Asia">${label} </acronym>`
     }
     else if (label === 'HK') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Hong Kong">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Hong Kong">${label} </acronym>`
     }
     else if (label === 'JP') {
         newLabel.style.backgroundColor= '#14C9CC'
-        newLabel.innerHTML = `<acronym title="Japan">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Japan">${label} </acronym>`
     }
     else if (label === 'KR') {
         newLabel.style.backgroundColor= '#9BCC14'
-        newLabel.innerHTML = `<acronym title="Korea">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Korea">${label} </acronym>`
     }
     else if (label === 'CN') {
         newLabel.style.backgroundColor= '#030180'
-        newLabel.innerHTML = `<acronym title="China">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="China">${label} </acronym>`
     }
     else if (label === 'GR') {
         newLabel.style.backgroundColor= '#CC067A'
-        newLabel.innerHTML = `<acronym title="Germany">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Germany">${label} </acronym>`
     }
     else if (label === 'ES') {
         newLabel.style.backgroundColor= '#FF00BA'
-        newLabel.innerHTML = `<acronym title="Spain">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Spain">${label} </acronym>`
     }
     else if (label === 'RU') {
         newLabel.style.backgroundColor= '#690052'
-        newLabel.innerHTML = `<acronym title="Russia">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Russia">${label} </acronym>`
     }
     else if (label === 'SA') {
         newLabel.style.backgroundColor= '#089e67'
-        newLabel.innerHTML = `<acronym title="Saudi Arabia">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Saudi Arabia">${label} </acronym>`
     }
     else if (label === 'AU') {
         newLabel.style.backgroundColor= '#00B5FF'
-        newLabel.innerHTML = `<acronym title="Australia">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Australia">${label} </acronym>`
     }
     else if (label === 'VR') {
         newLabel.style.backgroundColor= '#0068bf'
-        newLabel.innerHTML = `<acronym title="VR Required to 100%">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="VR Required to 100%">${label} </acronym>`
     }
     else if (label === 'DELISTEDorange') {
         newLabel.style.backgroundColor= '#FF8C00'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Delisted from PSN Store, available Physically">DELISTED</acronym>`
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store, available Physically">DELISTED </acronym>`
     }
     else if (label === 'DELISTED') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label} </acronym>`
     }
     else if (label === 'CODE') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '33px'
-        newLabel.innerHTML = `<acronym title="Only obtainable from a code">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Only obtainable from a code">${label} </acronym>`
     }
     else if (label === 'PHYSICAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Never got a digital release">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a digital release">${label} </acronym>`
     }
     else if (label === 'DIGITAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '45px'
-        newLabel.innerHTML = `<acronym title="Never got a physical release">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a physical release">${label} </acronym>`
     }
 	else {
         newLabel.style.backgroundColor= 'red'; // change this to another specific color for each region if you want
-        newLabel.innerHTML = `<acronym title="${label}">${label}</acronym>`
+        newLabel.innerHTML = `<acronym title="${label}">${label} </acronym>`
     }
 	newLabel.classList = ['platformlabel']
 
@@ -6007,7 +6006,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
+    return str.replace('  ',' ').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace('OR','').replace('RR','').replace('EU','').replace('NA','').replace('AS','').replace('HK','').replace('JP','').replace('KR','').replace('CN','').replace('GR','').replace('ES','').replace('RU','').replace('SA','').replace('AU','').replace('VR','').replace('DELISTED','').replace('CODE','').replace('PHYSICAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
@@ -6305,13 +6304,39 @@ GM_addStyle ( `
             let trophy_totals = row.getElementsByClassName('trophy_totals')[0];
             let dlcType = dlc_content.children[0].innerText
             let dlcName = ""
+            let _fixedname = document.querySelector("#gametitle > div")
+            let __fixedname = "!! Refresh Page !!"
+            if (_fixedname) {
+                __fixedname = fixstrings(_fixedname.innerText)
+            }
+            global_fixed_name = __fixedname
+            if (global_fixed_name == "!! Refresh Page !!") {
+                setTimeout(function(){ location.reload(); }, 2*1000);
+            }
+//console.log(global_fixed_name)
             if (dlc_content.children[0].innerText != "Base Game") {
                 temp = dlcType
                 dlcType = dlcType.split(':')[0]
+
                 dlcName = temp.split(dlcType+':  ').slice(-1)
                 dlcName = fixstrings(dlcName.toString())
+                dlcName = dlcName.replace(":",'').replace(":",'')
+                console.log(dlcName)
+                if (dlcName != "Call of Duty Modern Warfare III") {
+                    dlcName = dlcName.replace(global_fixed_name+" - ",'').replace(global_fixed_name+"- ",'').replace(global_fixed_name+" ",'').replace(global_fixed_name,'')
+                    let __testName1count = global_fixed_name.toLowerCase().length
+                    let __testName2count = dlcName.toLowerCase().length
+                    let _testNewName = dlcName.toLowerCase().replace(global_fixed_name.toLowerCase(),'')
+                    if (_testNewName.length != __testName2count) {
+                        let _xxx = __testName2count - _testNewName.length
+                        //console.log("slicing: " + dlcName.slice(parseInt(_xxx)))
+                        dlcName = dlcName.slice(parseInt(_xxx))
+                    }
+                }
+                //console.log(__testName1count)
+                //console.log(global_fixed_name)
+                //console.log(dlcName)
                 dlcType = dlcType.replace('Pack ',' ')
-                dlcName = dlcName.replace(global_fixed_name+": ",'')
             }
 
 
@@ -6321,7 +6346,7 @@ GM_addStyle ( `
             if (dlcType == "") {
                 dlcType = "Base Game"
             }
-
+//console.log(dlcName)
             let _aplat = ''
             let _aplattotal = ''
             let _aplatcurr = ''
@@ -6382,6 +6407,12 @@ GM_addStyle ( `
             }
             _atotalpoints = (parseInt(_aplattotal*300) + parseInt(_agoldtotal*90) + parseInt(_asilvertotal*30) + parseInt(_abronzetotal*15))
 
+            let _aNoGold = false
+            let _aNoSilver = false
+            let _aNoBronze = false
+            let __visgold = 'visible'
+            let __vissilver = 'visible'
+            let __visbronze = 'visible'
 
             if (_aplattotal == 0) {
                 _aplattotal = ""
@@ -6390,18 +6421,24 @@ GM_addStyle ( `
                 _aplattotal = " /" + _aplattotal
             }
             if (_agoldtotal == 0) {
+                _aNoGold = true
+                __visgold = 'hidden'
                 _agoldtotal = ""
             }
             else {
                 _agoldtotal = " /" + _agoldtotal
             }
             if (_asilvertotal == 0) {
+                _aNoSilver = true
+                __vissilver = 'hidden'
                 _asilvertotal = ""
             }
             else {
                 _asilvertotal = " /" + _asilvertotal
             }
             if (_abronzetotal == 0) {
+                _aNoBronze = true
+                __visbronze = 'hidden'
                 _abronzetotal = ""
             }
             else {
@@ -6424,7 +6461,6 @@ GM_addStyle ( `
 
 
 
-
             if (_agoldtotal == " /undefined") {
                 _agoldtotal = ""
             }
@@ -6437,7 +6473,20 @@ GM_addStyle ( `
             if (_atotalpoints == " /NaN") {
                 _atotalpoints = ""
             }
-
+            if (code == 2) {
+                if (_agoldcurr == 0) {
+                    _aNoGold = true
+                    __visgold = 'hidden'
+                }
+                if (_asilvercurr == 0) {
+                    _aNoSilver = true
+                    __vissilver = 'hidden'
+                }
+                if (_abronzecurr == 0) {
+                    _aNoBronze = true
+                    __visbronze = 'hidden'
+                }
+            }
             //console.log("dlcType: " + dlcType)
             //console.log("dlcName: " + dlcName)
             //console.log(": " + dlcName)
@@ -6446,7 +6495,7 @@ GM_addStyle ( `
             let do_later = false
             let _gamesrc
             if (dlc_img) {
-                if (dlc_img.naturalHeight == dlc_img.naturalWidth) {
+                if (dlc_img.naturalHeight > 180) {
                     ps5_pos_offset = 85
                 }
                 dlc_img = dlc_img.src
@@ -6454,7 +6503,7 @@ GM_addStyle ( `
             else {
                 do_later = true
                 let main_game_src = document.querySelector("#gamesHeader > div.page-left > a > img")
-                if (main_game_src.naturalHeight == main_game_src.naturalWidth) {
+                if (main_game_src.naturalHeight > 180) {
                     ps5_pos_offset = 85
                 }
                 _gamesrc = document.createElement('div');
@@ -6480,10 +6529,41 @@ GM_addStyle ( `
             if (do_later) {
                 dlc_header.parentNode.appendChild(_gamesrc);
             }
+            let _aposgold = 0
+            let _apossilver = 0
+            let _aposbronze = 0
+            let _counttrophytypes = 3
+let _askipgold = false
+let _askipsilver = false
+let _askipbronze = false
 
-
-
-
+            if (_aNoGold) {
+                _counttrophytypes = _counttrophytypes - 1
+                _apossilver = 42.5
+                _aposbronze = 21.25
+            }
+            if (_aNoSilver) {
+                _counttrophytypes = _counttrophytypes - 1
+                _aposgold = -42.5
+                _aposbronze = 21.25
+               if (_aNoGold) {
+                   _aposbronze = 85
+               }
+            }
+            if (_aNoBronze) {
+                _counttrophytypes = _counttrophytypes - 1
+                _aposgold = -42.5
+                _apossilver = -63.75
+               if (_aNoGold) {
+                   _apossilver = 0
+               }
+               if (_aNoSilver) {
+                   _aposgold = -85
+               }
+            }
+            if (_counttrophytypes != 3) {
+                console.log("_counttrophytypes " + _counttrophytypes)
+            }
 
             let percentage = 0
             let bonus_position = 0
@@ -6528,6 +6608,7 @@ GM_addStyle ( `
         let __gameTrophiesInfo = document.createElement('div');
         __gameTrophiesInfo.class = "__gameTrophiesInfo"
         __gameTrophiesInfo.style=`width: 0px; height: 0px; position:relative;`
+
         if (parseInt(_aplatcurr) > 0) {
             /// game has platinum (obtained)
             __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
@@ -6590,6 +6671,9 @@ GM_addStyle ( `
                }
                else {
                     /// game has NO platinum
+
+                   // OLD MIGHT USE LATER DUNNO
+                   /*
                     __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
 
 
@@ -6615,6 +6699,75 @@ GM_addStyle ( `
 
                                                           </span>
                                                           `;
+                   */
+                   // OLD MIGHT USE LATER DUNNO
+                    __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
+
+
+                                                               <img class="iconTrophy"style="visibility: ${__visgold}; position:absolute; bottom:35px; right:${425 + _aposgold}px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="visibility: ${__visgold}; width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:${345 + _aposgold}px;"><b>${_agoldcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_agoldtotal}</span></big>
+
+                                                               <img class="iconTrophy"style="visibility: ${__vissilver}; position:absolute; bottom:35px; right:${340 + _apossilver}px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="visibility: ${__vissilver}; width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:${260 + _apossilver}px;"><b>${_asilvercurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_asilvertotal}</span></big>
+
+                                                               <img class="iconTrophy"style="visibility: ${__visbronze}; position:absolute; bottom:35px; right:${255 + _aposbronze}px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="visibility: ${__visbronze}; width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:${175 + _aposbronze}px;"><b>${_abronzecurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_abronzetotal}</span></big>
+
+
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:375px;"><b>${_atotalcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotaltotal}</span></big>
+                                                               <big style="width: 80px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:375px;">Trophies</big>
+
+
+
+                                                               <big style="width: 100px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:238px;"><b>${_acurrentpoints}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotalpoints}</span></big>
+                                                               <big style="width: 100px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:238px;">Points</big>
+
+                                                          </span>
+                                                          `;
+
+
+/*
+                   __gameTrophiesInfo.innerHTML = `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
+
+                    `
+                    if ((!__Plat) && (_agoldcurr > 0 )) {
+                        __gameTrophiesInfo.innerHTML = __gameTrophiesInfo.innerHTML + `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:425px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:345px;"><b>${_agoldcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_agoldtotal}</span></big>
+                    `
+                    }
+                   else {
+                       add_offset = add_offset - 42.5
+                   }
+                    if ((!__Plat) && (_asilvercurr > 0 )) {
+                    __gameTrophiesInfo.innerHTML = __gameTrophiesInfo.innerHTML + `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:${340 + add_offset}px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:${260 + add_offset}px;"><b>${_asilvercurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_asilvertotal}</span></big>
+                    `
+                    }
+                   else {
+                       add_offset = add_offset - 42.5
+                   }
+                    if ((!__Plat) && (_abronzecurr > 0 )) {
+                    __gameTrophiesInfo.innerHTML = __gameTrophiesInfo.innerHTML + `<span style="font-size: 10pt; position: absolute; left:-150px; bottom: -${103 + extra_padding}px; width: 284px; z-index: 38;">
+                                                               <img class="iconTrophy"style="position:absolute; bottom:35px; right:${255 + add_offset}px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big style="width: 80px; text-align: left; font-size: 18px; color: #ddd; position:absolute; bottom:40px; right:${175 + add_offset}px;"><b>${_abronzecurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_abronzetotal}</span></big>
+
+
+                                                               <big style="width: 80px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:375px;"><b>${_atotalcurr}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotaltotal}</span></big>
+                                                               <big style="width: 80px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:375px;">Trophies</big>
+
+
+
+                                                               <big style="width: 100px; text-align: center; font-size: 14px; color: #ddd; position:absolute; bottom:0px; right:238px;"><b>${_acurrentpoints}</b><span  style="font-size: 9pt; color: #8b8b8b;">${_atotalpoints}</span></big>
+                                                               <big style="width: 100px; text-align: center; font-size: 13px; color: #ddd; position:absolute; bottom:-15px; right:238px;">Points</big>
+
+                    </span>
+                    `
+                    }*/
+
                }
            }
         __gameTrophiesInfo.style.paddingTop = '0px';
