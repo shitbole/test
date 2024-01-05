@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.7
+// @version       2.1.8
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6006,7 +6006,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('  ',' ').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace('OR','').replace('RR','').replace('EU','').replace('NA','').replace('AS','').replace('HK','').replace('JP','').replace('KR','').replace('CN','').replace('GR','').replace('ES','').replace('RU','').replace('SA','').replace('AU','').replace('VR','').replace('DELISTED','').replace('CODE','').replace('PHYSICAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
+    return str.replace('  ',' ').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace('OR ','').replace('RR ','').replace('EU ','').replace('NA ','').replace('AS ','').replace('HK ','').replace('JP ','').replace('KR ','').replace('CN ','').replace('GR ','').replace('ES ','').replace('RU ','').replace('SA ','').replace('AU ','').replace('VR ','').replace('DELISTED ','').replace('CODE ','').replace('PHYSICAL ','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
@@ -6309,7 +6309,7 @@ GM_addStyle ( `
             if (_fixedname) {
                 __fixedname = fixstrings(_fixedname.innerText)
             }
-            global_fixed_name = __fixedname
+            //global_fixed_name = __fixedname
             if (global_fixed_name == "!! Refresh Page !!") {
                 setTimeout(function(){ location.reload(); }, 2*1000);
             }
@@ -6324,6 +6324,7 @@ GM_addStyle ( `
                 console.log(dlcName)
                 if (dlcName != "Call of Duty Modern Warfare III") {
                     dlcName = dlcName.replace(global_fixed_name+" - ",'').replace(global_fixed_name+"- ",'').replace(global_fixed_name+" ",'').replace(global_fixed_name,'')
+                    dlcName = dlcName.replace("DLC ",'')
                     let __testName1count = global_fixed_name.toLowerCase().length
                     let __testName2count = dlcName.toLowerCase().length
                     let _testNewName = dlcName.toLowerCase().replace(global_fixed_name.toLowerCase(),'')
