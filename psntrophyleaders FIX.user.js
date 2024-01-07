@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.8
+// @version       2.1.9
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6309,7 +6309,7 @@ GM_addStyle ( `
             if (_fixedname) {
                 __fixedname = fixstrings(_fixedname.innerText)
             }
-            //global_fixed_name = __fixedname
+            global_fixed_name = __fixedname
             if (global_fixed_name == "!! Refresh Page !!") {
                 setTimeout(function(){ location.reload(); }, 2*1000);
             }
@@ -6330,13 +6330,14 @@ GM_addStyle ( `
                     let _testNewName = dlcName.toLowerCase().replace(global_fixed_name.toLowerCase(),'')
                     if (_testNewName.length != __testName2count) {
                         let _xxx = __testName2count - _testNewName.length
-                        //console.log("slicing: " + dlcName.slice(parseInt(_xxx)))
+                        console.log("slicing: " + dlcName.slice(parseInt(_xxx)))
                         dlcName = dlcName.slice(parseInt(_xxx))
                     }
                 }
                 //console.log(__testName1count)
-                //console.log(global_fixed_name)
-                //console.log(dlcName)
+                console.log("global_fixed_name: " + global_fixed_name)
+                console.log("dlcName" + dlcName)
+                console.log("")
                 dlcType = dlcType.replace('Pack ',' ')
             }
 
@@ -6534,9 +6535,7 @@ GM_addStyle ( `
             let _apossilver = 0
             let _aposbronze = 0
             let _counttrophytypes = 3
-let _askipgold = false
-let _askipsilver = false
-let _askipbronze = false
+
 
             if (_aNoGold) {
                 _counttrophytypes = _counttrophytypes - 1
@@ -6563,7 +6562,7 @@ let _askipbronze = false
                }
             }
             if (_counttrophytypes != 3) {
-                console.log("_counttrophytypes " + _counttrophytypes)
+                //console.log("_counttrophytypes " + _counttrophytypes)
             }
 
             let percentage = 0
