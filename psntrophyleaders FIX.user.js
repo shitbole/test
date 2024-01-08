@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.1.9
+// @version       2.2.0
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -5338,75 +5338,75 @@ function addTagGame(row, label) {
     newLabel.style.color = 'white';
     if (label === 'OR') {
         newLabel.style.backgroundColor= '#5c5c5c'
-        newLabel.innerHTML = `<acronym title="Original">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Original"> ${label} </acronym>`
     }
     else if (label === 'RR') {
         newLabel.style.backgroundColor= '#b8b8b8'
         newLabel.style.color = 'black';
-        newLabel.innerHTML = `<acronym title="Re-Released">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Re-Released"> ${label} </acronym>`
     }
 	else if (label === 'EU') {
         newLabel.style.backgroundColor= '#940000';
-        newLabel.innerHTML = `<acronym title="Europe">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Europe"> ${label} </acronym>`
     }
     else if (label === 'NA') {
         newLabel.style.backgroundColor= '#FF8C00'
-        newLabel.innerHTML = `<acronym title="North America">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="North America"> ${label} </acronym>`
     }
     else if (label === 'AS') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Asia">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Asia"> ${label} </acronym>`
     }
     else if (label === 'HK') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Hong Kong">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Hong Kong"> ${label} </acronym>`
     }
     else if (label === 'JP') {
         newLabel.style.backgroundColor= '#14C9CC'
-        newLabel.innerHTML = `<acronym title="Japan">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Japan"> ${label} </acronym>`
     }
     else if (label === 'KR') {
         newLabel.style.backgroundColor= '#9BCC14'
-        newLabel.innerHTML = `<acronym title="Korea">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Korea"> ${label} </acronym>`
     }
     else if (label === 'CN') {
         newLabel.style.backgroundColor= '#030180'
-        newLabel.innerHTML = `<acronym title="China">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="China"> ${label} </acronym>`
     }
     else if (label === 'GR') {
         newLabel.style.backgroundColor= '#CC067A'
-        newLabel.innerHTML = `<acronym title="Germany">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Germany"> ${label} </acronym>`
     }
     else if (label === 'ES') {
         newLabel.style.backgroundColor= '#089e67'
-        newLabel.innerHTML = `<acronym title="Spain">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Spain"> ${label} </acronym>`
     }
     else if (label === 'RU') {
         newLabel.style.backgroundColor= '#690052'
-        newLabel.innerHTML = `<acronym title="Russia">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Russia"> ${label} </acronym>`
     }
     else if (label === 'VR') {
         newLabel.style.backgroundColor= '#0068bf'
-        newLabel.innerHTML = `<acronym title="VR Required to 100%">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="VR Required to 100%"> ${label} </acronym>`
     }
     else if (label === 'DELISTED') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store"> ${label} </acronym>`
     }
     else if (label === 'PHYSICAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Never got a digital release">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a digital release"> ${label} </acronym>`
     }
     else if (label === 'DIGITAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '45px'
-        newLabel.innerHTML = `<acronym title="Never got a physical release">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a physical release"> ${label} </acronym>`
     }
 	else {
         newLabel.style.backgroundColor= 'red'; // change this to another specific color for each region if you want
-        newLabel.innerHTML = `<acronym title="${label}">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="${label}"> ${label} </acronym>`
     }
 	newLabel.classList = ['platformlabel']
 
@@ -5906,93 +5906,93 @@ function addTag(row, label) {
     }
     if (label === 'OR') {
         newLabel.style.backgroundColor= '#5c5c5c'
-        newLabel.innerHTML = `<acronym title="Original">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Original"> ${label} </acronym>`
     }
     else if (label === 'RR') {
         newLabel.style.backgroundColor= '#b8b8b8'
         newLabel.style.color = 'black';
-        newLabel.innerHTML = `<acronym title="Re-Released">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Re-Released"> ${label} </acronym>`
     }
 	else if (label === 'EU') {
         newLabel.style.backgroundColor= '#940000';
-        newLabel.innerHTML = `<acronym title="Europe">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Europe"> ${label} </acronym>`
     }
     else if (label === 'NA') {
         newLabel.style.backgroundColor= '#FF8C00'
-        newLabel.innerHTML = `<acronym title="North America">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="North America"> ${label} </acronym>`
     }
     else if (label === 'AS') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Asia">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Asia"> ${label} </acronym>`
     }
     else if (label === 'HK') {
         newLabel.style.backgroundColor= '#672787'
-        newLabel.innerHTML = `<acronym title="Hong Kong">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Hong Kong"> ${label} </acronym>`
     }
     else if (label === 'JP') {
         newLabel.style.backgroundColor= '#14C9CC'
-        newLabel.innerHTML = `<acronym title="Japan">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Japan"> ${label} </acronym>`
     }
     else if (label === 'KR') {
         newLabel.style.backgroundColor= '#9BCC14'
-        newLabel.innerHTML = `<acronym title="Korea">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Korea"> ${label} </acronym>`
     }
     else if (label === 'CN') {
         newLabel.style.backgroundColor= '#030180'
-        newLabel.innerHTML = `<acronym title="China">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="China"> ${label} </acronym>`
     }
     else if (label === 'GR') {
         newLabel.style.backgroundColor= '#CC067A'
-        newLabel.innerHTML = `<acronym title="Germany">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Germany"> ${label} </acronym>`
     }
     else if (label === 'ES') {
         newLabel.style.backgroundColor= '#FF00BA'
-        newLabel.innerHTML = `<acronym title="Spain">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Spain"> ${label} </acronym>`
     }
     else if (label === 'RU') {
         newLabel.style.backgroundColor= '#690052'
-        newLabel.innerHTML = `<acronym title="Russia">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Russia"> ${label} </acronym>`
     }
     else if (label === 'SA') {
         newLabel.style.backgroundColor= '#089e67'
-        newLabel.innerHTML = `<acronym title="Saudi Arabia">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Saudi Arabia"> ${label} </acronym>`
     }
     else if (label === 'AU') {
         newLabel.style.backgroundColor= '#00B5FF'
-        newLabel.innerHTML = `<acronym title="Australia">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Australia"> ${label} </acronym>`
     }
     else if (label === 'VR') {
         newLabel.style.backgroundColor= '#0068bf'
-        newLabel.innerHTML = `<acronym title="VR Required to 100%">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="VR Required to 100%"> ${label} </acronym>`
     }
     else if (label === 'DELISTEDorange') {
         newLabel.style.backgroundColor= '#FF8C00'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Delisted from PSN Store, available Physically">DELISTED </acronym>`
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store, available Physically"> DELISTED </acronym>`
     }
     else if (label === 'DELISTED') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Delisted from PSN Store">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Delisted from PSN Store"> ${label} </acronym>`
     }
     else if (label === 'CODE') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '33px'
-        newLabel.innerHTML = `<acronym title="Only obtainable from a code">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Only obtainable from a code"> ${label} </acronym>`
     }
     else if (label === 'PHYSICAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '55px'
-        newLabel.innerHTML = `<acronym title="Never got a digital release">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a digital release"> ${label} </acronym>`
     }
     else if (label === 'DIGITAL') {
         newLabel.style.backgroundColor= 'red'
         newLabel.style.width = '45px'
-        newLabel.innerHTML = `<acronym title="Never got a physical release">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="Never got a physical release"> ${label} </acronym>`
     }
 	else {
         newLabel.style.backgroundColor= 'red'; // change this to another specific color for each region if you want
-        newLabel.innerHTML = `<acronym title="${label}">${label} </acronym>`
+        newLabel.innerHTML = `<acronym title="${label}"> ${label} </acronym>`
     }
 	newLabel.classList = ['platformlabel']
 
@@ -6006,7 +6006,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('  ',' ').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace('OR ','').replace('RR ','').replace('EU ','').replace('NA ','').replace('AS ','').replace('HK ','').replace('JP ','').replace('KR ','').replace('CN ','').replace('GR ','').replace('ES ','').replace('RU ','').replace('SA ','').replace('AU ','').replace('VR ','').replace('DELISTED ','').replace('CODE ','').replace('PHYSICAL ','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
+    return str.replace('  ',' ').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace(' CODE ','').replace(' PHYSICAL ','').replace(' DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
