@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.0
+// @version       2.2.1
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -261,9 +261,19 @@ const arrayDELISTEDorange = [
 'sherlock-holmes-the-devils-daughter-ps4-2',
 'sherlock-holmes-crimes-and-punishments-ps4-ps3',
 'ドラゴンクエストxi　過ぎ去りし時を求めて-ps4',
+'dragon-quest-xi-echoes-of-an-elusive-age-ps4',
+'deadpool-ps3',
+'deadpool-ps4',
 ];
 const arrayDELISTED = [
 'fall-guys-ps4',
+'outrun-online-arcade-ps3',
+'transformers-devastation-ps4',
+'transformers-devastation-ps3',
+'expendables-2-videogame-ps3',
+'legend-of-korra-ps3',
+'teenage-mutant-ninja-turtles-mutants-in-manhattan-ps3',
+'teenage-mutant-ninja-turtles-mutants-in-manhattan-ps4',
 'marvel-ultimate-alliance-ps4',
 'legend-of-korra-ps4',
 'side-bullet-ps5',
@@ -321,6 +331,7 @@ const arrayDIGITAL = [
 'assassins-creed-chronicles-india-ps4',
 'assassins-creed-chronicles-russia-ps4',
 'walking-dead-the-final-season-ps4-1',
+
 ];
 const arrayREMOVEVITA = [
 'ratchet-clank-into-the-nexus-ps3-psvita',
@@ -409,6 +420,7 @@ const arrayREMOVEPS4 = [
 'twin-robots-ps4-psvita',
 'twin-robots-ps4-psvita-2',
 '콥스-파티-blood-drive-ps4-psvita',
+'コープスパーティー-blood-drive-ps4-psvita',
 ];
 
 const arrayOR =[
@@ -3607,7 +3619,6 @@ const arrayVR = [
 'sparc-ps4',
 'special-delivery-ps4',
 'special-delivery-ps4-1',
-'spice-and-wolf-vr-ps4',
 'sports-bar-vr-hangout-2-0-ps4',
 'sprint-vector-ps4',
 'spuds-unearthed-ps4',
@@ -6006,7 +6017,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('  ',' ').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace(' CODE ','').replace(' PHYSICAL ','').replace(' DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
+    return str.replace('  ',' ').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
@@ -6321,7 +6332,18 @@ GM_addStyle ( `
                 dlcName = temp.split(dlcType+':  ').slice(-1)
                 dlcName = fixstrings(dlcName.toString())
                 dlcName = dlcName.replace(":",'').replace(":",'')
-                console.log(dlcName)
+
+                console.log("input dlc name: " + dlcName)
+
+                dlcName = dlcName.replace(" DLC",'')
+
+                //Fallout New Vegas
+                dlcName = dlcName.replace("NVDLC01 Trophies","Dead Money")
+                dlcName = dlcName.replace("NVDLC02 Trophies","Honest Hearts")
+                dlcName = dlcName.replace("NVDLC03 Trophies","Old World Blues")
+                dlcName = dlcName.replace("NVDLC04 Trophies","Lonesome Road")
+                dlcName = dlcName.replace("NVDLC05 Trophies","Gun Runners' Arsenal")
+
                 if (dlcName != "Call of Duty Modern Warfare III") {
                     dlcName = dlcName.replace(global_fixed_name+" - ",'').replace(global_fixed_name+"- ",'').replace(global_fixed_name+" ",'').replace(global_fixed_name,'')
                     dlcName = dlcName.replace("DLC ",'')
@@ -6336,7 +6358,7 @@ GM_addStyle ( `
                 }
                 //console.log(__testName1count)
                 console.log("global_fixed_name: " + global_fixed_name)
-                console.log("dlcName" + dlcName)
+                console.log("dlcName: " + dlcName)
                 console.log("")
                 dlcType = dlcType.replace('Pack ',' ')
             }
