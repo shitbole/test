@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.1
+// @version       2.2.2
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -19,7 +19,6 @@
 
 // admin only
 var REMOVE_ID = true
-
 
 
 
@@ -190,11 +189,23 @@ GM_addStyle ( `
     tr.oddrow, tr.odd {
         background-color: #ededed;
     }
+
     tr.complete.odd, tr.earned.odd {
         background-color: #e6ede5 !important;
+        background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #c0ebba 100%);
     }
     tr.complete.even, tr.earned.even {
         background-color: #e6ede5 !important;
+        background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #c0ebba 100%);
+    }
+
+
+
+    tr.complete.odd, tr.earned.odd .trophy_image {
+        opacity: 1;
+    }
+    tr.complete.even, tr.earned.even .trophy_image {
+        opacity: 1;
     }
     tr.complete.hid, tr.earned.hid {
         background-color: #e4de42 !important;
@@ -3780,6 +3791,9 @@ var loadPercent = 0;
 var __completionpercent = 0;
 let global_fixed_name = " ";
 
+var dlc_trophies_flag_count = 0;
+let last_fixed_dlc_name = " ";
+
 (function() {
     //setTimeout(function() {
     'use strict';
@@ -3926,7 +3940,65 @@ GM_addStyle ( `
 
 
 
+GM_addStyle ( `
 
+#game_details_table .trophy_image img, .gameTrophyPreviewImage>img {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+
+    display: inline-block;
+    background-color: #333;
+    box-shadow: 0 2px 5px #000;
+    -moz-box-shadow: 0 2px 5px #000;
+    -webkit-box-shadow: 0 2px 5px #000;
+
+}
+
+ #game_details_table tr.earned .trophy-border, #game_details_table tr.impossible .trophy-border {
+     box-shadow: 1px 1px 5px #82c053;
+     -moz-box-shadow: 0 2px 5px #000;
+}
+
+#game_details_table tr.earned .trophy-border {
+background-color: #80b531;
+box-shadow: 0 0px 5px #000;
+-webkit-box-shadow: 0 0px 5px #000;
+}
+
+
+#game_details_table tr.earned.trophyvalue0 .trophy-border {
+     background-color: #80b531;
+}
+#game_details_table tr.earned.trophyvalue1 .trophy-border {
+     background-color: #80b531;
+}
+#game_details_table tr.earned.trophyvalue2 .trophy-border {
+     background-color: #80b531;
+}
+#game_details_table tr.earned.trophyvalue3 .trophy-border {
+     background-color: #80b531;
+}
+
+.trophy-border, .game-border {
+    display: inline-block;
+    padding: 3px 3px 3px 3px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+}
+
+
+#game_details_table .trophy_image {
+    text-align: center;
+    min-width: 60px;
+    padding: 4px;
+}
+
+`)
 
 
 
@@ -4858,6 +4930,7 @@ GM_addStyle ( `
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
+
     }
 
     #mainbody, #welcomebody, .mainbody {
@@ -4912,7 +4985,83 @@ td.title-cell {
         .gamesContent {
             background-color: #1d2126;
         }
+
+
+#game_details_table .trophy_image img, .gameTrophyPreviewImage>img {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+
+    display: inline-block;
+    background-color: #333;
+    box-shadow: 0 2px 5px #000;
+    -moz-box-shadow: 0 2px 5px #000;
+    -webkit-box-shadow: 0 2px 5px #000;
+
+}
+
+ #game_details_table tr.earned .trophy-border, #game_details_table tr.impossible .trophy-border {
+     box-shadow: 1px 1px 5px #82c053;
+     -moz-box-shadow: 0 2px 5px #000;
+}
+
+#game_details_table tr.earned .trophy-border {
+background-color: #80b531;
+box-shadow: 0 0px 5px #000;
+-webkit-box-shadow: 0 0px 5px #000;
+}
+
+
+#game_details_table tr.earned.trophyvalue0 .trophy-border {
+     background-color: #80b531;
+}
+#game_details_table tr.earned.trophyvalue1 .trophy-border {
+     background-color: #80b531;
+}
+#game_details_table tr.earned.trophyvalue2 .trophy-border {
+     background-color: #80b531;
+}
+#game_details_table tr.earned.trophyvalue3 .trophy-border {
+     background-color: #80b531;
+}
+
+.trophy-border, .game-border {
+    display: inline-block;
+    padding: 3px 3px 3px 3px;
+    border-radius: 1px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+}
+
+
+#game_details_table .trophy_image {
+    text-align: center;
+    min-width: 60px;
+    padding: 4px;
+}
+    tr.oddrow, tr.odd .trophy_image {
+        opacity: 0.67;
+        transition: visibility 0s, opacity 0.2s linear;
+    }
+    tr.evenrow, tr.even .trophy_image {
+        opacity: 0.67;
+        transition: visibility 0s, opacity 0.2s linear;
+    }
+
+
+
+    tr.oddrow, tr.odd .trophy_image:hover {
+        opacity: 1;
+    }
+    tr.evenrow, tr.even .trophy_image:hover {
+        opacity: 1;
+    }
     `)
+
+
 
                 injectLoadingBar();
                 checkRegion(null);
@@ -6017,7 +6166,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('  ',' ').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅻ','XII').replace(' trophies.', '')
+    return str.replace('  ',' ').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅹ','X').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
@@ -6221,6 +6370,47 @@ GM_addStyle ( `
 }
 `)
 	if (!row.classList.contains('dlc_header')) {
+console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
+    if (dlc_trophies_flag_count > 1) {
+        let newdlcIcon = document.createElement('div');
+        newdlcIcon.style='width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
+        newdlcIcon.innerHTML = `<div style="position:absolute; left:-641px; top:-4px"><acronym title="${last_fixed_dlc_name} • DLC #${(dlc_trophies_flag_count-1)}"><img width="auto" height="20px" float="left" src="https://i.imgur.com/LqzfhQk.png"></acronym>`
+        // `<div style="position:absolute; z-index: 69;><img width="auto" height="20px" src="https://i.imgur.com/LqzfhQk.png">`
+        if (code == 4) {
+            insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[11])
+        }
+        else {
+            insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[9])
+        }
+    }
+
+
+        if (row.getElementsByClassName('date_earned')[0]) {
+            let trophytype = row.getElementsByClassName('sort trophytype')[0].innerText.replace(/ /g,'').slice(-1)
+            //console.log(trophytype)
+            if (row.getElementsByClassName('date_earned')[0].children.length > 1) {
+                if (trophytype == 0) {
+                    // bronze
+                    row.style = "background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #c79882 100%);"
+                }
+                else if (trophytype == 1) {
+                    // silver
+                    row.style = "background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #a9a9a9 100%);"
+                }
+                else if (trophytype == 2) {
+                    // gold
+                    row.style = "background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #e3b162 100%);"
+                }
+                else if (trophytype == 3) {
+                    // platinum
+                    row.style = "background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #5175bf 100%);"
+                }
+                else {
+                    // default green
+                    row.style = "background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #c0ebba 100%);"
+                }
+            }
+        }
         let trophyHTML = row.getElementsByClassName('sonytrophyrare')[0];
         if (trophyHTML) {
             let percent = trophyHTML.innerHTML.split('title="')[1].split('%')[0]
@@ -6294,7 +6484,8 @@ GM_addStyle ( `
 
 	}
     else {
-        //DLC
+         //DLC
+        dlc_trophies_flag_count = dlc_trophies_flag_count + 1
         let dlc_content = row.getElementsByClassName('dlc_content')[0];
         let dlc_header = row.getElementsByClassName('dlc_header')[0];
         let extra_padding = 0
@@ -6358,6 +6549,7 @@ GM_addStyle ( `
                 }
                 //console.log(__testName1count)
                 console.log("global_fixed_name: " + global_fixed_name)
+                last_fixed_dlc_name = dlcName
                 console.log("dlcName: " + dlcName)
                 console.log("")
                 dlcType = dlcType.replace('Pack ',' ')
@@ -6533,7 +6725,7 @@ GM_addStyle ( `
                 _gamesrc = document.createElement('div');
                 _gamesrc.class = "__gamesrc"
                 _gamesrc.style=`width: 0px; height: 0px; position:relative;`
-                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -868px;bottom: -307px;height: 300px;z-index: 45;">
+                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -868px;bottom: -8px;height: 0px;z-index: 45;">
                                        <div style="float:left;"><img border="0" class="dlc_image" src="${main_game_src.src}" alt=""></div>
                 `
 
