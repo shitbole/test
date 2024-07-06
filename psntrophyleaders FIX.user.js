@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.2
+// @version       2.2.3
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3790,6 +3790,7 @@ var timeHigh = 0;
 var loadPercent = 0;
 var __completionpercent = 0;
 let global_fixed_name = " ";
+let global_num_owners = 0
 
 var dlc_trophies_flag_count = 0;
 let last_fixed_dlc_name = " ";
@@ -4010,6 +4011,11 @@ box-shadow: 0 0px 5px #000;
 			let table = document.getElementById('game_details_table');
 			let rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 					totalProgress = rows.length;
+
+                    for (let i = 0; i < totalProgress; ++i) {
+                        checkHighestOwnersCount(rows[i])
+                   }
+
 					var loadingInterval = setInterval(() => {
 						if (currentProgress >= totalProgress) {
 							clearInterval(loadingInterval);
@@ -4865,6 +4871,7 @@ height: 200px; !important
 					background: #1d2126;
 					transition: width 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 				}
+
 				ul.recent-trophies li.active {
 					width: 400px;
 				}
@@ -5101,6 +5108,11 @@ box-shadow: 0 0px 5px #000;
 
 
                 totalProgress = rows.length;
+
+                for (let i = 0; i < totalProgress; ++i) {
+                    checkHighestOwnersCount(rows[i])
+                }
+
                 var loadingInterval = setInterval(() => {
                     if (currentProgress >= totalProgress) {
                         clearInterval(loadingInterval);
@@ -5641,8 +5653,10 @@ function updateLoadingBar(currentProgress, totalProgress) {
 
 function checkRegion(row) {
 	let url = row ? decodeURI(row.getElementsByClassName('gameImageLink')[0].href): decodeURI(location.href);
-
-	let game = decodeURI(url.split('/')[6]);
+    let game = decodeURI(url.split('/')[6]);
+    if (code == 2) {
+        game = decodeURI(url.split('/')[5]);
+    }
     if (!row) {
         row = document
         row.getElementsByClassName('platformlabel')[row.getElementsByClassName('platformlabel').length-1].parentNode.style.padding = '0px'
@@ -5663,6 +5677,11 @@ function checkRegion(row) {
         }
         console.log("GAME URL: " +game)
         gameIMG.style = `background-color:#${__bg_color}; width:${200}px; height:auto;`
+        if (game == "sly-cooper-and-the-thievius-raccoonus-ps5") {
+            document.querySelector("#gamesHeader > div.page-left > a > img").src = `https://i.imgur.com/65cDwTj.png`
+        }
+
+
 			                                	GM_addStyle ( `
 
                                                .gameImage {
@@ -6166,7 +6185,7 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('  ',' ').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅹ','X').replace('Ⅻ','XII').replace(' trophies.', '')
+    return str.replace('  ',' ').replace("Tom Clancy's ",'').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅹ','X').replace('Ⅻ','XII').replace(' trophies.', '')
 
 }
 
@@ -6182,9 +6201,13 @@ function moveRowContent(original) {
     if (original.getElementsByClassName('user gameImageLink')[0].href.slice(-22) == "final-fantasy-xiii-ps3") {
         __bg_color = "ffffff"
     }
+
     let newGameIMG = document.createElement('span');
     if (gameIMG.naturalHeight > 1) {
         newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#${__bg_color}; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
+        if (original.getElementsByClassName('user gameImageLink')[0].href.slice(-41) == "sly-cooper-and-the-thievius-raccoonus-ps5") {
+            newGameIMG.innerHTML = `<img src="https://i.imgur.com/65cDwTj.png" class="game-image-cell" style="background-color:#${__bg_color}; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
+        }
         insertBefore(newGameIMG, original.getElementsByClassName('game-image-cell')[0])
         original.getElementsByClassName('game-image-cell')[0].remove()
     }
@@ -6341,8 +6364,26 @@ function moveRowContent(original) {
 	original.append(newEl);
 }
 
-function modifyProgressBar(row) {
+function checkHighestOwnersCount(row) {
+    //console.log("working... " + row)
+    let percent_expand = row.getElementsByClassName('percent_expand')[0]
+    if (percent_expand) {
+        let num = parseInt(percent_expand.innerText.split(' of ')[0])
+        let denum = parseInt(percent_expand.innerText.split(' of ')[1].split('\n')[0])
+        //console.log(denum)
+        if (denum > global_num_owners) {
+            global_num_owners = denum
+            console.log("new most owners detected: " + denum)
+        }
+        if (num > global_num_owners) {
+            global_num_owners = num
+            console.log("new most owners detected: " + num)
+        }
+    }
+}
 
+
+function modifyProgressBar(row) {
     let earned = row.getElementsByClassName('date_earned')[0]
     if (earned) {
         earned = earned.children[0].innerText
@@ -6370,7 +6411,7 @@ GM_addStyle ( `
 }
 `)
 	if (!row.classList.contains('dlc_header')) {
-console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
+//console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
     if (dlc_trophies_flag_count > 1) {
         let newdlcIcon = document.createElement('div');
         newdlcIcon.style='width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
@@ -6441,12 +6482,26 @@ console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
 
 		let num = row.getElementsByClassName('percent_expand')[0].innerText.split(' of ')[0];
 		let denum = row.getElementsByClassName('percent_expand')[0].innerText.split(' of ')[1].split('\n')[0];
-        /*if (num > denum) {
-           denum = num
-        }*/
-		let percent = row.getElementsByClassName('percent_earned')[0].innerText.trim().replace('%', '');
+        if (global_num_owners > denum) {
+           denum = global_num_owners
+        }
+        //site doesn't update right away, we get best data instead and calculate ourselves
+		//let percent = row.getElementsByClassName('percent_earned')[0].innerText.trim().replace('%', '');
+        let percent2 = ((((parseInt(num.toString().split(',').join('')) / parseInt(denum.toString().split(',').join('')))*100).toFixed(1) * 1000) / 1000)
 
-        let percentcolour = Math.ceil(255 * (percent / 100));
+        //ROUNDED (no declimal)
+        //let percent2 = parseInt((((parseInt(num.toString().split(',').join('')) / parseInt(denum.toString().split(',').join('')))*100).toFixed(1) * 1000) / 1000)
+        if (percent2 > 100) {
+            console.log("error!")
+            console.log("")
+            console.log("num " + num)
+            console.log("denum " + denum)
+            percent2 = 100
+        }
+
+
+
+        let percentcolour = Math.ceil(255 * (percent2 / 100));
         let R = 255-(percentcolour/2)
         let G = 0+percentcolour
 
@@ -6462,7 +6517,7 @@ console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
         class="progresscontainer stacked softshadow"
         style="width: calc(100% - 80px)">
 	  <div
-          class='progressbar' style="float: left; width: ${percent}%; background-color: rgb(${R} ${G} 0) !important;">
+          class='progressbar' style="float: left; width: ${percent2}%; background-color: rgb(${R} ${G} 0) !important;">
       </div>
 	</div>
 
@@ -6470,7 +6525,7 @@ console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
 
 
 
-    <div style="margin-left: 10px; width: 10px; font-weight: 150; -webkit-text-stroke-width: 0.2px; -webkit-text-stroke-color: black; color: rgb(${R} ${G} 0)"> ${percent}% </div>
+    <div style="margin-left: 10px; width: 10px; font-weight: 150; -webkit-text-stroke-width: 0.2px; -webkit-text-stroke-color: black; color: rgb(${R} ${G} 0)"> ${percent2}% </div>
 	</div>
 	<div style="color: black; width: 166px; text-align: right;  font-size: 16px"> <b>${num}</b> /</span>  <span  style="font-size: 10pt">${denum}</span></div>
 	`;
@@ -6527,6 +6582,11 @@ console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
                 console.log("input dlc name: " + dlcName)
 
                 dlcName = dlcName.replace(" DLC",'')
+
+                // The Division
+                dlcName = dlcName.replace("Expansion I ",'')
+                dlcName = dlcName.replace("Expansion II ",'')
+                dlcName = dlcName.replace("Expansion III ",'')
 
                 //Fallout New Vegas
                 dlcName = dlcName.replace("NVDLC01 Trophies","Dead Money")
@@ -7095,10 +7155,15 @@ function parseGameDetails() {
         denom1 = completionRateString.innerText.split('/')[1].split(' ')[1];
         difficultyPoints = completionRateString.innerText.split('(')[1].split(')')[0].split(' ')[0]
     }
-    const num = num1.replace(',', '');
-    const denom = denom1.replace(',', '');
-    const completionpercent = ((parseInt(num) / parseInt(denom)) * 100)
-
+    let num = num1.replace(',', '');
+    let denom = denom1.replace(',', '');
+    if (global_num_owners > denom) {
+        denom = global_num_owners
+    }
+    let completionpercent = ((parseInt(num) / parseInt(denom)) * 100)
+    if (parseInt(denom) > 999) {
+        denom = denom.replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, "$&,")
+    }
 
 
 
@@ -7341,7 +7406,6 @@ GM_addStyle ( `
 }
 `)
 
-
         let newEl = document.createElement('div');
         newEl.class = "gameTrophiesInfo"
         newEl.style=`width: 0px; height: 6px; position:relative;`
@@ -7352,7 +7416,7 @@ GM_addStyle ( `
                                        </span>
 
                                        <big style="display: flex; width: 250px; font-size: 10pt; text-align:center; position: absolute; left:120px; bottom: -140px;  z-index: 41;">
-                                            <big style="width: 250px; text-align: center; font-size: 14px; height: 18px"><span style="color: #EEE"><acronym title="Users Completed / Game Owners">${num1} / ${denom1}</acronym></span></div>
+                                            <big style="width: 250px; text-align: center; font-size: 14px; height: 18px"><span style="color: #EEE"><acronym title="Users Completed / Game Owners">${num1} / ${denom}</acronym></span></div>
                                        </span>
 
                                        `;
