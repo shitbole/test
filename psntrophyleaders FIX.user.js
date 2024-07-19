@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.3
+// @version       2.2.4
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -277,7 +277,12 @@ const arrayDELISTEDorange = [
 'deadpool-ps4',
 ];
 const arrayDELISTED = [
+'invasion-of-space-ps4',
+'invasion-of-space-ps4-1',
 'fall-guys-ps4',
+'citizens-of-earth-ps4',
+'citizens-of-earth-ps4-1',
+'citizens-of-space-ps4',
 'outrun-online-arcade-ps3',
 'transformers-devastation-ps4',
 'transformers-devastation-ps3',
