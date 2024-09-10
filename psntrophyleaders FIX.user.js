@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.4
+// @version       2.2.5
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3790,6 +3790,8 @@ var code = 0;
 
 var currentTime = 0;
 
+var lowestMonth = "str"
+var lowestYear = 2024
 var timeLow = 99999999999;
 var timeHigh = 0;
 var loadPercent = 0;
@@ -5177,13 +5179,17 @@ box-shadow: 0 0px 5px #000;
     doAnimation2()
 })();
 
-
+let oldmonth
+let newmonth
+let oldyear
+let newyear
 let i
 let oldtime
 let newtime
 let firsttime
 let lasttime
 let gap
+let gapstart
 function addButton(text, onclick, cssObj) {
     cssObj = cssObj || {
         position: "relative",
@@ -5232,26 +5238,40 @@ function addButton(text, onclick, cssObj) {
         for(i = 0; i < cells.length; i++) {
             if (valid(cells[i])) {
                 let timestamp = cells[i].children[7].children[0].innerText
+                let ___month = cells[i].children[7].children[2].children[0].innerText
+                let ___year = cells[i].children[7].children[2].children[0].innerText
                 if (i == 0) {
+                    oldmonth = ___month
+                    oldyear = ___year
                     firsttime = timestamp
                     oldtime = timestamp
                     gap = 0
+                    gapstart = 0
                 }
                 else if (i > 0) {
                     gap = timestamp - oldtime
+                    gapstart = timestamp - timeLow
                     oldtime = timestamp
+                    newmonth = oldmonth
+                    newyear = oldyear
+                    oldmonth = ___month
+                    oldyear = ___year
                 }
 
-
-
+                let hoverText = ""
                 let timeGaps = document.createElement('div');
                 timeGaps.classList = ["timeGaps"];
                 timeGaps.style = 'padding-top: 6px !important; color: #aabb49;'
-                timeGaps.innerText = secondsToTime(gap, i)
+                if (i > 0) {
+                    timeGaps.innerHTML = `<acronym title="${"Total Time: "+ secondsToTime(1, gapstart, null, newyear, i).slice(2)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
+                }
+                else {
+                    timeGaps.innerHTML = `<acronym title="${secondsToTime(1, gapstart, null, newyear, i)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
+                }
                 document.getElementsByClassName("date_earned")[i].append(timeGaps)
 
 
-                //console.log(timestamp + ", gap: " + secondsToTime(gap))
+                //console.log(timestamp + ", gap: " + secondsToTime(1, gap))
             }
         }
 
@@ -5281,6 +5301,7 @@ function addButton(text, onclick, cssObj) {
 }
 
 function simplifytime(time) {
+    //console.log(time)
     let splits = time.split(',')
 
     if (splits.length > 1) {
@@ -5290,30 +5311,129 @@ function simplifytime(time) {
     return splits[0]
 }
 
-function secondsToTime(sec, i){
-    /*const second = Math.floor(sec % 60).toString()
-    const minute = Math.floor(sec % 3600 / 60).toString()
-    const hour = Math.floor(sec / 3600 % 24).toString()
+var _xd = 0
+var _method = 1
 
-    const day = Math.floor((sec / 3600)/ 24 % 7).toString()
-    const week = Math.floor(((sec / 3600)/ 24)/ 7 % 30).toString()
-    const month = Math.floor((((sec / 3600)/ 24)/ 7) / 30 % 12).toString()
-    const year = Math.floor((((sec / 3600)/ 24)/ 7) / 30 / 12).toString()*/
+/*
+_method
+1 = normal, probably best
+2 = psntl style (removed week, days count up to 30)
+
+sec (timestamp)
+
+_month
+_year
+index
+*/
+
+function secondsToTime(_method, sec, _month, _year, i){
+    if (_month == null) {
+        _month = lowestMonth
+        //console.log(_month)
+    }
+    if (_year == null) {
+        _year = lowestYear
+        //console.log(_month)
+    }
+    if (i == null) {
+        i = 1
+    }
+
+    let month_index = 0
+    const month_array = [
+        {name: "object", days: 69},
+        {name: "Jan", days: 31},
+        {name: "Feb", days: 28},
+        {name: "Mar", days: 31},
+        {name: "Apr", days: 30},
+        {name: "May", days: 31},
+        {name: "Jun", days: 30},
+        {name: "Jul", days: 31},
+        {name: "Aug", days: 31},
+        {name: "Sep", days: 30},
+        {name: "Oct", days: 31},
+        {name: "Nov", days: 30},
+        {name: "Dec", days: 31}
+    ]
+
+    let year_calc = _year % 4
+    if (year_calc == 0) {
+        month_array[2].days = 29
+        console.log("Leap year!")
+    }
+
+    for(_xd = 0; _xd < 12 ; _xd++) {
+        if (month_array[_xd].name == _month) {
+            month_index = _xd
+        }
+    }
+    //console.log("month: " + _month + " | number: " + __month)
+    //console.log("Feb: " + month_array[1].days)
+
+    let current_month = month_index
+    let num_month = month_array[current_month].days
+    //console.log("num month: " + num_month)
+
+    let __day = Math.floor((sec / 3600)/ 24).toString()
+    //console.log("total days" + __day)
+
+    let __month = 0
+
+    while (num_month < __day) {
+        current_month = current_month + 1
+        if (current_month > 12) {
+            current_month = 1
+        }
+        __day = __day - num_month
+        num_month = month_array[current_month].days
+        __month = __month + 1
+    }
+    //console.log("months: " + __month)
+    //console.log("days: " + __day)
 
 
-    let minute = Math.floor(sec / 60);
-    sec = sec % 60;
-    let hour = Math.floor(minute / 60);
-    minute = minute % 60;
-    let day = Math.floor(hour / 24);
-    let day_ = day
-    hour = hour % 24;
-    let week = Math.floor(day / 7);
-    day = day % 7;
-    let month = Math.floor(day_ / 30.4167);
-    week = week % 4;
-    let year = Math.floor(month / 12);
-    month = month % 12;
+    let second
+    let minute
+    let hour
+
+    let day
+    let week
+    let month
+    let year
+    // normal
+    if (_method == 1) {
+        second = Math.floor(sec % 60).toString()
+        minute = Math.floor(sec % 3600 / 60).toString()
+        hour = Math.floor(sec / 3600 % 24).toString()
+
+        day = Math.floor(__day % 7).toString()
+        week = Math.floor(__day / 7 % (month_array[month_index].days / 7)).toString()
+        month = __month
+        year = Math.floor(((sec / 3600)/ 24) / month_array[month_index].days / 12).toString()
+    }
+    // skip week, only show days
+    else if (_method == 2) {
+        second = Math.floor(sec % 60).toString()
+        minute = Math.floor(sec % 3600 / 60).toString()
+        hour = Math.floor(sec / 3600 % 24).toString()
+
+        day = Math.floor(__day).toString()
+        //week = Math.floor(__day / 7 % 4).toString()
+        month = __month
+        year = Math.floor(((sec / 3600)/ 24) / month_array[month_index].days / 12).toString()
+    }
+    else {
+        // old method
+        second = Math.floor(sec % 60).toString()
+        minute = Math.floor(sec % 3600 / 60).toString()
+        hour = Math.floor(sec / 3600 % 24).toString()
+
+        day = Math.floor((sec / 3600)/ 24 % 7).toString()
+        week = Math.floor(((sec / 3600)/ 24) / 7 % 4).toString()
+        month = Math.floor(((sec / 3600)/ 24) / 30.4167 % 12).toString()
+        year = Math.floor(((sec / 3600)/ 24) / 30.4167 / 12).toString()
+    }
+
 
     if (i ==0) {
         return "First Trophy"
@@ -5372,14 +5492,14 @@ function secondsToTime(sec, i){
         result = result + minute + " minute and "
     }
 
-    if (sec == 0) {
+    if (second == 0) {
         result = result + "0 seconds"
     }
-    if (sec > 1) {
-        result = result + sec + " seconds"
+    if (second > 1) {
+        result = result + second + " seconds"
     }
-    else if (sec > 0) {
-        result = result + sec + " second"
+    else if (second > 0) {
+        result = result + second + " second"
     }
 
 
@@ -5631,7 +5751,17 @@ function updateLoadingBar(currentProgress, totalProgress) {
                         timeHigh = currentTime
                     }
 
-                    let timesimple = simplifytime(secondsToTime(timeHigh-timeLow).slice(2))
+
+                    console.log("")
+                    console.log("lowestMonth: " + lowestMonth)
+                    console.log("low: " + timeLow)
+                    console.log("high: " +timeHigh)
+                    console.log("")
+                    console.log("gap: " + (timeHigh-timeLow))
+                    let fulltime = secondsToTime(1, timeHigh-timeLow).slice(2)
+                    let fulltimedays = secondsToTime(2, timeHigh-timeLow).slice(2)
+                    let timesimple = simplifytime(fulltimedays)
+                    //console.log("gap2: " + (fulltime))
                     let timegap = document.createElement('div');
                     timegap.class = "timeGap"
                     timegap.style=`width: 0px; height: 0px; position:relative;`
@@ -5639,12 +5769,11 @@ function updateLoadingBar(currentProgress, totalProgress) {
                                        <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
                                             <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
                                             <span style="color: #9d9d9; font-size: 13px;">${aditionaltext}
-                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${secondsToTime(timeHigh-timeLow).slice(2)}">${timesimple}</acronym>
+                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltimedays + "\n • \n" + fulltime}">${timesimple}</acronym>
                                             </span></div>
                                        </span>
 
                                        `;
-
                     timegap.style.paddingTop = '0px';
                     document.getElementsByClassName('trophy_totals')[0].appendChild(timegap);
                 }
@@ -6389,18 +6518,6 @@ function checkHighestOwnersCount(row) {
 
 
 function modifyProgressBar(row) {
-    let earned = row.getElementsByClassName('date_earned')[0]
-    if (earned) {
-        earned = earned.children[0].innerText
-    }
-    if ((earned < timeLow) && (earned != 0)) {
-        timeLow = earned
-        //nsole.log("New lowest timestamp: " + timeLow)
-    }
-    if ((earned > timeHigh) && (earned != 0)) {
-        timeHigh = earned
-        //console.log("New highest timestamp: " + timeHigh)
-    }
 GM_addStyle ( `
 #game_details_table img.dlc_image {
     border-radius: 5px;
@@ -6415,7 +6532,31 @@ GM_addStyle ( `
     background-color: #001118;
 }
 `)
-	if (!row.classList.contains('dlc_header')) {
+    if (!row.classList.contains('dlc_header')) {
+        let trophyname = row.getElementsByClassName('trophy_title')[0]
+        //console.log(trophyname.children[1])
+        let earned = row.getElementsByClassName('date_earned')[0]
+        if (earned) {
+            earned = earned.children[0].innerText
+        }
+        let _lowestMonth = row.getElementsByClassName('month')[0]
+        if (_lowestMonth) {
+            _lowestMonth = _lowestMonth.innerText
+        }
+        let _lowestYear = row.getElementsByClassName('year')[0]
+        if (_lowestYear) {
+            _lowestYear = _lowestYear.innerText
+        }
+        if ((earned < timeLow) && (earned != 0)) {
+            timeLow = earned
+            lowestMonth = _lowestMonth
+            lowestYear = _lowestYear
+            console.log("New lowest timestamp: " + timeLow)
+        }
+        if ((earned > timeHigh) && (earned != 0)) {
+            timeHigh = earned
+            console.log("New highest timestamp: " + timeHigh)
+        }
 //console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
     if (dlc_trophies_flag_count > 1) {
         let newdlcIcon = document.createElement('div');
@@ -6583,6 +6724,7 @@ GM_addStyle ( `
                 dlcName = temp.split(dlcType+':  ').slice(-1)
                 dlcName = fixstrings(dlcName.toString())
                 dlcName = dlcName.replace(":",'').replace(":",'')
+                dlcName = dlcName.replace(" Trophies",'')
 
                 console.log("input dlc name: " + dlcName)
 
