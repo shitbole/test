@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.5
+// @version       2.2.6
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3802,6 +3802,14 @@ let global_num_owners = 0
 var dlc_trophies_flag_count = 0;
 let last_fixed_dlc_name = " ";
 
+var _total_plat = 0;
+var _total_gold = 0;
+var _total_silver = 0;
+var _total_bronze = 0;
+var _total_total = 0;
+var _cur_name_progress = "";
+
+
 (function() {
     //setTimeout(function() {
     'use strict';
@@ -5333,13 +5341,14 @@ function secondsToTime(_method, sec, _month, _year, i){
     }
     if (_year == null) {
         _year = lowestYear
-        //console.log(_month)
+        //console.log(_year)
     }
     if (i == null) {
         i = 1
     }
 
     let month_index = 0
+    let current_month = 0
     const month_array = [
         {name: "object", days: 69},
         {name: "Jan", days: 31},
@@ -5356,41 +5365,61 @@ function secondsToTime(_method, sec, _month, _year, i){
         {name: "Dec", days: 31}
     ]
 
-    let year_calc = _year % 4
-    if (year_calc == 0) {
-        month_array[2].days = 29
-        console.log("Leap year!")
-    }
-
-    for(_xd = 0; _xd < 12 ; _xd++) {
-        if (month_array[_xd].name == _month) {
+    for(_xd = 0; _xd < 13 ; _xd++) {
+        if (month_array[_xd].name == _month.toString()) {
+            //console.log("found month: " + month_array[_xd].name)
             month_index = _xd
         }
     }
     //console.log("month: " + _month + " | number: " + __month)
     //console.log("Feb: " + month_array[1].days)
 
-    let current_month = month_index
+    current_month = month_index
+    console.log("current_month " + month_index)
+
     let num_month = month_array[current_month].days
     //console.log("num month: " + num_month)
 
     let __day = Math.floor((sec / 3600)/ 24).toString()
+    let __day_original = __day
     //console.log("total days" + __day)
 
     let __month = 0
+    let __year = 0
+    let _count = 0
 
     while (num_month < __day) {
+        if (current_month == 0) {
+            console.log("Catastrophic failure!")
+            current_month = 1
+        }
+        let year_calc = _year % 4
+        if (year_calc == 0) {
+            month_array[2].days = 29
+            //console.log("Leap year!")
+        }
+        else {
+            month_array[2].days = 28
+        }
         current_month = current_month + 1
         if (current_month > 12) {
+            _year = parseInt(_year) + 1
             current_month = 1
         }
         __day = __day - num_month
         num_month = month_array[current_month].days
+
+        let this_month = month_array[current_month].name
+        //console.log("month: " +this_month + " [" + num_month+ "]")
+
         __month = __month + 1
+        //console.log(__month)
+        //_count = _count + 1
     }
     //console.log("months: " + __month)
     //console.log("days: " + __day)
-
+    let average_month = __day_original / __month
+    //console.log("average_month: " + average_month + " | " + __day_original + "/" + __month)
 
     let second
     let minute
@@ -5400,34 +5429,27 @@ function secondsToTime(_method, sec, _month, _year, i){
     let week
     let month
     let year
+
+
+    second = Math.floor(sec % 60).toString()
+    minute = Math.floor(sec % 3600 / 60).toString()
+    hour = Math.floor(sec / 3600 % 24).toString()
     // normal
     if (_method == 1) {
-        second = Math.floor(sec % 60).toString()
-        minute = Math.floor(sec % 3600 / 60).toString()
-        hour = Math.floor(sec / 3600 % 24).toString()
-
         day = Math.floor(__day % 7).toString()
-        week = Math.floor(__day / 7 % (month_array[month_index].days / 7)).toString()
-        month = __month
-        year = Math.floor(((sec / 3600)/ 24) / month_array[month_index].days / 12).toString()
+        week = Math.floor(__day / 7).toString()
+        month = __month % 12
+        year = Math.floor(((sec / 3600)/ 24) / average_month / 12).toString()
     }
     // skip week, only show days
     else if (_method == 2) {
-        second = Math.floor(sec % 60).toString()
-        minute = Math.floor(sec % 3600 / 60).toString()
-        hour = Math.floor(sec / 3600 % 24).toString()
-
         day = Math.floor(__day).toString()
-        //week = Math.floor(__day / 7 % 4).toString()
-        month = __month
-        year = Math.floor(((sec / 3600)/ 24) / month_array[month_index].days / 12).toString()
+        //week = Math.floor(__day / 7 % 4).toString() // stupid
+        month = __month % 12
+        year = Math.floor(((sec / 3600)/ 24) / average_month / 12).toString()
     }
     else {
         // old method
-        second = Math.floor(sec % 60).toString()
-        minute = Math.floor(sec % 3600 / 60).toString()
-        hour = Math.floor(sec / 3600 % 24).toString()
-
         day = Math.floor((sec / 3600)/ 24 % 7).toString()
         week = Math.floor(((sec / 3600)/ 24) / 7 % 4).toString()
         month = Math.floor(((sec / 3600)/ 24) / 30.4167 % 12).toString()
@@ -5711,17 +5733,52 @@ function addTagGame(row, label) {
 }
 
 function injectLoadingBar() {
-	let newLoadingBar = document.createElement('div');
-	newLoadingBar.style = 'width: 300px; height: 40px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
-	newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
-  newLoadingBar.classList = ["loadingBar"];
+    let newLoadingBar = document.createElement('div');
+    if (code == 3) {
+        newLoadingBar.style = 'width: 441px; height: 90px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
+        newLoadingBar.innerHTML = `<div style="width: 100%; padding: 5px; position: relative;">
+                                                         <span id="loadingBarProgressRaw" style="color: white;float: left;position: absolute;left: 2px;bottom: -65px;font-size: 15px;"></span>
+                                                         <span class="loadingBarProgressPercent" style="color: white;float: right;position: absolute; left: 172px;bottom: -69px;font-size: 20px;"></span>
+
+                                                         <span class="loadingBarProgressPlat" style="color: white;float: right; position: absolute; right: 32px; top: -1px; font-size: 15px;"> </span>
+                                                         <span class="loadingBarProgressGold" style="color: white;float: right; position: absolute; right: 32px; top: 23px; font-size: 15px;"> </span>
+                                                         <span class="loadingBarProgressSilver" style="color: white;float: right; position: absolute; right: 32px; top: 47px; font-size: 15px;"> </span>
+                                                         <span class="loadingBarProgressBronze" style="color: white;float: right; position: absolute; right: 32px; top: 71px; font-size: 15px;"> </span>
+
+                                                         <img style="position: absolute;width: auto;height:20px;right: 6px; top: -2px; float: right;" src="https://i.imgur.com/VnkHuFc.png">
+                                                         <img style="position: absolute;width: auto;height:20px;right: 6px; top: 22px; float: right;" src="https://i.imgur.com/dP1FS6L.png">
+                                                         <img style="position: absolute;width: auto;height:20px;right: 6px; top: 46px; float: right;" src="https://i.imgur.com/TDJmHUc.png">
+                                                         <img style="position: absolute;width: auto;height:20px;right: 6px; top: 70px; float: right;" src="https://i.imgur.com/EjoXyJB.png">
+
+                                                         <span class="loadingBarProgressStats1" style="color: #ffffff;float: right;position: absolute;left: 39px;bottom: -24px;font-size: 17px;">Status:</span>
+                                                         <span class="loadingBarProgressStats2" style="color: #fff25a;float: right;position: absolute;left: 97px;bottom: -24px;font-size: 18px;">Idle</span>
+
+                                                         <span class="loadingBarProgressStats3" style="color: #ffffff;float: right;position: absolute;left: 3px;bottom: -32px;font-size: 13px;"></span>
+
+                                                         <span class="loadingBarProgressStats4" style="color: #ffffff;float: right;position: absolute;right: 97px;bottom: -6px;font-size: 15px;"></span>
+                                                         <span class="loadingBarProgressStats5" style="color: #ffde65;float: right;position: absolute;right: 107px;bottom: -24px;font-size: 14px;"></span>
+
+                                                         <span class="loadingBarProgressStats5" style="color: #ffffff;float: right;position: absolute;right: 133px;bottom: -54px;font-size: 15px;">Total</span>
+                                                         <span class="loadingBarProgressStats5" style="color: #ffffff;float: right;position: absolute;right: 115px;bottom: -73px;font-size: 15px;text-align: center;width: 65px;height: auto;"></span>
+                                                    </div>
+                                                    <div class="progresscontainer stacked softshadow" style="width: 50%;position: relative;top: 67px;">
+                                                        <div class="progressbar" style="float:left; width: 0%">
+                                                        </div>
+                                                    </div>`;
+    }
+    else {
+        newLoadingBar.style = 'width: 300px; height: 40px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
+        newLoadingBar.innerHTML = '<div style="width: 100%; padding: 5px;"> <span id="loadingBarProgressRaw" style="color: white;"></span> <span class="loadingBarProgressPercent" style="color: white; float: right; font-size: 20px;"></span></div> <div class="progresscontainer stacked softshadow" style="100%"> <div class="progressbar" style="float:left; width: 0%"></div> </div>';
+    }
+
+    newLoadingBar.classList = ["loadingBar"];
     let point = 1
     if (document.getElementsByClassName('container')[2]) {
         point = 2
     }
-	insertBefore(newLoadingBar, document.getElementsByClassName('container')[point].previousSibling);
-	//document.getElementById('social_media').parentElement.style = "width: 900px; margin: 0 auto; display:flex; justify-content: space-between;";
-	// document.getElementById('social_media').parentElement.append(newLoadingBar);
+    insertBefore(newLoadingBar, document.getElementsByClassName('container')[point].previousSibling);
+    //document.getElementById('social_media').parentElement.style = "width: 900px; margin: 0 auto; display:flex; justify-content: space-between;";
+    // document.getElementById('social_media').parentElement.append(newLoadingBar);
 
     document.getElementsByClassName("mainBG")[0].style = "padding-top: 35px";
 }
@@ -5731,9 +5788,144 @@ function updateLoadingBar(currentProgress, totalProgress) {
 	let loadingBar = document.getElementsByClassName('loadingBar')[0];
 	if (loadingBar && loadingBar.children[0]) {
 		loadingBar.children[1].children[0].style = "float: left; width:" + loadPercent + "%";
-		loadingBar.children[0].children[0].innerHTML = currentProgress + " / " + totalProgress;
+        loadingBar.children[0].children[0].innerHTML = currentProgress + " / " + totalProgress;
+
+        let __bronze_tray
+        let __silver_tray
+        let __gold_tray
+        let __plat_tray
+        let __total_tray
+
+        let __store_bronze
+        let __store_silver
+        let __store_gold
+        let __store_plat
+
+        let __error_bronze = false
+        let __error_silver = false
+        let __error_gold = false
+        let __error_plat = false
+        let __error_total = false
+
+        if (code == 3) {
+            let trophytray = document.getElementById('newtoprightstats')
+            __bronze_tray = trophytray.children[0].innerText
+            __silver_tray = trophytray.children[2].innerText
+            __gold_tray = trophytray.children[4].innerText
+            __plat_tray = trophytray.children[6].innerText
+            __total_tray = trophytray.children[8].innerText
+
+            __store_bronze = __bronze_tray
+            __store_silver = __silver_tray
+            __store_gold = __gold_tray
+            __store_plat = __plat_tray
+            __store_total = __total_tray
+
+            if (parseInt(__store_bronze) < parseInt(_total_bronze)) {
+                loadingBar.children[0].children[5].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: 71px; font-size: 15px;";
+                __error_bronze = true
+            }
+            if (parseInt(__store_silver) < parseInt(_total_silver)) {
+                loadingBar.children[0].children[4].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: 47px; font-size: 15px;";
+                __silver_tray = true
+            }
+            if (parseInt(__store_gold) < parseInt(_total_gold)) {
+                loadingBar.children[0].children[3].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: 23px; font-size: 15px;";
+                __error_gold = true
+            }
+            if (parseInt(__store_plat) < parseInt(_total_plat)) {
+                loadingBar.children[0].children[2].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: -1px; font-size: 15px;";
+                __error_plat = true
+            }
+            if (parseInt(__store_total) < parseInt(_total_plat)) {
+                loadingBar.children[0].children[2].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: -1px; font-size: 15px;";
+                __error_plat = true
+            }
+
+            // plat
+            loadingBar.children[0].children[2].innerHTML = "" + _total_plat;
+            // gold
+            loadingBar.children[0].children[3].innerHTML = "" + _total_gold;
+            // silver
+            loadingBar.children[0].children[4].innerHTML = "" + _total_silver;
+            // bronze
+            loadingBar.children[0].children[5].innerHTML = "" + _total_bronze;
+
+            _total_total = (parseInt(_total_bronze) + parseInt(_total_silver) + parseInt(_total_gold) + parseInt(_total_plat))
+            loadingBar.children[0].children[16].innerHTML = "" + _total_total;
+
+            loadingBar.children[0].children[10].style = "color: #ffffff;float: right;position: absolute;left: 39px;bottom: -14px;font-size: 17px;";
+            loadingBar.children[0].children[11].innerHTML = "Scanning";
+            loadingBar.children[0].children[11].style = "color: #ffa500;float: right;position: absolute;left: 97px;bottom: -14px;font-size: 18px;";
+
+            loadingBar.children[0].children[12].innerHTML = "" + _cur_name_progress;
+
+            loadingBar.children[0].children[13].innerHTML = "Trophy Count:";
+        }
         if (currentProgress === totalProgress) {
             loadingBar.children[0].children[1].innerHTML = "100%";
+            if (code == 3) {
+
+                if ((parseInt(__store_bronze) > parseInt(_total_bronze)) || (parseInt(__store_silver) > parseInt(_total_silver)) || (parseInt(__store_gold) > parseInt(_total_gold)) || (parseInt(__store_plat) > parseInt(_total_plat))) {
+                    loadingBar.children[0].children[13].innerHTML = "Hidden Trophies:";
+                    loadingBar.children[0].children[14].innerHTML = "Adjusted Stats";
+
+                    let __result_plat = (parseInt(__store_plat) - parseInt(_total_plat))
+                    let __result_gold= (parseInt(__store_gold) - parseInt(_total_gold))
+                    let __result_silver = (parseInt(__store_silver) - parseInt(_total_silver))
+                    let __result_bronze = (parseInt(__store_bronze) - parseInt(_total_bronze))
+                    _total_total = (__result_bronze + __result_silver + __result_gold + __result_plat)
+                    loadingBar.children[0].children[16].innerHTML = "" + _total_total;
+
+                    loadingBar.children[0].children[2].innerHTML = "" + __result_plat;
+                    loadingBar.children[0].children[3].innerHTML = "" + __result_gold;
+                    loadingBar.children[0].children[4].innerHTML = "" + __result_silver;
+                    loadingBar.children[0].children[5].innerHTML = "" + __result_bronze;
+                }
+                else {
+                    loadingBar.children[0].children[14].innerHTML = "No missing data";
+                    loadingBar.children[0].children[14].style = "color: #c0ff00;float: right;position: absolute;right: 94px;bottom: -24px;font-size: 14px;";
+                }
+                loadingBar.children[0].children[10].style = "color: #ffffff;float: right;position: absolute;left: 39px;bottom: -24px;font-size: 17px;";
+                loadingBar.children[0].children[11].innerHTML = "Done";
+                loadingBar.children[0].children[11].style = "color: #c0ff00;float: right;position: absolute;left: 97px;bottom: -24px;font-size: 18px;";
+                loadingBar.children[0].children[12].innerHTML = ""
+
+                let trophytray = document.getElementById('newtoprightstats')
+                let statstray = document.getElementById('bottomrightstats')
+                let bonusTrophies = document.getElementById('bonusTrophies')
+
+
+                /*
+                console.log()
+                let ___bronze = trophytray.children[0]
+                let ___silver = trophytray.children[2]
+                let ___gold = trophytray.children[4]
+                let ___platinum = trophytray.children[6]
+                */
+
+                trophytray.children[0].innerText = _total_bronze
+                trophytray.children[2].innerText = _total_silver
+                trophytray.children[4].innerText = _total_gold
+                trophytray.children[6].innerText = _total_plat
+
+//console.log("aaaaaa" + bonusTrophies.children[0].innerText)
+                bonusTrophies.children[0].innerText = _total_plat
+                bonusTrophies.children[2].innerText = _total_gold
+                bonusTrophies.children[4].innerText = _total_silver
+                bonusTrophies.children[6].innerText = _total_bronze
+
+                let _total_points = (parseInt(_total_plat*300) + parseInt(_total_gold*90) + parseInt(_total_silver*30) + parseInt(_total_bronze*15))
+                let _total_trophies = (parseInt(_total_plat) + parseInt(_total_gold) + parseInt(_total_silver) + parseInt(_total_bronze))
+                let _totalcomma = fixnumber(_total_points)
+                statstray.children[6].innerText = _totalcomma
+                trophytray.children[8].innerText = _total_trophies
+
+
+                //console.log(_totalcomma)
+
+
+            }
             if (code == 4) {
                 if (timeHigh != timeLow) {
                     //console.log("attempted % colour: " + __completionpercent.toString())
@@ -5765,15 +5957,28 @@ function updateLoadingBar(currentProgress, totalProgress) {
                     let timegap = document.createElement('div');
                     timegap.class = "timeGap"
                     timegap.style=`width: 0px; height: 0px; position:relative;`
+                    if (fulltimedays.toString() == fulltime.toString()) {
                     timegap.innerHTML = `
                                        <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
                                             <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
                                             <span style="color: #9d9d9; font-size: 13px;">${aditionaltext}
-                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltimedays + "\n • \n" + fulltime}">${timesimple}</acronym>
+                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltime}">${timesimple}</acronym>
                                             </span></div>
                                        </span>
 
                                        `;
+                    }
+                    else {
+                    timegap.innerHTML = `
+                                       <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
+                                            <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
+                                            <span style="color: #9d9d9; font-size: 13px;">${aditionaltext}
+                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltimedays + "\n • AKA:\n" + fulltime}">${timesimple}</acronym>
+                                            </span></div>
+                                       </span>
+
+                                       `;
+                }
                     timegap.style.paddingTop = '0px';
                     document.getElementsByClassName('trophy_totals')[0].appendChild(timegap);
                 }
@@ -5791,6 +5996,8 @@ function checkRegion(row) {
     if (code == 2) {
         game = decodeURI(url.split('/')[5]);
     }
+
+
     if (!row) {
         row = document
         row.getElementsByClassName('platformlabel')[row.getElementsByClassName('platformlabel').length-1].parentNode.style.padding = '0px'
@@ -5831,6 +6038,31 @@ function checkRegion(row) {
             game = decodeURI(url.split('/')[5]);
         }
     }
+
+    if (code == 3) {
+        let trophysegment = row.getElementsByClassName('progress-cell')[0]
+
+        let _gold = trophysegment.children[0].innerText
+        let _silver = trophysegment.children[1].innerText
+        let _bronze = trophysegment.children[2].innerText
+
+        let trophyPLAT = row.getElementsByClassName('hasplatcell')[0];
+        if (trophyPLAT) {
+            _total_plat = parseInt(_total_plat) + 1
+        }
+        _total_gold = parseInt(_total_gold) + parseInt(_gold)
+        _total_silver = parseInt(_total_silver) + parseInt(_silver)
+        _total_bronze = parseInt(_total_bronze) + parseInt(_bronze)
+
+    }
+
+    /*console.log("plat " + _total_plat)
+    console.log("gold " + _total_gold)
+    console.log("silv " + _total_silver)
+    console.log("bron " + _total_bronze)*/
+
+
+
     if (arrayREMOVEVITA.includes(game)) removeTag(row, 'VITA')
     if (arrayREMOVEPS4.includes(game)) removeTag(row, 'PS4')
     if (arrayREMOVEPS3.includes(game)) removeTag(row, 'PS3')
@@ -6048,6 +6280,7 @@ function checkRegion(row) {
         let fixedName = fixstrings(nameStyle.innerText)
         nameStyle.innerText = fixedName
         nameStyle.title = 'View trophies for ' + fixedName
+        _cur_name_progress = fixedName
     }
     //console.log(code)
     if (code == 3){
@@ -6312,6 +6545,14 @@ function addTag(row, label) {
 	insertBefore(newLabel, lastLabel);
 }
 
+function fixnumber(num) {
+    if (num > 999) {
+        let num2 = num.toString()
+        num2 = num2.replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, "$&,")
+        return num2
+    }
+    return num.toString()
+}
 
 function fixstrings(str) {
     if (REMOVE_ID) {
