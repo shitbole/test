@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.6
+// @version       2.2.7
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -26,6 +26,21 @@ var REMOVE_ID = true
 
 
 GM_addStyle ( `
+
+    #mainbody a, #welcomebody a, .mainbody a {
+        color: #38699b;
+        text-decoration:none;
+    }
+    #psntlfooter {
+        color: #b5b5b5 !important;
+        text-align:right;
+        margin-top: 3em;
+        line-height: 13px;
+        width: 100%;
+        padding-top: 2em;
+        font-size: 11px;
+    }
+
     html, body {
         background: url('https://i.imgur.com/jHChbSI.png') #10141B repeat !important;
         scroll-behavior: smooth;
@@ -145,8 +160,9 @@ GM_addStyle ( `
     .sort-row {
         background-color: #33383e !important;
         color: #cecece !important;
-        margin-bottom: 2px; !important
+        margin-bottom: 2px !important;
     }
+
     .page-header {
         background-color: #1d2126 !important;
         color: #cecece !important;
@@ -197,6 +213,14 @@ GM_addStyle ( `
     tr.complete.even, tr.earned.even {
         background-color: #e6ede5 !important;
         background: linear-gradient(to left, #e6ede5 , #e6ede5 80%, #c0ebba 100%);
+    }
+    tr.evenrow.hid, tr.even.hid {
+        background-color: #fff83a !important;
+        background: linear-gradient(to left, #e8e8e8 0%, #fff83a 30%, #fff83a 70%, #e8e8e8 100%);
+    }
+    tr.oddrow.hid, tr.odd.hid {
+        background-color: #fff83a !important;
+        background: linear-gradient(to left, #ededed 0%, #fff83a 30%, #fff83a 70%, #ededed 100%);
     }
 
 
@@ -4304,7 +4328,7 @@ GM_addStyle ( `
                 if (averageprogress.length > 1) {
                     averageprogress = ([averageprogress[0], averageprogress[1].slice(0, 1)].join('.'))
                 }
-                
+
                 //console.log(averageprogress);
 
                 let level = topstats[0].children[0].innerText;
@@ -4335,23 +4359,27 @@ GM_addStyle ( `
                 let boardrank = document.getElementById('boardrank');
                 //console.log(boardrank)
 
+
                 let bonusTrophies = document.createElement("div");
+
+
+
                 bonusTrophies.id = ["bonusTrophies"];
                 bonusTrophies.class = "bonusTrophiesContainer"
                 bonusTrophies.style = `text-align:right; display: block; font-family: 'Microsoft YaHei UI'; margin-left: auto; margin-right: auto; width: auto; height: 150px; color: #1d2126; background-color: #1d2126; position:sticky; top: ${200+addBufferSticky}px; !important`
 
                 bonusTrophies.innerHTML = `
-                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:40px; right:20px;">${platinumtrophies}</big>
-                                                               <img class="iconTrophy" style="position:absolute; top:20px; left:20px;" width=auto height=50px  src="https://i.imgur.com/VnkHuFc.png">
+                                                               <big class="iconTrophyText" style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:40px; right:20px;">${platinumtrophies}</big>
+                                                               <img class="iconTrophyX" style="position:absolute; top:20px; left:21px;" width=auto height=50px  src="https://i.imgur.com/VnkHuFc.png">
 
-                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:90px; right:20px;">${goldtrophies}</big>
-                                                               <img class="iconTrophy" style="position:absolute; top:70px; left:20px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
+                                                               <big class="iconTrophyText" style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:90px; right:20px;">${goldtrophies}</big>
+                                                               <img class="iconTrophyX" style="position:absolute; top:70px; left:22px;" width=auto height=50px  src="https://i.imgur.com/dP1FS6L.png">
 
-                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:140px; right:20px;">${silvertrophies}</big>
-                                                               <img class="iconTrophy" style="position:absolute; top:120px; left:20px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
+                                                               <big class="iconTrophyText" style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:140px; right:20px;">${silvertrophies}</big>
+                                                               <img class="iconTrophyX" style="position:absolute; top:120px; left:20px;" width=auto height=50px  src="https://i.imgur.com/TDJmHUc.png">
 
-                                                               <big style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:190px; right:20px;">${bronzetrophies}</big>
-                                                               <img class="iconTrophy" style="position:absolute; top:170px; left:20px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
+                                                               <big class="iconTrophyText" style="width: 80px; text-align: right; font-size: 18px; font-weight: bold; color: #EEE; position:absolute; top:190px; right:20px;">${bronzetrophies}</big>
+                                                               <img class="iconTrophyX" style="position:absolute; top:170px; left:20px;" width=auto height=50px  src="https://i.imgur.com/EjoXyJB.png">
 
                                                         `
 
@@ -4361,10 +4389,51 @@ GM_addStyle ( `
 
                 insertBefore(bonusTrophies, boardrank)
 
+                                      GM_addStyle ( `
+                                          .iconTrophyX {
+                                                z-index: 996 !important;
+                                                transition: transform .2s, opacity .4s 0s, visibility .4s 0s;
+                                                transform: scale(1) rotate(0deg);
+                                                visibility: hidden;
+                                                opacity: 0;
+                                          }
+                                             .iconTrophyX.vis {
+                                                z-index: 996 !important;
+                                                transition: transform .2s, opacity .4s 0s, visibility .4s 0s;
+                                                transform: scale(1) rotate(0deg);
+                                                visibility: visible;
+                                                opacity: 1;
+                                          }
+                                          .iconTrophyX.vis:hover {
+                                                transition: transform .2s;
+                                                transform: scale(1.5) rotate(-15deg);
+                                          }
 
 
+                                          .iconTrophyText {
+                                                -webkit-transition: opacity .4s 0s, visibility .4s 0s;
+                                                -moz-transition: opacity .4s 0s, visibility .4s 0s;
+                                                transition: opacity .4s 0s, visibility .4s 0s;
+                                                visibility: hidden;
+                                                opacity: 0;
+                                          }
+                                             .iconTrophyText.vis {
+                                                -webkit-transition: opacity .4s 0s, visibility .4s 0s;
+                                                -moz-transition: opacity .4s 0s, visibility .4s 0s;
+                                                transition: opacity .4s 0s, visibility .4s 0s;
+                                                visibility: visible;
+                                                opacity: 1;
+                                          }
+
+                                      `)
 
 
+    $(window).scroll(function(e) {
+        var _topDistance = $(this).scrollTop();
+        var _screenWidth = $(window).width();
+        (_topDistance > 1000 ? $('.iconTrophyX').addClass('vis') : $('.iconTrophyX').removeClass('vis'));
+        (_topDistance > 1000 ? $('.iconTrophyText').addClass('vis') : $('.iconTrophyText').removeClass('vis'));
+    });
 
 
 
@@ -4959,6 +5028,16 @@ GM_addStyle ( `
         background-color: #1d2126;
     }
 
+
+
+    #mainbody a, #welcomebody a, .mainbody a {
+        color:#DDD; text-decoration:none;
+    }
+    #mainbody a:hover, #welcomebody a:hover, .mainbody a:hover {
+        color:#FFF; text-decoration:underline;
+    }
+
+
 td.title-cell {
     padding-top: 5px !important;
 }
@@ -4983,7 +5062,7 @@ td.title-cell {
                         clearInterval(loadingInterval);
                         return;
                     }
-                    
+
                     checkRegion(rows[currentProgress]);
                     moveRowContent(rows[currentProgress]);
                     currentProgress++;
@@ -5738,7 +5817,7 @@ function injectLoadingBar() {
         newLoadingBar.style = 'width: 441px; height: 90px; background-color: #1d2126; margin: 0 auto; border-radius: 3px; padding: 10px; margin-bottom:50px; box-shadow: 0px 0px 20px 0px #000;';
         newLoadingBar.innerHTML = `<div style="width: 100%; padding: 5px; position: relative;">
                                                          <span id="loadingBarProgressRaw" style="color: white;float: left;position: absolute;left: 2px;bottom: -65px;font-size: 15px;"></span>
-                                                         <span class="loadingBarProgressPercent" style="color: white;float: right;position: absolute; left: 172px;bottom: -69px;font-size: 20px;"></span>
+                                                         <span class="loadingBarProgressPercent" style="color: white;float: right;position: absolute; right: 228px;bottom: -69px;font-size: 20px;"></span>
 
                                                          <span class="loadingBarProgressPlat" style="color: white;float: right; position: absolute; right: 32px; top: -1px; font-size: 15px;"> </span>
                                                          <span class="loadingBarProgressGold" style="color: white;float: right; position: absolute; right: 32px; top: 23px; font-size: 15px;"> </span>
@@ -5758,8 +5837,8 @@ function injectLoadingBar() {
                                                          <span class="loadingBarProgressStats4" style="color: #ffffff;float: right;position: absolute;right: 97px;bottom: -6px;font-size: 15px;"></span>
                                                          <span class="loadingBarProgressStats5" style="color: #ffde65;float: right;position: absolute;right: 107px;bottom: -24px;font-size: 14px;"></span>
 
-                                                         <span class="loadingBarProgressStats5" style="color: #ffffff;float: right;position: absolute;right: 133px;bottom: -54px;font-size: 15px;">Total</span>
-                                                         <span class="loadingBarProgressStats5" style="color: #ffffff;float: right;position: absolute;right: 115px;bottom: -73px;font-size: 15px;text-align: center;width: 65px;height: auto;"></span>
+                                                         <span class="loadingBarProgressStats6" style="color: #ffffff;float: right;position: absolute;right: 133px;bottom: -54px;font-size: 15px;">Total</span>
+                                                         <span class="loadingBarProgressStats7" style="color: #ffffff;float: right;position: absolute;right: 115px;bottom: -73px;font-size: 15px;text-align: center;width: 65px;height: auto;"></span>
                                                     </div>
                                                     <div class="progresscontainer stacked softshadow" style="width: 50%;position: relative;top: 67px;">
                                                         <div class="progressbar" style="float:left; width: 0%">
@@ -5800,6 +5879,7 @@ function updateLoadingBar(currentProgress, totalProgress) {
         let __store_silver
         let __store_gold
         let __store_plat
+        let __store_total
 
         let __error_bronze = false
         let __error_silver = false
@@ -5821,25 +5901,36 @@ function updateLoadingBar(currentProgress, totalProgress) {
             __store_plat = __plat_tray
             __store_total = __total_tray
 
+            _total_total = (parseInt(_total_bronze) + parseInt(_total_silver) + parseInt(_total_gold) + parseInt(_total_plat))
             if (parseInt(__store_bronze) < parseInt(_total_bronze)) {
                 loadingBar.children[0].children[5].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: 71px; font-size: 15px;";
+                    loadingBar.children[0].children[14].innerHTML = "Errors";
+                    loadingBar.children[0].children[14].style = "color: #ff4242;float: right;position: absolute;right: 126px;bottom: -24px;font-size: 14px;";
                 __error_bronze = true
             }
             if (parseInt(__store_silver) < parseInt(_total_silver)) {
                 loadingBar.children[0].children[4].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: 47px; font-size: 15px;";
+                    loadingBar.children[0].children[14].innerHTML = "Errors";
+                    loadingBar.children[0].children[14].style = "color: #ff4242;float: right;position: absolute;right: 126px;bottom: -24px;font-size: 14px;";
                 __silver_tray = true
             }
             if (parseInt(__store_gold) < parseInt(_total_gold)) {
                 loadingBar.children[0].children[3].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: 23px; font-size: 15px;";
+                    loadingBar.children[0].children[14].innerHTML = "Errors";
+                    loadingBar.children[0].children[14].style = "color: #ff4242;float: right;position: absolute;right: 126px;bottom: -24px;font-size: 14px;";
                 __error_gold = true
             }
             if (parseInt(__store_plat) < parseInt(_total_plat)) {
                 loadingBar.children[0].children[2].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: -1px; font-size: 15px;";
+                    loadingBar.children[0].children[14].innerHTML = "Errors";
+                    loadingBar.children[0].children[14].style = "color: #ff4242;float: right;position: absolute;right: 126px;bottom: -24px;font-size: 14px;";
                 __error_plat = true
             }
-            if (parseInt(__store_total) < parseInt(_total_plat)) {
-                loadingBar.children[0].children[2].style = "color: #ff4242;float: right; position: absolute; right: 32px; top: -1px; font-size: 15px;";
-                __error_plat = true
+            if (parseInt(__store_total) < parseInt(_total_total)) {
+                loadingBar.children[0].children[16].style = "color: #ff4242;float: right;position: absolute;right: 115px;bottom: -73px;font-size: 15px;text-align: center;width: 65px;height: auto;";
+                    loadingBar.children[0].children[14].innerHTML = "Errors";
+                    loadingBar.children[0].children[14].style = "color: #ff4242;float: right;position: absolute;right: 126px;bottom: -24px;font-size: 14px;";
+                __error_total = true
             }
 
             // plat
@@ -5851,7 +5942,6 @@ function updateLoadingBar(currentProgress, totalProgress) {
             // bronze
             loadingBar.children[0].children[5].innerHTML = "" + _total_bronze;
 
-            _total_total = (parseInt(_total_bronze) + parseInt(_total_silver) + parseInt(_total_gold) + parseInt(_total_plat))
             loadingBar.children[0].children[16].innerHTML = "" + _total_total;
 
             loadingBar.children[0].children[10].style = "color: #ffffff;float: right;position: absolute;left: 39px;bottom: -14px;font-size: 17px;";
@@ -5883,8 +5973,10 @@ function updateLoadingBar(currentProgress, totalProgress) {
                     loadingBar.children[0].children[5].innerHTML = "" + __result_bronze;
                 }
                 else {
-                    loadingBar.children[0].children[14].innerHTML = "No missing data";
-                    loadingBar.children[0].children[14].style = "color: #c0ff00;float: right;position: absolute;right: 94px;bottom: -24px;font-size: 14px;";
+                    if (!__error_total) {
+                        loadingBar.children[0].children[14].innerHTML = "No missing data";
+                        loadingBar.children[0].children[14].style = "color: #c0ff00;float: right;position: absolute;right: 94px;bottom: -24px;font-size: 14px;";
+                    }
                 }
                 loadingBar.children[0].children[10].style = "color: #ffffff;float: right;position: absolute;left: 39px;bottom: -24px;font-size: 17px;";
                 loadingBar.children[0].children[11].innerHTML = "Done";
@@ -5927,37 +6019,39 @@ function updateLoadingBar(currentProgress, totalProgress) {
 
             }
             if (code == 4) {
-                if (timeHigh != timeLow) {
-                    //console.log("attempted % colour: " + __completionpercent.toString())
-                    let aditionaltext = "Time Elapsed: "
-                    let complete_colour = "9d9d9"
-                    let percentcolour = Math.ceil(255 * (__completionpercent.toString().slice(0, -1) / 100));
-                    let R = 255-(percentcolour * 0.375)
-                    let G = 110+(percentcolour * 0.5686)
+                if (timeHigh == timeLow) {
+                    timeHigh = currentTime
+                }
+                //console.log("attempted % colour: " + __completionpercent.toString())
+                let aditionaltext = "Time Elapsed: "
+                let complete_colour = "9d9d9"
+                let percentcolour = Math.ceil(255 * (__completionpercent.toString().slice(0, -1) / 100));
+                let R = 255-(percentcolour * 0.375)
+                let G = 110+(percentcolour * 0.5686)
 
-                    if (__completionpercent.toString() == "100%") {
-                        aditionaltext = "Completed in: "
-                        complete_colour = "9fff6e"
-                    }
-                    else {
-                        timeHigh = currentTime
-                    }
+                if (__completionpercent.toString() == "100%") {
+                    aditionaltext = "Completed in: "
+                    complete_colour = "9fff6e"
+                }
+                else {
+                    timeHigh = currentTime
+                }
 
 
-                    console.log("")
-                    console.log("lowestMonth: " + lowestMonth)
-                    console.log("low: " + timeLow)
-                    console.log("high: " +timeHigh)
-                    console.log("")
-                    console.log("gap: " + (timeHigh-timeLow))
-                    let fulltime = secondsToTime(1, timeHigh-timeLow).slice(2)
-                    let fulltimedays = secondsToTime(2, timeHigh-timeLow).slice(2)
-                    let timesimple = simplifytime(fulltimedays)
-                    //console.log("gap2: " + (fulltime))
-                    let timegap = document.createElement('div');
-                    timegap.class = "timeGap"
-                    timegap.style=`width: 0px; height: 0px; position:relative;`
-                    if (fulltimedays.toString() == fulltime.toString()) {
+                console.log("")
+                console.log("lowestMonth: " + lowestMonth)
+                console.log("low: " + timeLow)
+                console.log("high: " +timeHigh)
+                console.log("")
+                console.log("gap: " + (timeHigh-timeLow))
+                let fulltime = secondsToTime(1, timeHigh-timeLow).slice(2)
+                let fulltimedays = secondsToTime(2, timeHigh-timeLow).slice(2)
+                let timesimple = simplifytime(fulltimedays)
+                //console.log("gap2: " + (fulltime))
+                let timegap = document.createElement('div');
+                timegap.class = "timeGap"
+                timegap.style=`width: 0px; height: 0px; position:relative;`
+                if (fulltimedays.toString() == fulltime.toString()) {
                     timegap.innerHTML = `
                                        <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
                                             <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
@@ -5967,8 +6061,8 @@ function updateLoadingBar(currentProgress, totalProgress) {
                                        </span>
 
                                        `;
-                    }
-                    else {
+                }
+                else {
                     timegap.innerHTML = `
                                        <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
                                             <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
@@ -5979,9 +6073,8 @@ function updateLoadingBar(currentProgress, totalProgress) {
 
                                        `;
                 }
-                    timegap.style.paddingTop = '0px';
-                    document.getElementsByClassName('trophy_totals')[0].appendChild(timegap);
-                }
+                timegap.style.paddingTop = '0px';
+                document.getElementsByClassName('trophy_totals')[0].appendChild(timegap);
             }
         }
         else {
@@ -6040,19 +6133,25 @@ function checkRegion(row) {
     }
 
     if (code == 3) {
-        let trophysegment = row.getElementsByClassName('progress-cell')[0]
-
-        let _gold = trophysegment.children[0].innerText
-        let _silver = trophysegment.children[1].innerText
-        let _bronze = trophysegment.children[2].innerText
-
-        let trophyPLAT = row.getElementsByClassName('hasplatcell')[0];
-        if (trophyPLAT) {
-            _total_plat = parseInt(_total_plat) + 1
+        //console.log(row.className.slice(-8).split(" "))
+        if ((row.className.slice(-8).split(" ")[0] == "hid") || (row.className.slice(-8).split(" ")[1] == "hid")) {
+            console.log("Hidden: " + row.getElementsByClassName('gametitle')[0].innerText)
         }
-        _total_gold = parseInt(_total_gold) + parseInt(_gold)
-        _total_silver = parseInt(_total_silver) + parseInt(_silver)
-        _total_bronze = parseInt(_total_bronze) + parseInt(_bronze)
+        else {
+            let trophysegment = row.getElementsByClassName('progress-cell')[0];
+
+            let _gold = trophysegment.children[0].innerText
+            let _silver = trophysegment.children[1].innerText
+            let _bronze = trophysegment.children[2].innerText
+
+            let trophyPLAT = row.getElementsByClassName('hasplatcell')[0];
+            if (trophyPLAT) {
+                _total_plat = parseInt(_total_plat) + 1
+            }
+            _total_gold = parseInt(_total_gold) + parseInt(_gold)
+            _total_silver = parseInt(_total_silver) + parseInt(_silver)
+            _total_bronze = parseInt(_total_bronze) + parseInt(_bronze)
+        }
 
     }
 
@@ -6274,13 +6373,16 @@ function checkRegion(row) {
         fixtag(game)
     }
     else {
-        if (!nameStyle) {
-            nameStyle = row.getElementsByClassName('gametitle')[0]
+        if (code == 3){
+            if (!nameStyle) {
+                nameStyle = row.getElementsByClassName('gametitle')[0]
+            }
+            //console.log(nameStyle)
+            let fixedName = fixstrings(nameStyle.innerText)
+            nameStyle.innerText = fixedName
+            nameStyle.title = 'View trophies for ' + fixedName
+            _cur_name_progress = fixedName
         }
-        let fixedName = fixstrings(nameStyle.innerText)
-        nameStyle.innerText = fixedName
-        nameStyle.title = 'View trophies for ' + fixedName
-        _cur_name_progress = fixedName
     }
     //console.log(code)
     if (code == 3){
@@ -6560,8 +6662,16 @@ function fixstrings(str) {
             str = str.slice(0, -15)
         }
     }
-    return str.replace('  ',' ').replace("Tom Clancy's ",'').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅹ','X').replace('Ⅻ','XII').replace(' trophies.', '')
+    let string = str.replace('  ',' ').replace('《','').replace('》','').replace("Tom Clancy's ",'').replace(' Remastered','').replace(' Remaster','').replace('-　ノ','- ノ').replace(':','').replace('PS3','').replace('PS4','').replace('PS5','').replace('Vita','').replace(' OR ','').replace(' RR ','').replace(' EU ','').replace(' NA ','').replace(' AS ','').replace(' HK ','').replace(' JP ','').replace(' KR ','').replace(' CN ','').replace(' GR ','').replace(' ES ','').replace(' RU ','').replace(' SA ','').replace(' AU ','').replace(' VR ','').replace(' DELISTED ','').replace('DELISTED ','').replace(' CODE ','').replace('CODE ','').replace(' PHYSICAL ','').replace('PHYSICAL ','').replace(' DIGITAL','').replace('DIGITAL','').replace('®Vita',' Vita').replace('®3',' 3').replace('®2',' 2').replace('®4',' 4').replace('®5',' 5').replace('®','').replace('®','').replace('®','').replace('™','').replace(' :',':').replace('(JP)','').replace(' - Breakthrough Gaming Arcade','').replace('Ⅱ','II').replace('Ⅲ','III').replace('Ⅳ','IV').replace('Ⅹ','X').replace('Ⅻ','XII').replace(' trophies.', '')
 
+    if (string.slice(0, 3) == " VR"){
+        string = string.slice(3)
+    }
+    else if (string.slice(0, 2) == "VR"){
+        string = string.slice(2)
+    }
+
+    return string
 }
 
 function moveRowContent(original) {
@@ -6665,7 +6775,7 @@ function moveRowContent(original) {
 	newFraction.innerHTML = `<div style="display: flex; justfy center"><span style="flex: 1; text-align:right; margin-right: 2px; font-size: 10pt;">${fraction.split("/")[0]}</span> / <span style="flex: 1; text-align:left; margin-left: 2px; font-size: 8pt;">${fraction.split("/")[1]}</span></div>`
     //console.log(fraction.split("/"))
 	newFraction.style = 'float: right; color: #888';
-	
+
 
 
     let newProgressdd = document.createElement('div');
@@ -6794,15 +6904,21 @@ GM_addStyle ( `
             lowestYear = _lowestYear
             console.log("New lowest timestamp: " + timeLow)
         }
+
         if ((earned > timeHigh) && (earned != 0)) {
             timeHigh = earned
             console.log("New highest timestamp: " + timeHigh)
         }
+
+        let weirdbug = 0
 //console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
     if (dlc_trophies_flag_count > 1) {
         let newdlcIcon = document.createElement('div');
+        if (code == 2) {
+            weirdbug = 20
+        }
         newdlcIcon.style='width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
-        newdlcIcon.innerHTML = `<div style="position:absolute; left:-641px; top:-4px"><acronym title="${last_fixed_dlc_name} • DLC #${(dlc_trophies_flag_count-1)}"><img width="auto" height="20px" float="left" src="https://i.imgur.com/LqzfhQk.png"></acronym>`
+        newdlcIcon.innerHTML = `<div style="position:absolute; left:-${641-weirdbug}px; top:-4px"><acronym title="${last_fixed_dlc_name} • DLC #${(dlc_trophies_flag_count-1)}"><img width="auto" height="20px" float="left" src="https://i.imgur.com/LqzfhQk.png"></acronym>`
         // `<div style="position:absolute; z-index: 69;><img width="auto" height="20px" src="https://i.imgur.com/LqzfhQk.png">`
         if (code == 4) {
             insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[11])
@@ -7170,10 +7286,14 @@ GM_addStyle ( `
                 if (main_game_src.naturalHeight > 180) {
                     ps5_pos_offset = 85
                 }
+                let weirdbug1 = 0
+                if (code == 2) {
+                    weirdbug1 = 20
+                }
                 _gamesrc = document.createElement('div');
                 _gamesrc.class = "__gamesrc"
                 _gamesrc.style=`width: 0px; height: 0px; position:relative;`
-                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -868px;bottom: -8px;height: 0px;z-index: 45;">
+                _gamesrc.innerHTML = `<span style="font-size: 10pt;position: absolute;left: -${868-weirdbug1}px;bottom: -8px;height: 0px;z-index: 45;">
                                        <div style="float:left;"><img border="0" class="dlc_image" src="${main_game_src.src}" alt=""></div>
                 `
 
@@ -7835,6 +7955,9 @@ GM_addStyle ( `
 	title.append(clone);
 	titleText.style.display = 'none';
 	clone.classList.add("clonedTitle");
+
+    document.getElementsByClassName('gamebreadcrumb')[0].parentNode.style = `background-color:rgb(29, 33, 38);width:100%;height: 34px;`
+
 	// clone.children[0].innerHTML = clone.children[0].innerHTML.replace('<div class="main">', '').replace('</div>', '').replace('<div class="sub">', '').replace('<br>', ' - ');
     if (!((document.URL.split('/').length) === 6)) {
         if (document.getElementsByClassName('sub')[2]) {
@@ -7845,6 +7968,28 @@ GM_addStyle ( `
                 document.getElementsByClassName('sub')[1].style.display = 'none';
             }
         }
+
+
+
+
+        let avatarPresent = document.getElementsByClassName('page-right useravatar')[0]
+        if (avatarPresent) {
+            let user = avatarPresent.children[0].href.split('/')[5]
+            user = user.split(' ')[0].split('\n')[0]
+            let usercurrentEL = document.createElement('div');
+            usercurrentEL.innerHTML = `
+                                           <a href="https://psntrophyleaders.com/user/view/${user}">
+                                           <div style="width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges; text-align: center;">
+                                               <span style="position: absolute;color: #EEE;display: table-cell;width: 130px;left: -130px;text-align: center;font-size: 14px;height: 17px;top: 119px;padding-top: 6px;float: right;">${user}
+
+                                               </span>
+                                           </div>
+                                           </a>
+                                       `
+            insertBefore(usercurrentEL, document.getElementsByClassName('page-right useravatar')[0]);
+            //document.getElementsByClassName('page-right useravatar')[0].children[0].append(usercurrentEL);
+        }
+
         if (document.getElementsByClassName('gamebreadcrumb')[1]) {
             document.getElementsByClassName('gamebreadcrumb')[1].style.display = 'none';
         }
@@ -7942,6 +8087,10 @@ GM_addStyle ( `
 
     }, 0);
     if (((document.URL.split('/').length) === 6) || (((document.URL.split('/').length) === 7) && (document.URL.split('/')[6] === ''))) {
+
+        document.getElementsByClassName('gamebreadcrumb')[0].style = `background-color:rgb(29, 33, 38);width:100%;height: 34px;`
+        //console.log("msg 55")
+
         let user = ''
         let usr = document.getElementsByClassName('username')[0]
         if (usr) {
