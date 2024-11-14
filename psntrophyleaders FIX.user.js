@@ -6093,7 +6093,14 @@ function checkRegion(row) {
 
     if (!row) {
         row = document
-        row.getElementsByClassName('platformlabel')[row.getElementsByClassName('platformlabel').length-1].parentNode.style.padding = '0px'
+        let aa = row.getElementsByClassName('platformlabel')
+        if (aa) {
+            let bb = aa[row.getElementsByClassName('platformlabel').length-1]
+            if (bb) {
+                bb.parentNode.style.padding = '0px'
+            }
+        }
+        
 
         let gameIMG = document.getElementsByClassName('gameImage')[0]
         let manual_height = 0;
@@ -8134,8 +8141,11 @@ function remove(att) {
 function inlineTitleTags() {
 	let auxContainer = document.createElement('div');
 	let span = document.createElement('span');
-	span.appendChild(document.getElementsByClassName('platformlabel')[0].parentNode.cloneNode(true));
-	auxContainer.appendChild(span);
+    let afa = document.getElementsByClassName('platformlabel')[0]
+    if (afa) {
+        span.appendChild(document.getElementsByClassName('platformlabel')[0].parentNode.cloneNode(true));
+    }
+    auxContainer.appendChild(span);
 
 	let title = document.getElementsByClassName('gameDetailTitle')[0].children[0].children[0].children[0].children[0];
 	if (title) {
