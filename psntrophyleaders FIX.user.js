@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.7
+// @version       2.2.8
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -6093,14 +6093,11 @@ function checkRegion(row) {
 
     if (!row) {
         row = document
-        let aa = row.getElementsByClassName('platformlabel')
-        if (aa) {
-            let bb = aa[row.getElementsByClassName('platformlabel').length-1]
-            if (bb) {
-                bb.parentNode.style.padding = '0px'
-            }
+        let xdrow = row.getElementsByClassName('platformlabel')
+        if (xdrow.length > 0) {
+            console.log(xdrow)
+            xdrow[xdrow.length-1].parentNode.style.padding = '0px'
         }
-        
 
         let gameIMG = document.getElementsByClassName('gameImage')[0]
         let manual_height = 0;
@@ -6682,8 +6679,17 @@ function fixstrings(str) {
 }
 
 function moveRowContent(original) {
-	let offset = original.getElementsByClassName('platformlabel').length - 1;
-    let FirstTag = original.getElementsByClassName('platformlabel')[0].innerText
+
+    let platformlabel = original.getElementsByClassName('platformlabel')
+    let offset = platformlabel.length - 1;
+    let FirstTag = ""
+    if (platformlabel.length > 0) {
+        FirstTag = platformlabel[0].innerText
+    }
+
+    /*else {
+        FirstTag = "PS5"
+    }*/
     //                                                                                                         console.log("got innerText")
     let gameIMG = original.getElementsByClassName('game-image-cell')[0]
     //                                                                                                          console.log("got game-image-cell")
@@ -6696,6 +6702,9 @@ function moveRowContent(original) {
 
     let newGameIMG = document.createElement('span');
     if (gameIMG.naturalHeight > 1) {
+        if (gameIMG.naturalHeight > 50) {
+            FirstTag = "PS5"
+        }
         newGameIMG.innerHTML = `<img src="${gameIMG.src}" class="game-image-cell" style="background-color:#${__bg_color}; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
         if (original.getElementsByClassName('user gameImageLink')[0].href.slice(-41) == "sly-cooper-and-the-thievius-raccoonus-ps5") {
             newGameIMG.innerHTML = `<img src="https://i.imgur.com/65cDwTj.png" class="game-image-cell" style="background-color:#${__bg_color}; height:${gameIMG.naturalHeight}px" title="${gameIMG.title}" alt=""!important>`
@@ -6756,9 +6765,14 @@ function moveRowContent(original) {
 	dateHTML.innerText = timestamp.split('.')[0];
 	//dateHTML.style.color = dateHTML.style.color;
 	dateHTML.style.fontWeight = 'bold';
+
+
+
+    // vertically align tray for ps5 games
     if (FirstTag == "PS5") {
         original.getElementsByClassName('title-cell')[0].style.verticalAlign = `middle`;
     }
+
     original.getElementsByClassName('title-cell')[0].style.width = `100%`;
 	original.getElementsByClassName('title-cell')[0].colSpan = 'unset';
 	original.getElementsByClassName('image-cell')[0].style.width = '105px';
@@ -8139,16 +8153,17 @@ function remove(att) {
 }
 
 function inlineTitleTags() {
-	let auxContainer = document.createElement('div');
-	let span = document.createElement('span');
-    let afa = document.getElementsByClassName('platformlabel')[0]
-    if (afa) {
-        span.appendChild(document.getElementsByClassName('platformlabel')[0].parentNode.cloneNode(true));
-    }
-    auxContainer.appendChild(span);
+    let plabel = document.getElementsByClassName('platformlabel')
+    if (plabel.length > 0) {
 
-	let title = document.getElementsByClassName('gameDetailTitle')[0].children[0].children[0].children[0].children[0];
-	if (title) {
-		title.children[0].children[0].children[0].innerHTML = auxContainer.innerHTML + title.children[0].children[0].children[0].innerHTML;
-	}
+        let auxContainer = document.createElement('div');
+        let span = document.createElement('span');
+        span.appendChild(document.getElementsByClassName('platformlabel')[0].parentNode.cloneNode(true));
+        auxContainer.appendChild(span);
+
+        let title = document.getElementsByClassName('gameDetailTitle')[0].children[0].children[0].children[0].children[0];
+        if (title) {
+            title.children[0].children[0].children[0].innerHTML = auxContainer.innerHTML + title.children[0].children[0].children[0].innerHTML;
+        }
+    }
 }
