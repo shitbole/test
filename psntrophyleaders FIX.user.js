@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.8
+// @version       2.2.9
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -279,17 +279,20 @@ var REMOVE_FLAGGLOSS = true
 
 
 
-
+// DELISTED PHYSICAL AVAILABLE
 const arrayDELISTEDorange = [
 'babylons-fall-ps5',
 'babylons-fall-ps4',
+'ゴジラ-godzilla-ps3',
+'godzilla-ps3',
+'godzilla-ps4',
 'minecraft-story-mode-ps3',
 'minecraft-story-mode-ps4',
 'minecraft-story-mode-season-2-ps4',
 'assetto-corsa-ps4-1',
 'will-a-wonderful-world-ps4-2',
 'will-a-wonderful-world-ps4-1',
-'godzilla-ps4',
+'jak-and-daxter-the-precursor-legacy-ps4',
 'walking-dead-the-telltale-series-collection-ps4',
 'sherlock-holmes-the-devils-daughter-ps4',
 'sherlock-holmes-the-devils-daughter-ps4-1',
@@ -300,10 +303,34 @@ const arrayDELISTEDorange = [
 'deadpool-ps3',
 'deadpool-ps4',
 ];
+
+//DELISTED DIGITAL ONLY
 const arrayDELISTED = [
 'invasion-of-space-ps4',
 'invasion-of-space-ps4-1',
+'oktoberfest-break-head-to-head-ps4',
+'oktoberfest-break-head-to-head-ps4-1',
+'oktoberfest-break-head-to-head-ps5',
+'oktoberfest-break-head-to-head-ps5-1',
+'oktoberfest-break-ps4',
+'oktoberfest-break-ps4-1',
+'oktoberfest-break-ps5',
+'oktoberfest-break-ps5-1',
+'oktoberfest-fun-ps4',
+'oktoberfest-fun-ps4-1',
+'oktoberfest-fun-ps5',
+'oktoberfest-fun-ps5-1',
+'oktoberfest-run-ps4',
+'oktoberfest-run-ps4-1',
+'oktoberfest-run-ps5',
+'oktoberfest-run-ps5-1',
+'60-seconds-ps4',
 'fall-guys-ps4',
+'vampire-the-masquerade-coteries-of-new-york-ps4-3',
+'シチズンズ　オブ　アース-ps4-psvita',
+'hatoful-boyfriend-ps4-psvita',
+'hatoful-boyfriend-holiday-star-ps4-psvita',
+'citizens-of-space-ps4-1',
 'citizens-of-earth-ps4',
 'citizens-of-earth-ps4-1',
 'citizens-of-space-ps4',
@@ -7115,9 +7142,14 @@ GM_addStyle ( `
 
                 //Fallout New Vegas
                 dlcName = dlcName.replace("NVDLC01 Trophies","Dead Money")
+                dlcName = dlcName.replace("NVDLC01","Dead Money")
+                dlcName = dlcName.replace("NVDLC02","Honest Hearts")
                 dlcName = dlcName.replace("NVDLC02 Trophies","Honest Hearts")
+                dlcName = dlcName.replace("NVDLC03","Old World Blues")
                 dlcName = dlcName.replace("NVDLC03 Trophies","Old World Blues")
+                dlcName = dlcName.replace("NVDLC04","Lonesome Road")
                 dlcName = dlcName.replace("NVDLC04 Trophies","Lonesome Road")
+                dlcName = dlcName.replace("NVDLC05","Gun Runners' Arsenal")
                 dlcName = dlcName.replace("NVDLC05 Trophies","Gun Runners' Arsenal")
 
                 if (dlcName != "Call of Duty Modern Warfare III") {
