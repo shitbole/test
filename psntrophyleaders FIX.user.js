@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.2.9
+// @version       2.3.0
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -302,12 +302,34 @@ const arrayDELISTEDorange = [
 'dragon-quest-xi-echoes-of-an-elusive-age-ps4',
 'deadpool-ps3',
 'deadpool-ps4',
+'teenage-mutant-ninja-turtles-mutants-in-manhattan-ps3',
+'teenage-mutant-ninja-turtles-mutants-in-manhattan-ps4',
+'samurai-jack-ps4',
+'samurai-jack-ps4-2',
+'kung-fu-panda-showdown-of-legendary-legends-ps4',
+'kung-fu-panda-showdown-of-legendary-legends-ps3',
+'knowledge-is-power-decades-ps4',
+'knowledge-is-power-ps4',
+'thats-you-ps4',
 ];
 
 //DELISTED DIGITAL ONLY
 const arrayDELISTED = [
 'invasion-of-space-ps4',
+'citizens-of-earth-psvita',
+'popeye-ps4-1',
+'popeye-ps4',
+'daylight-ps4',
+'daylight-ps4-1',
+'tetris-ultimate-ps4',
+'knowledge-is-power-decades-ps4-1',
 'invasion-of-space-ps4-1',
+'mega-coin-squad-ps4',
+'phlegethon-ps4',
+'phlegethon-ps4-1',
+'phlegethon-ps4-2',
+'rise-shine-ps4',
+'samurai-jack-ps4-1',
 'oktoberfest-break-head-to-head-ps4',
 'oktoberfest-break-head-to-head-ps4-1',
 'oktoberfest-break-head-to-head-ps5',
@@ -339,8 +361,6 @@ const arrayDELISTED = [
 'transformers-devastation-ps3',
 'expendables-2-videogame-ps3',
 'legend-of-korra-ps3',
-'teenage-mutant-ninja-turtles-mutants-in-manhattan-ps3',
-'teenage-mutant-ninja-turtles-mutants-in-manhattan-ps4',
 'marvel-ultimate-alliance-ps4',
 'legend-of-korra-ps4',
 'side-bullet-ps5',
@@ -5340,8 +5360,8 @@ function addButton(text, onclick, cssObj) {
 
                .gamesLeft .date_earned {
                     min-width: 200px;
-                    vertical-align: top !important;
-                    padding-top: 2px;
+                    vertical-align: center !important;
+                    padding-top: 1px;
                }
                .date_earned {
                    text-align: right;
@@ -5375,14 +5395,15 @@ function addButton(text, onclick, cssObj) {
                 let hoverText = ""
                 let timeGaps = document.createElement('div');
                 timeGaps.classList = ["timeGaps"];
-                timeGaps.style = 'padding-top: 6px !important; color: #aabb49;'
+                timeGaps.style = 'padding-bottom : 3px !important; color: #aabb49;'
                 if (i > 0) {
                     timeGaps.innerHTML = `<acronym title="${"Total Time: "+ secondsToTime(1, gapstart, null, newyear, i).slice(2)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
                 }
                 else {
                     timeGaps.innerHTML = `<acronym title="${secondsToTime(1, gapstart, null, newyear, i)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
                 }
-                document.getElementsByClassName("date_earned")[i].append(timeGaps)
+                insertBefore(timeGaps, document.getElementsByClassName("date_earned")[i].children[0]);
+
 
 
                 //console.log(timestamp + ", gap: " + secondsToTime(1, gap))
