@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       psntrophyleaders FIX
-// @version       2.3.0
+// @version       2.3.1
 // @author       Luhari & DenDelisted
 // @description       upgrade
 // @icon       https://i.imgur.com/M32n7XP.png
@@ -3880,6 +3880,9 @@ var _total_bronze = 0;
 var _total_total = 0;
 var _cur_name_progress = "";
 
+var missing_timestamps = false;
+var missing_timestamps_count = 0;
+
 
 (function() {
     //setTimeout(function() {
@@ -5336,6 +5339,7 @@ function addButton(text, onclick, cssObj) {
         color: "white",
         border: "none",
         padding: "1px 10px",
+        cursor: "pointer",
     }
 
     let button = document.createElement("button"),
@@ -5359,7 +5363,7 @@ function addButton(text, onclick, cssObj) {
 
 
                .gamesLeft .date_earned {
-                    min-width: 200px;
+                    min-width: 190px;
                     vertical-align: center !important;
                     padding-top: 1px;
                }
@@ -5371,40 +5375,47 @@ function addButton(text, onclick, cssObj) {
         let cells = document.getElementsByClassName('earned');
         for(i = 0; i < cells.length; i++) {
             if (valid(cells[i])) {
-                let timestamp = cells[i].children[7].children[0].innerText
-                let ___month = cells[i].children[7].children[2].children[0].innerText
-                let ___year = cells[i].children[7].children[2].children[0].innerText
-                if (i == 0) {
-                    oldmonth = ___month
-                    oldyear = ___year
-                    firsttime = timestamp
-                    oldtime = timestamp
-                    gap = 0
-                    gapstart = 0
-                }
-                else if (i > 0) {
-                    gap = timestamp - oldtime
-                    gapstart = timestamp - timeLow
-                    oldtime = timestamp
-                    newmonth = oldmonth
-                    newyear = oldyear
-                    oldmonth = ___month
-                    oldyear = ___year
-                }
+                let __missingtimestamp = cells[i].children[7].children[1].innerText
+                //console.log(__missingtimestamp)
+                if (__missingtimestamp == "Invalid Time Sync") {
 
-                let hoverText = ""
-                let timeGaps = document.createElement('div');
-                timeGaps.classList = ["timeGaps"];
-                timeGaps.style = 'padding-bottom : 3px !important; color: #aabb49;'
-                if (i > 0) {
-                    timeGaps.innerHTML = `<acronym title="${"Total Time: "+ secondsToTime(1, gapstart, null, newyear, i).slice(2)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
                 }
                 else {
-                    timeGaps.innerHTML = `<acronym title="${secondsToTime(1, gapstart, null, newyear, i)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
+
+                    let timestamp = cells[i].children[7].children[0].innerText
+                    let ___month = cells[i].children[7].children[2].children[0].innerText
+                    let ___year = cells[i].children[7].children[2].children[0].innerText
+                    if (i == 0) {
+                        oldmonth = ___month
+                        oldyear = ___year
+                        firsttime = timestamp
+                        oldtime = timestamp
+                        gap = 0
+                        gapstart = 0
+                    }
+                    else if (i > 0) {
+                        gap = timestamp - oldtime
+                        gapstart = timestamp - timeLow
+                        oldtime = timestamp
+                        newmonth = oldmonth
+                        newyear = oldyear
+                        oldmonth = ___month
+                        oldyear = ___year
+                    }
+
+                    let hoverText = ""
+                    let timeGaps = document.createElement('div');
+                    timeGaps.classList = ["timeGaps"];
+                    timeGaps.style = 'padding-bottom : 3px !important; color: #aabb49;'
+                    if (i > 0) {
+                        timeGaps.innerHTML = `<acronym title="${"Total Time: "+ secondsToTime(1, gapstart, null, newyear, i).slice(2)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
+                    }
+                    else {
+                        timeGaps.innerHTML = `<acronym title="${secondsToTime(1, gapstart, null, newyear, i)}">${secondsToTime(1, gap, newmonth, newyear, i)}</acronym>`
+                    }
+                    insertBefore(timeGaps, document.getElementsByClassName("date_earned")[i].children[0]);
+
                 }
-                insertBefore(timeGaps, document.getElementsByClassName("date_earned")[i].children[0]);
-
-
 
                 //console.log(timestamp + ", gap: " + secondsToTime(1, gap))
             }
@@ -6085,7 +6096,27 @@ function updateLoadingBar(currentProgress, totalProgress) {
                     timeHigh = currentTime
                 }
 
-
+                let mxp = document.querySelector("#flagLink > a")
+                if (mxp) {
+                    console.log(mxp.innerText.slice(5, 8))
+                    if (mxp.innerText.slice(5, 8) == "Gam") {
+                        mxp.innerHTML = `
+                                            <span style="color: rgb(225, 225, 225); margin-bottom: 5px; text-align: center; background: rgb(57 153 45); border-radius: 3px; padding: 5px; display: inline-block; width: 142px; margin-left: 0px;">
+                                            <acronym title="Click to flag">Legit
+                                            </acronym>
+                                            </span>
+                                       `
+                    }
+                    else if (mxp.innerText.slice(5, 8) == "ed,") {
+                        //mxp.style = 'color: rgb(225, 225, 225); margin-bottom: 5px; text-align: center; background: rgb(153, 45, 45); border-radius: 3px; padding: 5px; display: inline-block; width: 142px; margin-left: 0px;'
+                        mxp.innerHTML = `
+                                            <span style="color: rgb(225, 225, 225); margin-bottom: 5px; text-align: center; background: rgb(153, 45, 45); border-radius: 3px; padding: 5px; display: inline-block; width: 142px; margin-left: 0px;">
+                                            <acronym title="Click to unflag">Cheated
+                                            </acronym>
+                                            </span>
+                                       `
+                    }
+                }
                 console.log("")
                 console.log("lowestMonth: " + lowestMonth)
                 console.log("low: " + timeLow)
@@ -6103,9 +6134,9 @@ function updateLoadingBar(currentProgress, totalProgress) {
                     timegap.innerHTML = `
                                        <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
                                             <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
-                                            <span style="color: #9d9d9; font-size: 13px;">${aditionaltext}
-                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltime}">${timesimple}</acronym>
-                                            </span></div>
+                                            <span style="color: #DDD; font-size: 13px;">${aditionaltext}</span>
+                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltime}">${timesimple}</acronym></span>
+                                            </div>
                                        </span>
 
                                        `;
@@ -6114,15 +6145,32 @@ function updateLoadingBar(currentProgress, totalProgress) {
                     timegap.innerHTML = `
                                        <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
                                             <big style="width: 450px; height: 18px; text-align: center; font-size: 13px;">
-                                            <span style="color: #9d9d9; font-size: 13px;">${aditionaltext}
-                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltimedays + "\n • AKA:\n" + fulltime}">${timesimple}</acronym>
-                                            </span></div>
+                                            <span style="color: #DDD; font-size: 13px;">${aditionaltext}</span>
+                                            <span style="color: rgb(${R} ${G} 110); font-size: 13px;"><acronym title="${fulltimedays + "\n • AKA:\n" + fulltime}">${timesimple}</acronym></span>
+                                            </div>
                                        </span>
 
                                        `;
                 }
+
                 timegap.style.paddingTop = '0px';
                 document.getElementsByClassName('trophy_totals')[0].appendChild(timegap);
+                if (missing_timestamps) {
+                    let missing_timestamps_div = document.createElement('div');
+                    missing_timestamps_div.class = "missingTimestamps"
+                    missing_timestamps_div.style=`width: 0px; height: 0px; position:relative;`
+                    missing_timestamps_div.innerHTML = `
+                                       <big style="display: flex; width: 410px; font-size: 10pt; text-align:center; position: absolute; left:-225px; bottom: -131px;  z-index: 42;">
+                                            <big style="width: 450px; height: 7px; text-align: center; font-size: 13px;">
+                                            <span style="color: #e76736; font-size: 20px; vertical-align: middle;">⚠ </span>
+                                            <span style="color: #e3ae60; font-size: 13px; vertical-align: sub;">${missing_timestamps_count} Missing Timestamps</span>
+                                            </div>
+                                       </span>
+
+                                       `;
+                    missing_timestamps_div.style.paddingTop = '0px';
+                    document.getElementsByClassName('trophy_totals')[0].appendChild(missing_timestamps_div);
+                }
             }
         }
         else {
@@ -6951,50 +6999,61 @@ GM_addStyle ( `
     vertical-align: middle;
     background-color: #001118;
 }
+#game_details_table .trophy_title {
+    max-width: 300px;
+}
 `)
     if (!row.classList.contains('dlc_header')) {
         let trophyname = row.getElementsByClassName('trophy_title')[0]
-        //console.log(trophyname.children[1])
-        let earned = row.getElementsByClassName('date_earned')[0]
-        if (earned) {
-            earned = earned.children[0].innerText
-        }
-        let _lowestMonth = row.getElementsByClassName('month')[0]
-        if (_lowestMonth) {
-            _lowestMonth = _lowestMonth.innerText
-        }
-        let _lowestYear = row.getElementsByClassName('year')[0]
-        if (_lowestYear) {
-            _lowestYear = _lowestYear.innerText
-        }
-        if ((earned < timeLow) && (earned != 0)) {
-            timeLow = earned
-            lowestMonth = _lowestMonth
-            lowestYear = _lowestYear
-            console.log("New lowest timestamp: " + timeLow)
-        }
-
-        if ((earned > timeHigh) && (earned != 0)) {
-            timeHigh = earned
-            console.log("New highest timestamp: " + timeHigh)
-        }
-
-        let weirdbug = 0
-//console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
-    if (dlc_trophies_flag_count > 1) {
-        let newdlcIcon = document.createElement('div');
-        if (code == 2) {
-            weirdbug = 20
-        }
-        newdlcIcon.style='width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
-        newdlcIcon.innerHTML = `<div style="position:absolute; left:-${641-weirdbug}px; top:-4px"><acronym title="${last_fixed_dlc_name} • DLC #${(dlc_trophies_flag_count-1)}"><img width="auto" height="20px" float="left" src="https://i.imgur.com/LqzfhQk.png"></acronym>`
-        // `<div style="position:absolute; z-index: 69;><img width="auto" height="20px" src="https://i.imgur.com/LqzfhQk.png">`
-        if (code == 4) {
-            insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[11])
+        let _invalid = row.getElementsByClassName('invalid')[0]
+        if (_invalid) {
+            missing_timestamps = true
+            missing_timestamps_count = missing_timestamps_count + 1
         }
         else {
-            insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[9])
-        }
+            //console.log(trophyname.children[1])
+            let earned = row.getElementsByClassName('date_earned')[0]
+            let _lowestMonth = row.getElementsByClassName('month')[0]
+            let _lowestYear = row.getElementsByClassName('year')[0]
+            if (earned) {
+                earned = earned.children[0].innerText
+            }
+            if (_lowestMonth) {
+                _lowestMonth = _lowestMonth.innerText
+            }
+            if (_lowestYear) {
+                _lowestYear = _lowestYear.innerText
+            }
+
+            if ((earned < timeLow) && (earned != 0)) {
+                timeLow = earned
+                lowestMonth = _lowestMonth
+                lowestYear = _lowestYear
+                console.log("New lowest timestamp: " + timeLow)
+            }
+
+            if ((earned > timeHigh) && (earned != 0)) {
+                timeHigh = earned
+                console.log("New highest timestamp: " + timeHigh)
+            }
+
+            let weirdbug = 0
+            //console.log(row.getElementsByClassName('trophy_image')[0].parentNode)
+            if (dlc_trophies_flag_count > 1) {
+                let newdlcIcon = document.createElement('div');
+                if (code == 2) {
+                    weirdbug = 20
+                }
+                newdlcIcon.style='width: 0px; height: 0px; position:relative; font-family: Microsoft YaHei UI; image-rendering: crisp-edges;'
+                newdlcIcon.innerHTML = `<div style="position:absolute; left:-${641-weirdbug}px; top:-4px"><acronym title="${last_fixed_dlc_name} • DLC #${(dlc_trophies_flag_count-1)}"><img width="auto" height="20px" float="left" src="https://i.imgur.com/LqzfhQk.png"></acronym>`
+                // `<div style="position:absolute; z-index: 69;><img width="auto" height="20px" src="https://i.imgur.com/LqzfhQk.png">`
+                if (code == 4) {
+                    insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[11])
+                }
+                else {
+                    insertBefore(newdlcIcon, row.getElementsByClassName('trophy_image')[0].parentNode.children[9])
+                }
+            }
     }
 
 
@@ -7746,10 +7805,6 @@ function parseGameDetails() {
     if (parseInt(denom) > 999) {
         denom = denom.replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, "$&,")
     }
-
-
-
-
 
 
         currentpoints = (parseInt(platinumtrophies.split("/")[0]*300) + parseInt(goldtrophies.split("/")[0]*90) + parseInt(silvertrophies.split("/")[0]*30) + parseInt(bronzetrophies.split("/")[0]*15))
