@@ -316,6 +316,7 @@ const arrayDELISTEDorange = [
 //DELISTED DIGITAL ONLY
 const arrayDELISTED = [
 'invasion-of-space-ps4',
+'lost-legend-of-redwall-the-scout-ps4',
 'citizens-of-earth-psvita',
 'popeye-ps4-1',
 'popeye-ps4',
